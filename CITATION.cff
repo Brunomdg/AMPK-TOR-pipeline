@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article and this software."
+title: "Code for: Beyond presence and absence: a survey of TOR and AMPK across 210 eukaryotes reveals unusually long coccidian AMPKγ"
+version: 1.0.0
+date-released: 2026-09-26
+license: MIT
+type: software
+authors:
+  - family-names: Patwardhan
+    given-names: Aditya
+    affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+  - family-names: Brennan
+    given-names: Euwen
+    affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+  - family-names: Martorelli Di Genova
+    given-names: Bruno
+    affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+    email: bruno.mdigenova@med.uvm.edu
+contact:
+  - family-names: Martorelli Di Genova
+    given-names: Bruno
+    affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+    email: bruno.mdigenova@med.uvm.edu
+keywords:
+  - AMPK
+  - TOR
+  - comparative genomics
+  - protein sequence variation
+  - component repertoires
+  - eukaryotes
+  - Apicomplexa
+preferred-citation:
+  type: article
+  title: "Beyond presence and absence: a survey of TOR and AMPK across 210 eukaryotes reveals unusually long coccidian AMPKγ"
+  journal: "Molecular Biology and Evolution"
+  authors:
+    - family-names: Patwardhan
+      given-names: Aditya
+      affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+    - family-names: Brennan
+      given-names: Euwen
+      affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+    - family-names: Martorelli Di Genova
+      given-names: Bruno
+      affiliation: "Department of Microbiology and Molecular Genetics, Larner College of Medicine, University of Vermont, Burlington, Vermont, USA"
+      email: bruno.mdigenova@med.uvm.edu
