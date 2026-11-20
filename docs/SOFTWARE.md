@@ -2,7 +2,11 @@
 
 This page lists every program and package the analyses used, with its version and the evidence for that
 version. Where a program was run by a job script that is not part of this repository, the settings given
-are copied from that job script's command line.
+are copied from that job script's command line. Those command lines are also deposited one per program and
+step in `external_runs/`, where each file names the Supplementary Methods subsection it serves; this page
+remains the record of versions and evidence.
+
+Where a deposited script issues the call itself, the script is the authority and this page follows it.
 
 The analyses ran on the VACC cluster of the University of Vermont (Red Hat Enterprise Linux 9), from conda
 environments that the job scripts call by absolute path, for example `${TA210_ENVS}/ms210_phase2/bin/Rscript`.
@@ -53,6 +57,10 @@ interrupted gene-tree searches.
 
 ## Programs, by step of the Materials and Methods
 
+The headings below are the steps of the analysis. They are not one to one with the eight subsections of the
+Supplementary Methods; `docs/CODE_MAP.md`, section 6, gives that mapping, and `external_runs/` is organised
+by it.
+
 ### Proteomes and the species tree
 
 | Program | Version | Evidence | Settings as run |
@@ -63,8 +71,8 @@ interrupted gene-tree searches.
 | MAFFT | 7.526 | env, banner | species-tree markers: `mafft --auto` |
 | trimAl | 1.5.1 | env, banner | `trimal -automated1` |
 | IQ-TREE | 3.1.3 | env, banner, log | 210-taxon tree: `-p <partitions> -m LG+G4 -B 1000 -seed 20260817`. 209-taxon PMSF tree: `-m LG+C20+F+G4 -ft <210-taxon tree> -B 1000 -seed 20260817`. Concordance factors: `--gcf <20 marker trees> --scf 100` |
-| R (system installation) with ape `chronos` | R 4.5.1 with the home-folder library | log | penalised-likelihood chronograms under the correlated, relaxed, discrete and clock models, with the calibrations of the Methods |
-| LSD2 | 2.2.3 | env | alternative dating: `lsd2 -i <rooted tree> -d <dates> -s 7933 -z 0` |
+| R (system installation) with ape `chronos` | R 4.5.1 with the home-folder library, **not** the R 4.5.3 of the cluster steps | log | penalised-likelihood chronograms under the correlated, relaxed, discrete and clock models, with the calibrations of the Methods. The script of record is lost and the run of record reports `conv=FALSE`; `docs/DATING_GAP.md` states what is missing |
+| LSD2 | 2.2.3 (conda package `lsd` 2.2.3, build `hdfd78af_3`, in the `dating` environment) | env | alternative dating: `lsd2 -i <rooted tree> -d <dates> -s 7933 -z 0`. That environment holds no R, which is consistent with the `chronos` dating having run under the system R |
 | treePL | not recorded | not recorded | alternative dating: prime, then cross-validation of the smoothing value from 1e6 to 1e-12 (step 0.1), then a thorough run, 7,933 sites |
 
 ### Candidate discovery
@@ -72,10 +80,10 @@ interrupted gene-tree searches.
 | Program | Version | Evidence | Settings as run |
 |---|---|---|---|
 | OrthoFinder | 3.1.5 | env | `orthofinder -S diamond --only-groups -I 1.2`; the saved similarity graph was re-clustered at further MCL inflation values with `-b <working folder> --only-groups -I <value>` |
-| SonicParanoid | 2.0.9 | env (pinned at creation) | `sonicparanoid -m default -ca -op -ot --min-arch-merging-cov 0.90`, with MCL inflation varied by `-I` |
+| SonicParanoid | 2.0.9 | env (pinned at creation), script | Delivered clustering: `sonicparanoid -m default -ca -op -ot`, at the program's own defaults, arch-merging coverage 0.75 and MCL inflation 1.5. Sweeps: `--min-arch-merging-cov 0.90` (the run submitted by `sp2_cov90.sbatch`) and `-I` at 2.0 and 3.0 |
 | KinOrtho | not recorded | not recorded | AMPKα only: `kinortho.py -f <full-length queries> -d <kinase-domain queries> -t 32` |
 | MCL | 22.282 (with OrthoFinder), 14.137 (with SonicParanoid) | env | called by OrthoFinder, SonicParanoid and KinOrtho |
-| HMMER | 3.4 | env, probe | genome-wide search of all 210 proteomes against the profile panel: `hmmsearch -E 1e5 --domE 1e5 --max --tblout --domtblout`. `hmmbuild` for the contaminant-family profiles. `phmmer` in the genome-grade re-examination |
+| HMMER | 3.4 | env, probe, script | genome-wide search of all 210 proteomes against the profile panel: `hmmsearch -E 1e5 --domE 1e5 --max --tblout --domtblout`. The score ceilings and `--max` are confirmed by the call site in `rl_threshold_pilot_pertarget.py` (line 180). `hmmbuild` for the contaminant-family profiles. `phmmer` in the genome-grade re-examination |
 | BLAST+ (`rpsblast`, `makeprofiledb`) | 2.17.0 | env, probe | `makeprofiledb` over every profile of CDD 3.21, then `rpsblast -evalue 0.01 -outfmt '6 qseqid sseqid bitscore evalue qstart qend'` |
 | InterProScan | 5.78-109.0 | probe | `interproscan.sh -f TSV -appl Pfam,PANTHER,SMART`. The installation no longer exists; its outputs remain |
 | FastTree | 2.2.0 | env | the MAFFT and FastTree tree method of the earlier candidate build |
@@ -87,15 +95,15 @@ interrupted gene-tree searches.
 | MAFFT | 7.526 | env, banner | gene trees: `mafft --globalpair --maxiterate 1000 --anysymbol` (G-INS-i, as van Dam et al. 2011), and `mafft --auto` for a tip set above the G-INS-i size limit |
 | IQ-TREE | 3.1.3 | env, banner, log | gene trees: `-m MFP -B 1000 --alrt 1000 --seed 488761235`. Site-heterogeneous cross-check: `-m LG+C60+F+G -ft <ModelFinder tree> -B 1000 --alrt 1000 --seed 488761235` |
 | IQ-TREE | 2.3.6 (cluster module) | job script | resumed the interrupted TOR and RAPTOR gene-tree searches from their checkpoints |
-| RAxML | 8.2.12 per its own logs (8.2.13 is the installed conda package) | log | `raxmlHPC-PTHREADS -f a -x 488761235 -p 488761235 -N autoMRE -m PROTGAMMAIWAG` |
+| RAxML | 8.2.12 per its own logs (8.2.13 is the installed conda package); the conflict is unresolved | log | `raxmlHPC-PTHREADS -f a -x 488761235 -p 488761235 -N autoMRE -m PROTGAMMAIWAG`. The manuscript no longer describes the RAxML replication, so this conflict stands in the repository only |
 
 ### Sequence phenotypes and structure
 
 | Program | Version | Evidence | Settings as run |
 |---|---|---|---|
-| MAFFT | 7.526 (`orthofinder3` environment) | env | AMPKγ contact positions, AMPKα tail and AMPKβ module: `mafft --globalpair --maxiterate 1000 --anysymbol` (in `rbx1_score.py`). Coccidian residue-correspondence test: `mafft --localpair --maxiterate 1000` |
-| metapredict | 3.0.2 | pinned | default predictor, `predict_disorder`; the model identifier it resolved to was not recorded |
-| ColabFold | 1.6.2 | env, project log | every AMPKγ copy, predicted alone: `colabfold_batch --model-type alphafold2_ptm --num-models 5 --num-seeds 5 --num-recycle 12 --random-seed 0`, with multiple sequence alignments from `colabfold_batch --msa-only`. The earlier 86-query panel: the same settings. The three-chain complexes and the partner-context benchmark: the same settings with `--model-type alphafold2_multimer_v3` |
+| MAFFT | 7.526 (`orthofinder3` environment) | env, script | AMPKγ contact positions, AMPKα tail and AMPKβ module: `mafft --globalpair --maxiterate 1000 --anysymbol --quiet` (built in `rbx1_score.py`, line 57). Coccidian residue-correspondence test: `mafft --localpair --maxiterate 1000` |
+| metapredict | 3.0.2 | pinned, script | `predict_disorder` called with no model argument, so the release default network applied: **V3**, which `metapredict/parameters.py` sets as `DEFAULT_NETWORK` in 3.0.2. Called from `rbx1_alpha.py`, which refuses to run on any other version |
+| ColabFold | 1.6.2 | env, project log | every AMPKγ copy, predicted alone: `colabfold_batch --model-type alphafold2_ptm --num-models 5 --num-seeds 5 --num-recycle 12 --random-seed 0`, with multiple sequence alignments from `colabfold_batch --msa-only`. The earlier 86-query panel: the same settings. The three-chain complexes and the partner-context benchmark: the same settings with `--model-type alphafold2_multimer_v3`. No template flag and no relaxation flag was passed, so the defaults applied: no templates, no Amber relaxation. The analysis scripts read only `*_unrelaxed_rank_*_seed_*.pdb`, which is the artifact for the second of those |
 | pyKVFinder | 0.9.5 | env | cavity volumes at the AMP sites, through the measurement library `p45b_colabfold_analysis.py` |
 | rate4site | 3.0.0, compiled from source | banner | empirical Bayes `-ib` with the assertion build; maximum likelihood `-im -k 16` with the build without assertions; reference sequence *Homo sapiens* |
 
@@ -118,7 +126,7 @@ interrupted gene-tree searches.
 | phytools | 2.5-2 | env | `fitPagel` and `fitMk` in the tests of correlated evolution and of loss direction |
 | windex, convevol | 2.1.0, 2.2.1 | env | Wheatsheaf index and Ct1 in the convergence tests |
 | HyPhy (GARD) | 2.5.101 | banner, env | amino acids: `gard --type amino-acid --model LG --rv GDD --rate-classes 4`; codons: `gard --type codon --code Universal --rv GDD --rate-classes 4` |
-| mvMORPH | 1.2.2 | sessionInfo | the joint three-response model of Supplementary Table S26, run on the authors' workstation under R 4.6.1 |
+| mvMORPH | 1.2.2 | sessionInfo (workstation) | the joint three-response model of Supplementary Table S38, run on the authors' workstation under R 4.6.1. The manuscript does not describe this model and rests no claim on it. The record is the workstation's own `sessionInfo()`; `envs/R_SESSIONS.tsv` holds the cluster records only, all of them R 4.5.3, and carries no row for this run |
 | Python | 3.12 (`ms210_phase2`), 3.11 (`ms210`, `p68_*`) | env | the Python steps; standard library plus pandas, numpy and Biopython 1.88 |
 
 ## Online resources queried
@@ -130,15 +138,26 @@ interrupted gene-tree searches.
 
 ## What the records do not show
 
-- The versions of KinOrtho, treePL and STRPsearch, and the metapredict model identifier.
-- The criteria that delimit the remaining clades.
+- The versions of KinOrtho, treePL and STRPsearch. These three are the only versions this study cannot
+  state. Every other version on this page rests on at least one record.
 - **Versions resting on a single source:**
   - InterProScan, HMMER, rpsblast and MAFFT versions come from one software check, not from each run's log;
     the environment records agree for HMMER, BLAST+ and MAFFT.
   - HyPhy 2.5.101 comes from the job script's banner and the environment; the GARD log prints only the
     analysis version.
-- **RAxML:** its logs report 8.2.12, while the installed package is 8.2.13.
+- **RAxML:** its logs report 8.2.12, while the installed package is 8.2.13. The manuscript no longer
+  describes the RAxML replication, so this conflict is recorded here and nowhere else.
 - **Species-tree dating:** the script was edited after the run that produced the chronogram. The job log stamps
   its md5 as `2171c20ab00817e67bf598fffdf2d48a`, and the surviving copy differs. The chronos log of the
-  chronogram of record reports `conv=FALSE`, and two of the eight calibrations were dropped from that fit
-  because they are not clades of this tree.
+  chronogram of record reports `conv=FALSE`, and two of the eight declared calibrations were dropped from that
+  fit because they are not clades of this tree, so six entered it. This is the one genuine reproduction gap;
+  `docs/DATING_GAP.md` states it in full and the Supplementary Methods cites that file.
+
+## What the records do show, and once did not
+
+- **The metapredict model identifier.** It is V3. The call passes no model argument, and metapredict 3.0.2
+  sets `DEFAULT_NETWORK = 'V3'` in `metapredict/parameters.py`, so the release default applied.
+- **The clade delimitation.** The criteria that delimit the remaining clades are not written down, but the
+  assignment itself is published: the supplementary table of species states carries a clade label for all 210
+  species, 31 distinct clades, with no blanks. The result is deposited even though the rule that produced it
+  is not recorded.

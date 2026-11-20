@@ -1,0 +1,24 @@
+## The accessions that count as HEAT evidence in the final TOR N-terminal HEAT call.
+## Source: 06_tor_heat/final_calls/resolve_heat_final.py, function evi_class (lines 94 to 105). This file is a
+## transcription of that function; the function remains the authority.
+## Rule: HEAT_PRESENT if at least one accession of class A, B or C overlaps the N-terminal region by at least one
+## residue; otherwise HEAT_ABSENT, meaning the region was evaluated and no HEAT-indicative evidence was found.
+## Tier: class A or B gives HIGH; class C from both SUPERFAMILY and Gene3D gives MODERATE; class C from one of them
+## gives LOW. A weak E-value (above 1e-5) on class A or B evidence lowers the tier by one step. FunFam is counted
+## with Gene3D, not as a separate database.
+## The accessions admitted are also listed in HEAT_EVIDENCE_RULES.tsv, which the script reads and requires to be
+## non-empty; that file is in the data deposit, not in this repository.
+EVIDENCE_CLASS	DATABASE	ACCESSION	MATCH	WHAT_IT_IS
+A	Pfam	PF11865	exact	mTOR-family domain
+A	SMART	SM01346	exact	mTOR-family domain
+B	Pfam	PF23593	exact	HEAT repeat family
+B	Pfam	PF13513	exact	HEAT repeat family
+B	Pfam	PF13646	exact	HEAT repeat family
+B	Pfam	PF20175	exact	HEAT repeat family
+B	Pfam	PF20206	exact	HEAT repeat family
+B	Pfam	PF23271	exact	HEAT repeat family
+B	Pfam	PF25786	exact	HEAT repeat family
+B	ProSiteProfiles	PS50077	exact	HEAT repeat profile
+C	SUPERFAMILY	SSF48371	exact	repeat-fold annotation
+C	Gene3D	G3DSA:1.25.10.10	exact	repeat-fold annotation
+C	FunFam	G3DSA:1.25.10.10:FF:	prefix	repeat-fold annotation, any FunFam family under G3DSA:1.25.10.10

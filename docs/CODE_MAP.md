@@ -2,20 +2,37 @@
 
 This repository holds the code of the eleven methods that are new in this study and that produce the data
 of the main results. For each method, section 2 lists the scripts in the order they run. Section 1 goes
-table by table and figure by figure through the paper and names the method behind each one's data. Paths are
-relative to the repository root. Each script begins with a header giving its purpose, inputs, outputs and
-programs.
+table by table and figure by figure through the paper and names the method behind each one's data. Section 6
+maps the eight Supplementary Methods subsections to the scripts that implement them, section 7 names the
+command line of every external program the study ran, and section 8 lists the operative constants published
+as files. Paths are relative to the repository root. Each script begins with a header giving its purpose,
+inputs, outputs and programs.
+
+The Materials and Methods of the article is split in two: a main-text Methods, which carries the decision
+rules, the thresholds that determine a call, the headline software and the wet-lab protocol, and a
+Supplementary Methods, which carries the exact invocations, the reference-site definitions, the sensitivity
+variants and the model-by-model specifications. The Supplementary Methods cites paths in this repository.
 
 Everything else the study ran is not included here, and the authors can provide it on request:
-- the runs of standard programs, whose versions and settings are in `docs/SOFTWARE.md`;
 - the drawing of figures and the typesetting of tables;
 - checks, including the independent recomputations of the fitted models;
 - corrections and reruns;
 - supplementary analyses that apply standard tests to the outputs of these methods.
 
+The runs of standard programs were in that list until the command lines were deposited. They are now in
+`external_runs/`, one file per program and step, with their versions and evidence in `docs/SOFTWARE.md`. The
+programs themselves still have to be installed to rerun a step.
+
 ## 1. Tables and figures
 
-Numbering follows the manuscript.
+**Numbering follows the manuscript**, which is authoritative. An earlier draft numbered the supplement
+differently, and this table was rebuilt against the submitted legends; a number here means what the
+manuscript's legend gives it, not what an earlier version of this file called it.
+
+"Not included" means the code that built that object is not deposited, for the reasons listed above. The
+object itself is in the supplement; the data behind it are in the data deposit.
+
+### Main tables and figures
 
 | Item | Data produced by | Notes |
 |---|---|---|
@@ -23,53 +40,84 @@ Numbering follows the manuscript.
 | Table 2 | Method 8, `network10_refit.R` | |
 | Figure 1 | Method 2 (the species-state matrix) | Supergroup shares are counts of that matrix |
 | Figure 2 | Method 5 | The per-phylum summaries of the measurements are not included |
-| Figure 3 | Methods 6 and 7 | The plotted values were prepared by hand from Supplementary Table S28 |
+| Figure 3 | Methods 6 and 7 | The plotted values were prepared by hand from the coccidian AMPKγ copy measurements (Table S4) |
 | Figure 4 | Method 8, `rbx2_torc_core.py` and `core18_penalized.R` | |
 | Figure 5 | Method 10 (repertoire) and method 5, `rbx2_ampka_activation.py` (activation-site residue) | |
 | Figure 6 | Method 9, with the measurements of method 5 | |
 | Figure 7 | Method 11 | Panel A summarises sensitivity analyses that are not included |
-| Supplementary Figure S1 | Method 2, with the species tree (`docs/SOFTWARE.md`) | |
-| Supplementary Figures S2, S3 | Built on method 5 | The descriptive analyses of all copies are not included |
-| Supplementary Figure S4 | Method 7 | |
-| Supplementary Figures S5, S6 | Not included | The earlier 86-query multimer panel and the partner-context benchmark |
-| Supplementary Figure S7 | Methods 1 and 2 | The performance measurements are not included |
-| Supplementary Figure S8 | Method 8, `network10_refit.R` | |
-| Supplementary Figure S9 | Method 8, `core18_penalized.R` | |
-| Supplementary Figure S10 | Method 5, `rbx2_ampka_activation.py` | |
-| Supplementary Figure S11 | Built on method 10 | The models are not included |
-| Supplementary Figure S12 | Method 9 | The post hoc models are not included |
-| Supplementary Figure S13 | Method 11 | The co-transition count is not included |
-| Supplementary Figures S14, S15 | Not included | Convergence tests and lifestyle models |
-| Supplementary Figure S16 | Method 10 | |
-| Supplementary Tables S1, S2 | Methods 1 and 2 | |
-| Supplementary Tables S3, S4 | Method 1 | The table builders are not included |
-| Supplementary Table S5 | Method 2 (the criterion) | Its measured performance is not included |
-| Supplementary Tables S6, S7, S9 | Built on method 2 | Not included |
-| Supplementary Table S8 | Not included | The LKB1 candidate screen |
-| Supplementary Table S10 | Not included | Candidate replacements |
-| Supplementary Table S11 | Method 11 | |
-| Supplementary Table S12 | Built on method 11 | Not included |
-| Supplementary Table S13 | Not included | Lifestyle models |
-| Supplementary Table S14 | Not included | The index of the numbers in the text |
-| Supplementary Tables S15, S18 | Method 5, `rbx1_gamma.py` | |
-| Supplementary Tables S16, S17 | Built on method 5 | The descriptive analyses of all 239 copies are not included |
-| Supplementary Table S19 | Method 5, `rbx1_alpha.py` | |
-| Supplementary Tables S20 to S22 | Not included | Built on methods 2 and 5 |
-| Supplementary Table S23 | Built on method 5 | The summaries are not included |
-| Supplementary Tables S24 to S26 | Not included | The block of additional estimates |
-| Supplementary Table S27 | Not included | The comparison with earlier surveys |
-| Supplementary Table S28 | Method 6 | |
-| Supplementary Table S29 | External programs (BUSCO, OMArk) | Their summary is not included |
-| Supplementary Tables S30 to S34 | Not included | Built on methods 2, 4 and 5 with standard tests: Pagel's test, the no-regain comparison, rate4site and the within-clade decomposition |
-| Supplementary Table S35 | External program only (GARD) | |
-| Supplementary Table S36 | Built on method 2 | The composition counts are not included |
-| Supplementary Table S37 | Method 8, `network10_refit.R` | |
-| Supplementary Table S38 | Method 5, `rbx2_ampkb_cbm.py` | The models are not included |
+
+### Supplementary tables
+
+| Item | What the legend gives it | Data produced by |
+|---|---|---|
+| Table S1 | prevalence by target and supergroup | Methods 1 and 2 |
+| Table S2 | component composition by phylum | Methods 1 and 2 |
+| Table S3 | descriptive sequence comparisons and coverage | Built on method 5; the descriptive analyses of all copies are not included |
+| Table S4 | coccidian AMPKγ copy measurements | Method 6, `build_degeneration_metrics.py` |
+| Table S5 | comparison with the earlier single-species scoring | Method 5, `rbx1_gamma.py`, which reproduces the original `gamma_pocket.tsv` site-1 scores under the primary procedure and reports every difference with its cause |
+| Table S6 | AMP-contact scores per copy | Method 5, `rbx1_gamma.py` (`AMPKg_contact_copy.tsv`) |
+| Table S7 | substitution rate against burial-matched positions | rate4site, run externally (`external_runs/sm4_sequence_phenotypes/rate4site.sh`); the comparison against burial-matched positions is not included |
+| Table S8 | TOR HEAT architecture metrics | Method 4, `resolve_heat_final.py` |
+| Table S9 | mapped length and identity per human HEAT repeat | Method 4, `refine_nterminal_heat.py`, which transfers the 32 N-terminal HEAT repeats of human mTOR to every copy |
+| Table S10 | correlated evolution of the HEAT region and TORC partner loss | Not included; a standard test on the outputs of methods 4 and 2 |
+| Table S11 | identity at TOR partner-contacting surfaces | Not included; built on method 4 |
+| Table S12 | recombination screen | External program only (GARD; `external_runs/sm5_phylogenetic_analyses/hyphy_gard.sh`) |
+| Table S13 | component-state and sequence-feature models | Not included; built on methods 2 and 5 |
+| Table S14 | within- and between-clade decomposition | Not included; a standard test on the method 2 states |
+| Table S15 | AMPKα copy measurements | Method 5, `rbx1_alpha.py` |
+| Table S16 | AMPKβ reference-position states | Method 5, `rbx2_ampkb_cbm.py`; the reference panel and the scoring rule are in `docs/constants/ampkb_cbm_reference_and_score.md` |
+| Table S17 | component absence against subunit absence | Not included; a standard test on the method 2 states |
+| Table S18 | all ordered comparisons | Method 8, `network10_refit.R` |
+| Table S19 | rate dependence between absences | Not included; a standard test on the method 2 states |
+| Table S20 | candidate replacement comparisons | Not included; the candidate replacements |
+| Table S21 | reconstructed origins | Method 11, `rl_rm_q7_origins.py` |
+| Table S22 | reconstructed co-transitions | Built on method 11; the co-transition count is not included |
+| Table S23 | lifestyle models | Not included; the lifestyle models |
+| Table S24 | matched-endpoint comparison with earlier surveys | Not included; the comparison with earlier surveys |
+| Table S25 | gene-tree criterion by target | Method 2 (the criterion); its measured performance is not included |
+| Table S26 | basis of present cells per target | Built on method 2; not included |
+| Table S27 | present cells whose orthologs are all model sensitive | Built on method 2; not included |
+| Table S28 | every candidate and its orthology call | Methods 1 and 2, `rl_pub_t1_t2_active10.py` (the candidate table) |
+| Table S29 | search methods by target | Method 1, `rl_per_method_report.py` |
+| Table S30 | every LKB1 candidate | Not included; the LKB1 candidate screen |
+| Table S31 | orthology calls by line of evidence | Method 2, `rl_final_ortholog_table.py`, with the two-arm rule of `rl_ambiguous_arm_rule.py` |
+| Table S32 | proteome completeness | External programs (BUSCO, OMArk; `external_runs/sm1_proteomes_taxonomy_species_tree/`); their summary is not included |
+| Table S33 | species states | Method 2, `rl_pub_t1_t2_active10.py` (the 210-species state matrix, with each species' clade label) |
+| Table S34 | AMP-contact calls per position | Method 5, `rbx1_gamma.py` (`AMPKg_contact_long.tsv`) |
+| Table S35 | AMP-contact reference positions | The frozen panel that method 5 reads (`AMPKg_contact_reference.tsv`, three site sets of ten positions each, in the data deposit); the structures behind the positions are in `docs/constants/ampkg_amp_site_structures.md` |
+| Table S36 | per-species input and output for HEAT divergence against partner loss | Not included; the input and output of the test on methods 4 and 2 |
+| Table S37 | numerical estimates of the first additional block | Not included; the block of additional estimates |
+| Table S38 | joint three-response model | Not included; mvMORPH, run on the authors' workstation (`docs/SOFTWARE.md`) |
+| Table S39 | model comparison for loss with and without regain | Not included; the no-regain comparison |
+| Table S40 | broad-group comparisons | Not included |
+| Table S41 | descendant-minus-sister contrasts | Not included |
+
+### Supplementary figures
+
+| Item | What the legend gives it | Data produced by |
+|---|---|---|
+| Figure S1 | repertoires across 37 clade blocks with the species tree | Method 2, with the species tree (`docs/SOFTWARE.md`) |
+| Figure S2 | contact-position evidence across all AMPKγ | Built on method 5; the descriptive analyses of all copies are not included |
+| Figure S3 | convergence tests | Not included; the convergence tests |
+| Figure S4 | alignment, domain evidence and partner multiplicity across all AMPKγ copies | Built on methods 5 and 7 |
+| Figure S5 | predicted geometry of the three AMP sites | Method 7, `analyze_all_ampkg_structures.py` |
+| Figure S6 | geometry and confidence across the earlier multimer panel | Not included; the earlier 86-query multimer panel |
+| Figure S7 | partner context and variability of the human multimer predictions | Not included; the partner-context benchmark |
+| Figure S8 | AMPKα activation-loop site | Method 5, `rbx2_ampka_activation.py` |
+| Figure S9 | upstream kinase repertoire and TOR state | Method 10 |
+| Figure S10 | retained-module length fit and model-sensitivity status | Method 9; the post hoc models are not included |
+| Figure S11 | associations of absence across ten targets | Method 8, `network10_refit.R` |
+| Figure S12 | core-disruption associations after adjustment | Method 8, `core18_penalized.R` |
+| Figure S13 | lifestyle and proteome size as predictors | Not included; the lifestyle models |
+| Figure S14 | reconstructed origins and co-transitions | Method 11; the co-transition count is not included |
+| Figure S15 | how each orthology call was reached | Methods 1 and 2; the performance measurements are not included |
+| Figure S16 | CAMKK-category and LKB1 trees | Method 10 |
 
 ## 2. The methods, with their scripts in run order
 
-External programs and the settings they ran with are in `docs/SOFTWARE.md`. Inputs that these scripts read
-but do not make will be in the data deposit:
+External programs and the settings they ran with are in `external_runs/`, with their versions and the
+evidence for them in `docs/SOFTWARE.md`. Inputs that these scripts read but do not make will be in the data
+deposit:
 - the proteomes;
 - the declared control sequences, decoys and negatives;
 - the profile panel;
@@ -84,6 +132,8 @@ Before these scripts, the external searches run:
 - rpsblast against CDD;
 - InterProScan;
 - OrthoFinder, SonicParanoid and KinOrtho.
+
+Their command lines are in `external_runs/sm2_candidate_discovery_and_orthology/`.
 
 1. `02_candidate_discovery/rl_threshold_pilot_pertarget.py`: for each target and profile, the pair of sequence
    and domain score cuts that holds the false-positive rate on the target's same-species decoys at or below 5,
@@ -102,7 +152,7 @@ Helpers:
 ### Method 2. Gene-tree clade criterion and the species-state matrix
 
 Before these scripts, the gene trees are built externally: MAFFT, IQ-TREE with ModelFinder, the PMSF
-cross-check, and RAxML.
+cross-check, and RAxML (`external_runs/sm2_candidate_discovery_and_orthology/`).
 
 1. `03_orthology_calls/rl_phylo_subtree.py`: the clade criterion of van Dam et al. (2011), anchored on the
    curated controls, applied to each gene tree.
@@ -125,7 +175,10 @@ Helpers:
 
 ### Method 4. TOR N-terminal HEAT calls
 
-Before these scripts, InterProScan signatures, the AlphaFold models and US-align are run externally.
+Before these scripts, InterProScan signatures, the AlphaFold models and US-align are run externally
+(`external_runs/sm2_candidate_discovery_and_orthology/interproscan_pfam_panther_smart.sh` and
+`external_runs/sm4_sequence_phenotypes/usalign_tor_heat.sh`, `hhsuite_tor_heat.sh`,
+`strpsearch_foldseek.sh`).
 
 1. `06_tor_heat/signature_screen/classify_tor_heat.py`: HEAT signatures N-terminal to the FAT domain.
 2. `06_tor_heat/signature_screen/refine_nterminal_heat.py`: transfers the 32 N-terminal HEAT repeats of human
@@ -133,7 +186,8 @@ Before these scripts, InterProScan signatures, the AlphaFold models and US-align
 3. `06_tor_heat/structural_screen/run_direct_alignment.py`: aligns each model's N-terminal crop to the
    experimental references and applies the structural acceptance rule.
 4. `06_tor_heat/final_calls/resolve_heat_final.py`: the final present or absent call, with its confidence
-   tier.
+   tier. The accessions it accepts as HEAT evidence are in
+   `docs/constants/tor_heat_evidence_accessions.tsv`.
 
 ### Method 5. Sequence measurements of the retained subunits
 
@@ -158,11 +212,12 @@ Helpers: `05_sequence_phenotypes/rbx1_chain/rbx1_lib.py`, `05_sequence_phenotype
 
 1. `11_structure_pocket/all_copies/prepare_ampkg_domain_preserving.py`: builds each copy's prediction
    sequence so that every observed CBS domain is kept.
-2. ColabFold runs externally.
+2. ColabFold runs externally (`external_runs/sm6_structure_prediction_and_pocket/`).
 3. `11_structure_pocket/all_copies/analyze_all_ampkg_structures.py`: measures the three reference AMP sites
    in all 25 models of every prediction.
 
-Helper: `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py`, the measurement library.
+Helper: `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py`, the measurement library. The
+structures it measures against are in `docs/constants/ampkg_amp_site_structures.md`.
 
 ### Method 8. Penalised phylogenetic logistic regression
 
@@ -184,6 +239,10 @@ values and the local refinement.
 
 Helper: `07_phylogenetic_regressions/ctd_cross_feature/ctdx_lib.R`.
 
+The declared sensitivities that swap one input for another are listed in
+`docs/constants/site1_score_input_variants.tsv` (AMPKγ) and
+`docs/constants/ampkb_cbm_reference_and_score.md` (AMPKβ).
+
 **These two scripts cannot run as deposited.** `ctdx_lib.R` checks the checksum of the model engine it
 reads, and that version of the engine was not preserved. `ctdx_cross_ampk.R` also reads the record of a
 reproduction step that is not included.
@@ -192,7 +251,8 @@ reproduction step that is not included.
 
 1. `07_phylogenetic_regressions/upstream_kinases/rbx3_mask.py`: masks each kinase-domain alignment to the
    columns the reference sequences occupy.
-2. MAFFT L-INS-i and IQ-TREE run externally.
+2. MAFFT L-INS-i and IQ-TREE run externally
+   (`external_runs/sm2_candidate_discovery_and_orthology/mafft_iqtree_upstream_kinases.sh`).
 3. `07_phylogenetic_regressions/upstream_kinases/rbx3_tree_calls.R`: assigns each tip by its placement
    among the references.
 4. `07_phylogenetic_regressions/upstream_kinases/rbx3_calls.py` for LKB1 and `rbx3_camkk_calls.py` for the
@@ -268,3 +328,140 @@ Scripts keep the names they ran under, because logs and output folders refer to 
 | `arm1`, `arm2` | The orthology arm (OrthoFinder, SonicParanoid, KinOrtho) and the domain arm (HMMER, CDD, InterProScan) |
 | `decoy` | A same-species protein known not to be the target, used to count false nominations |
 | `p45` | The structure-prediction step |
+
+## 6. The Supplementary Methods, subsection by subsection
+
+The eight subsections of the Supplementary Methods, with the code that implements each. The mapping is by
+content. Where a script's own `# Methods:` header names a different subsection, the header is the earlier
+internal label and the row below says so.
+
+### Proteomes, taxonomy and the species tree
+
+No deposited scripts: every step is an external program. The command lines are in
+`external_runs/sm1_proteomes_taxonomy_species_tree/`, covering BUSCO, OMAmer and OMArk, DIAMOND, MAFFT,
+trimAl, IQ-TREE, LSD2 and treePL. The dating of record cannot be reproduced; `docs/DATING_GAP.md` states
+what is missing.
+
+### Candidate discovery and orthology calls
+
+| Script | What it does |
+|---|---|
+| `02_candidate_discovery/rl_threshold_pilot_pertarget.py` | the per-target score cuts at each false-positive rate |
+| `02_candidate_discovery/rl_r59_union_optimum.py` | the joint choice of one setting per method and target |
+| `02_candidate_discovery/rl_per_method_report.py` | each method's calls, the candidate list and the contaminant screen |
+| `02_candidate_discovery/rl_arm1_selection.py` | the OrthoFinder and SonicParanoid setting per target |
+| `02_candidate_discovery/rl_invariants.py` | the checksum gate on the reference inputs |
+| `03_orthology_calls/rl_phylo_subtree.py` | the gene-tree clade criterion |
+| `03_orthology_calls/rl_ambiguous_arm_rule.py` | the two-arm rule where the tree abstains |
+| `03_orthology_calls/rl_final_ortholog_table.py` | one call per candidate |
+| `03_orthology_calls/rl_core8_tree_rule.py` | the core candidates that remained open |
+| `03_orthology_calls/rl_absence_research.py` | the genome-grade re-examination of absences |
+| `03_orthology_calls/rl_absence_support.R` | clade support for each absence |
+| `03_orthology_calls/lkb1_camkk/` (2 scripts) | the freeze gates on the LKB1 and CAMKK calls |
+| `07_phylogenetic_regressions/upstream_kinases/rbx3_mask.py`, `rbx3_tree_calls.R`, `rbx3_calls.py`, `rbx3_camkk_calls.py` | the LKB1 and CAMKK-category calls; their headers say "Orthology calls", and they sit under `07_` only because they share that chain's helpers |
+| `shared/pipeline_lib/` | the target lists, accession joins and call labels |
+
+External programs: `external_runs/sm2_candidate_discovery_and_orthology/`.
+
+### Species states and composition
+
+| Script | What it does |
+|---|---|
+| `03_orthology_calls/rl_pub_t1_t2_active10.py` | the candidate table and the 210-species state matrix |
+| `05_sequence_phenotypes/rbx2/rbx2_torc_core.py` | the TORC1 and TORC2 core state of every species; its header says "Phylogenetic regressions", the chain it was written for |
+| `07_phylogenetic_regressions/upstream_kinases/rbx3_architecture.py` | each species' upstream-kinase state; its header says "Phylogenetic regressions" |
+| `08_ancestral_states/rl_rm_q7_standard.py` | the standard coding of each target for the evolutionary analyses |
+
+No external programs.
+
+### Sequence phenotypes of the retained subunits
+
+| Script | What it does |
+|---|---|
+| `05_sequence_phenotypes/rbx1_chain/rbx1_gamma.py` | the AMPKγ AMP-contact scores, per copy and per position |
+| `05_sequence_phenotypes/rbx1_chain/rbx1_alpha.py` | the AMPKα C-terminal length and disorder |
+| `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py` | the AMPKβ carbohydrate-binding module score |
+| `05_sequence_phenotypes/rbx2/rbx2_ampka_activation.py` | the AMPKα activation-site residue; its header says "Phylogenetic regressions" |
+| `05_sequence_phenotypes/coccidian_remodelling/build_degeneration_metrics.py` | the coccidian AMPKγ comparison |
+| `06_tor_heat/signature_screen/classify_tor_heat.py`, `refine_nterminal_heat.py` | the TOR N-terminal HEAT signature screen and the repeat transfer |
+| `06_tor_heat/structural_screen/run_direct_alignment.py` | the structural acceptance rule |
+| `06_tor_heat/final_calls/resolve_heat_final.py` | the final HEAT call and its confidence tier |
+| Helpers | `rbx1_lib.py`, `rbx1_score.py`, `rbx2_common.py` |
+
+External programs: `external_runs/sm4_sequence_phenotypes/`. Constants:
+`docs/constants/tor_heat_evidence_accessions.tsv`, `docs/constants/ampkb_cbm_reference_and_score.md`,
+`docs/constants/site1_score_input_variants.tsv`.
+
+### Phylogenetic analyses
+
+| Script | What it does |
+|---|---|
+| `07_phylogenetic_regressions/core_complements/core18_penalized.R` | subunit absence on core disruption |
+| `07_phylogenetic_regressions/ten_target_pairs/network10_refit.R` | every ordered pair of the ten targets |
+| `07_phylogenetic_regressions/ctd_cross_feature/ctdx_cross_ampk.R`, `ctdx_upstream.R` | the AMPKα tail models |
+| `08_ancestral_states/repair/rl_rm_q0_asr.R` | the state at both ends of every edge |
+| `08_ancestral_states/rl_rm_q7_origins.py` | the origins of absence per reconstruction block |
+| Helpers | the two multistart helpers, `ctdx_lib.R`, `rl_rm_asr_lib.R`, `rl_rm_q7_lib.py`, `rl_rm_prov.R` |
+
+External programs: `external_runs/sm5_phylogenetic_analyses/` (GARD). The R packages that fit the models
+are in `docs/SOFTWARE.md`, not here, because the scripts call them directly.
+
+### Structure prediction and AMPKγ pocket geometry
+
+| Script | What it does |
+|---|---|
+| `11_structure_pocket/all_copies/prepare_ampkg_domain_preserving.py` | the domain-preserving prediction sequences |
+| `11_structure_pocket/all_copies/analyze_all_ampkg_structures.py` | the three AMP sites in all 25 models per prediction |
+| `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py` | the measurement library |
+
+External programs: `external_runs/sm6_structure_prediction_and_pocket/`. Constants:
+`docs/constants/ampkg_amp_site_structures.md`.
+
+### Comparison with earlier surveys
+
+| Script | What it does |
+|---|---|
+| `05_sequence_phenotypes/rbx1_chain/rbx1_gamma.py` | reproduces the earlier single-species site-1 scores under the primary procedure and reports every difference with its cause (`AMPKg_legacy_reproduction.tsv`, `AMPKg_legacy_pairwise_reproduction_delta.tsv`) |
+
+The matched-endpoint comparison with the earlier surveys is not included. No external programs.
+
+### Development of *Toxoplasma gondii* TOR-knockout strains
+
+Wet-lab work. No code, no external programs. The protocol is in the main-text Methods.
+
+## 7. External program runs
+
+`external_runs/` holds the command line of every program the study ran that is not itself deposited as a
+script, one file per program and step, each naming the Supplementary Methods subsection it serves.
+
+| Directory | Supplementary Methods subsection |
+|---|---|
+| `external_runs/sm1_proteomes_taxonomy_species_tree/` | Proteomes, taxonomy and the species tree |
+| `external_runs/sm2_candidate_discovery_and_orthology/` | Candidate discovery and orthology calls |
+| `external_runs/sm4_sequence_phenotypes/` | Sequence phenotypes of the retained subunits |
+| `external_runs/sm5_phylogenetic_analyses/` | Phylogenetic analyses |
+| `external_runs/sm6_structure_prediction_and_pocket/` | Structure prediction and AMPKγ pocket geometry |
+
+The job scripts themselves are not deposited. Each file states whether its command line was transcribed from
+`docs/SOFTWARE.md`, which copied it from the job script while it still existed, or is issued by a deposited
+script, which is the stronger evidence of the two. Where neither holds, the file says so and gives the
+documented procedure rather than a flag string. `external_runs/README.md` explains the convention.
+
+One step has no command line at all: the `chronos` dating of record, whose script is lost
+(`docs/DATING_GAP.md`).
+
+## 8. Operative constants
+
+The values that decide a call, published as files so that they can be read without opening a script. The
+script named in each row remains the authority.
+
+| File | What it holds | From |
+|---|---|---|
+| `docs/constants/tor_heat_evidence_accessions.tsv` | the Pfam, SMART, PROSITE, SUPERFAMILY, Gene3D and FunFam accessions that count as HEAT evidence, by class, with the tier rule | `06_tor_heat/final_calls/resolve_heat_final.py` |
+| `docs/constants/ampkb_cbm_reference_and_score.md` | the AMPKβ reference, its numbering, the module envelope, the two site sets and the scoring rule | `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py` |
+| `docs/constants/ampkg_amp_site_structures.md` | the experimental structures behind the AMP-contact positions, and how the positions are defined on them | `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py` |
+| `docs/constants/site1_score_input_variants.tsv` | the three input variants of the site-1 score and the primary input they replace | `07_phylogenetic_regressions/ctd_cross_feature/ctdx_cross_ampk.R` |
+
+Two of these state a limit of the records rather than a value. The AMPKβ residue positions are read at run
+time from a frozen panel that is in the data deposit, not here. The AMP-contact geometry rests on two
+experimental structures in the code, `2V8Q` and `4CFE`, and the repository records no larger panel.

@@ -1,0 +1,15 @@
+## The three input variants of the AMPKγ site-1 score, and the primary input they replace.
+## Source: 07_phylogenetic_regressions/ctd_cross_feature/ctdx_cross_ampk.R, lines 45 to 47 (the predictor swaps),
+## with the column list in ctdx_lib.R line 102. The scores themselves are produced by
+## 05_sequence_phenotypes/rbx1_chain/rbx1_gamma.py and summarised per species.
+## Each variant is a declared sensitivity: it swaps one species-level column for the primary one in the two
+## AMPKγ contact-score models (GA_CONTACT_LEN and GA_CONTACT_DIS) and changes nothing else. The variants are
+## never averaged with the primary and never chosen per species.
+## Not listed here, because they are not variants of the same input: SCORE_SITE3_MEDIAN and SCORE_SITE4_MEDIAN
+## (site-definition sensitivities, a different set of ten positions) and CONTACT_MINUS_BACKGROUND_MEDIAN
+## (a different quantity, the contact score minus background identity).
+ROLE	COLUMN	PREDICTOR_LABEL	MODEL_ID_SUFFIX	SENSITIVITY_LABEL	WHAT_CHANGES
+primary	SCORE_SITE1_MEDIAN	site1_median_primary	-	-	the species median of the site-1 score, over every callable copy, on the primary pairwise alignment
+variant	SCORE_SITE1_MEDIAN_HIGHPROV	site1_high_provenance	G_HIGHPROV	GAMMA_PREDICTOR_HIGH_PROVENANCE	the median is taken over high-provenance copies only
+variant	SCORE_SITE1_MEDIAN_NO_MODEL_SENSITIVE	site1_no_model_sensitive	G_NOMODELSENS	GAMMA_PREDICTOR_NO_MODEL_SENSITIVE	the median is taken with model-sensitive copies excluded
+variant	SCORE_SITE1_MEDIAN_JOINT	site1_joint_alignment	G_JOINT	GAMMA_PREDICTOR_JOINT	the score is computed on the joint alignment instead of the pairwise one

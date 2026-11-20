@@ -1,4 +1,4 @@
-# Code for "Beyond presence and absence: a survey of TOR and AMPK across 210 eukaryotes reveals unusually long coccidian AMPKγ"
+# Code for "Beyond Presence and Absence: Noncanonical TOR and AMPK Divergence Across 210 Eukaryotes Challenges Mammalian Generalizations"
 
 Version 1.0.0
 
@@ -29,17 +29,37 @@ its main results.
 | 11 | Ancestral-state reconstructions and origins of absence | `08_ancestral_states/` | Figure 7 |
 
 - `docs/CODE_MAP.md` maps every table and figure of the article to this code, and lists each method's
-  scripts in the order they run.
+  scripts in the order they run. Section 6 maps the eight subsections of the Supplementary Methods to the
+  scripts that implement them.
 - `docs/SOFTWARE.md` gives the version of every program the study used and the settings it ran with.
+- `external_runs/` holds the command line of every external program, one file per program and step, each
+  naming the Supplementary Methods subsection it serves.
+- `docs/constants/` holds the values that decide a call, as files that can be read without opening a script:
+  the accessions that count as HEAT evidence, the AMPKβ reference and scoring rule, the structures behind
+  the AMPKγ AMP-contact positions, and the three input variants of the site 1 score.
+- `docs/DATING_GAP.md` states the one step that cannot be reproduced from this repository.
 - `envs/` holds the complete package lists of the software environments.
 
 `shared/pipeline_lib/` and the other helper modules are the code these scripts import.
 
+## The Methods of the article
+
+The Materials and Methods is split in two. The main-text Methods carries the decision rules, the thresholds
+that determine a call, the headline software and the wet-lab protocol. The Supplementary Methods carries the
+exact invocations, the reference-site definitions, the sensitivity variants and the model-by-model
+specifications, under the same eight headings, and **cites paths in this repository** rather than restating a
+flag string. `docs/CODE_MAP.md`, sections 6 to 8, is the index from those headings to the code, the external
+command lines and the published constants.
+
 ## What is not here
 
-- The runs of standard programs: HMMER, OrthoFinder, SonicParanoid, KinOrtho, rpsblast, InterProScan, MAFFT,
-  trimAl, IQ-TREE, RAxML, BUSCO, OMArk, ColabFold, US-align, HH-suite, HyPhy and rate4site. Their versions,
-  and the settings as run, are in `docs/SOFTWARE.md`.
+- The job scripts of the standard programs: HMMER, OrthoFinder, SonicParanoid, KinOrtho, rpsblast,
+  InterProScan, MAFFT, trimAl, IQ-TREE, RAxML, BUSCO, OMArk, ColabFold, US-align, HH-suite, HyPhy and
+  rate4site. What is here is their command lines, in `external_runs/`, transcribed from those job scripts
+  while they still existed, with versions and evidence in `docs/SOFTWARE.md`. The scheduler directives, the
+  module loads, the path defaults, and the inputs and outputs of those runs are not here. Two command lines
+  did not survive at all: the `chronos` dating of record, whose script is lost (`docs/DATING_GAP.md`), and
+  treePL, which is driven by a configuration file that is not in the records.
 - The drawing of figures and the typesetting of tables.
 - Checks, including the independent recomputation of every fitted model, and the corrections and reruns made
   after the main runs.
