@@ -31,7 +31,8 @@ Evidence for a version:
 - **pinned**: the script stops unless it finds this version;
 - **sessionInfo**: the R session records;
 - **probe**: a one-off software check, not a per-run log;
-- **not recorded**: no record was found.
+- **script**: the job script or a deposited script fixes it;
+- **source clone**: the commit of the clone that was built or run, for a tool with no release number.
 
 ## Environments
 
@@ -73,7 +74,7 @@ by it.
 | IQ-TREE | 3.1.3 | env, banner, log | 210-taxon tree: `-p <partitions> -m LG+G4 -B 1000 -seed 20260817`. 209-taxon PMSF tree: `-m LG+C20+F+G4 -ft <210-taxon tree> -B 1000 -seed 20260817`. Concordance factors: `--gcf <20 marker trees> --scf 100` |
 | R (system installation) with ape `chronos` | R 4.5.1 with the home-folder library, **not** the R 4.5.3 of the cluster steps | log | penalised-likelihood chronograms under the correlated, relaxed, discrete and clock models, with the calibrations of the Methods. The script of record is lost and the run of record reports `conv=FALSE`; `docs/DATING_GAP.md` states what is missing |
 | LSD2 | 2.2.3 (conda package `lsd` 2.2.3, build `hdfd78af_3`, in the `dating` environment) | env | alternative dating: `lsd2 -i <rooted tree> -d <dates> -s 7933 -z 0`. That environment holds no R, which is consistent with the `chronos` dating having run under the system R |
-| treePL | not recorded | not recorded | alternative dating: prime, then cross-validation of the smoothing value from 1e6 to 1e-12 (step 0.1), then a thorough run, 7,933 sites |
+| treePL | 1.0, built from source on 22 August 2026 from commit `1f5c99f088227c7c8dacdf343e5d1ab23405009b` | banner, log, source clone | alternative dating: prime, then cross-validation of the smoothing value, then a thorough run, on root A2 under both calibration sets. The build log records the banner `treePL version 1.0`; the clone records the commit |
 
 ### Candidate discovery
 
@@ -81,11 +82,11 @@ by it.
 |---|---|---|---|
 | OrthoFinder | 3.1.5 | env | `orthofinder -S diamond --only-groups -I 1.2`; the saved similarity graph was re-clustered at further MCL inflation values with `-b <working folder> --only-groups -I <value>` |
 | SonicParanoid | 2.0.9 | env (pinned at creation), script | Delivered clustering: `sonicparanoid -m default -ca -op -ot`, at the program's own defaults, arch-merging coverage 0.75 and MCL inflation 1.5. Sweeps: `--min-arch-merging-cov 0.90` (the run submitted by `sp2_cov90.sbatch`) and `-I` at 2.0 and 3.0 |
-| KinOrtho | not recorded | not recorded | AMPKα only: `kinortho.py -f <full-length queries> -d <kinase-domain queries> -t 32` |
+| KinOrtho | commit `5c14ed1d0b49b6e98d16b56522e0b886d48b11e1`, 26 July 2021; the project publishes no release number | source clone | AMPKα only: `kinortho.py -f <full-length queries> -d <kinase-domain queries> -t 32`, in three variants (the published PF00069 query at E 1e-5, the query recut to the declared AMPKα controls, and the BLAST default E 10) |
 | MCL | 22.282 (with OrthoFinder), 14.137 (with SonicParanoid) | env | called by OrthoFinder, SonicParanoid and KinOrtho |
-| HMMER | 3.4 | env, probe, script | genome-wide search of all 210 proteomes against the profile panel: `hmmsearch -E 1e5 --domE 1e5 --max --tblout --domtblout`. The score ceilings and `--max` are confirmed by the call site in `rl_threshold_pilot_pertarget.py` (line 180). `hmmbuild` for the contaminant-family profiles. `phmmer` in the genome-grade re-examination |
+| HMMER | 3.4 (Aug 2023) | log, env, probe, script | genome-wide search of all 210 proteomes against the profile panel: `hmmsearch --tblout <tbl> --domtblout <domtbl> -E 1e5 --domE 1e5 --max --cpu 8 <panel_v2.hmm> <proteome.faa>`. Every per-species output carries its own `# Version: 3.4 (Aug 2023)` header and the complete option-settings line, so the version and the settings are recorded per run, not inferred. The ceilings and `--max` also appear at the call site in `rl_threshold_pilot_pertarget.py` (line 180). `hmmbuild` for the contaminant-family profiles. `phmmer` in the genome-grade re-examination |
 | BLAST+ (`rpsblast`, `makeprofiledb`) | 2.17.0 | env, probe | `makeprofiledb` over every profile of CDD 3.21, then `rpsblast -evalue 0.01 -outfmt '6 qseqid sseqid bitscore evalue qstart qend'` |
-| InterProScan | 5.78-109.0 | probe | `interproscan.sh -f TSV -appl Pfam,PANTHER,SMART`. The installation no longer exists; its outputs remain |
+| InterProScan | 5.78-109.0 | probe, script | `interproscan.sh -i <input.faa> -f TSV -appl Pfam,PANTHER,SMART`. The version is also pinned in the job scripts themselves, which set the install directory to `interproscan-5.78-109.0`. The installation no longer exists; its outputs remain |
 | FastTree | 2.2.0 | env | the MAFFT and FastTree tree method of the earlier candidate build |
 
 ### Orthology calls
@@ -95,7 +96,7 @@ by it.
 | MAFFT | 7.526 | env, banner | gene trees: `mafft --globalpair --maxiterate 1000 --anysymbol` (G-INS-i, as van Dam et al. 2011), and `mafft --auto` for a tip set above the G-INS-i size limit |
 | IQ-TREE | 3.1.3 | env, banner, log | gene trees: `-m MFP -B 1000 --alrt 1000 --seed 488761235`. Site-heterogeneous cross-check: `-m LG+C60+F+G -ft <ModelFinder tree> -B 1000 --alrt 1000 --seed 488761235` |
 | IQ-TREE | 2.3.6 (cluster module) | job script | resumed the interrupted TOR and RAPTOR gene-tree searches from their checkpoints |
-| RAxML | 8.2.12 per its own logs (8.2.13 is the installed conda package); the conflict is unresolved | log | `raxmlHPC-PTHREADS -f a -x 488761235 -p 488761235 -N autoMRE -m PROTGAMMAIWAG`. The manuscript no longer describes the RAxML replication, so this conflict stands in the repository only |
+| RAxML | 8.2.13, conda package `raxml-8.2.13-h7b50bb2_3` from bioconda. Its own banner prints "RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018", because upstream did not change the version string in that release | env, banner, log | `raxmlHPC-PTHREADS -f a -x 488761235 -p 488761235 -N autoMRE -m PROTGAMMAIWAG`, from the `orthofinder3` environment. The two numbers describe one binary: the package metadata of the environment that owns `raxmlHPC-PTHREADS` says 8.2.13, and that same file prints 8.2.12 |
 
 ### Sequence phenotypes and structure
 
@@ -113,7 +114,7 @@ by it.
 |---|---|---|---|
 | US-align | 20241201 | env | `USalign <model crop> <reference> -mol prot` (in `run_direct_alignment.py`) |
 | HH-suite (`hhsearch`, HHrepID) | 3.3.0 | env | `hhsearch -M first -p 0 -E 100 -Z 100 -B 100 -e 100` against SCOP40 (`scop40_01Mar17`); HHrepID with its own calibration files; PDB70 (`pdb70_from_mmcif_220313`) |
-| STRPsearch, with Foldseek | Foldseek 10.941cd33; STRPsearch not recorded | env | structured tandem-repeat search on each structure, maximum E-value 0.1 |
+| STRPsearch, with Foldseek | Foldseek 10.941cd33; STRPsearch commit `ed325a7f6b77578ee96753f31dbdcfda4931cca8` (BioComputingUP/STRPsearch, branch `master`); the project publishes no release number | env, source clone | `strpsearch.py query-file <structure> <out dir> --no-chainsaw --max-eval 0.1 --min-height auto --temp-dir <tmp>`, recorded per structure in that run's own receipt file |
 
 ### Phylogenetic regressions, reconstructions and other tests
 
@@ -136,28 +137,40 @@ by it.
 - The InterPro API, for the curated Pfam and PANTHER profiles.
 - The RCSB Protein Data Bank, for the experimental control structures.
 
-## What the records do not show
+## Notes on particular versions
 
-- The versions of KinOrtho, treePL and STRPsearch. These three are the only versions this study cannot
-  state. Every other version on this page rests on at least one record.
-- **Versions resting on a single source:**
-  - InterProScan, HMMER, rpsblast and MAFFT versions come from one software check, not from each run's log;
-    the environment records agree for HMMER, BLAST+ and MAFFT.
-  - HyPhy 2.5.101 comes from the job script's banner and the environment; the GARD log prints only the
-    analysis version.
-- **RAxML:** its logs report 8.2.12, while the installed package is 8.2.13. The manuscript no longer
-  describes the RAxML replication, so this conflict is recorded here and nowhere else.
-- **Species-tree dating:** the script was edited after the run that produced the chronogram. The job log stamps
-  its md5 as `2171c20ab00817e67bf598fffdf2d48a`, and the surviving copy differs. The chronos log of the
-  chronogram of record reports `conv=FALSE`, and two of the eight declared calibrations were dropped from that
-  fit because they are not clades of this tree, so six entered it. This is the one genuine reproduction gap;
-  `docs/DATING_GAP.md` states it in full and the Supplementary Methods cites that file.
+Every program on this page has a stated version resting on at least one record. These are the entries whose
+record needs a word of explanation.
 
-## What the records do show, and once did not
+- **RAxML, 8.2.13 and 8.2.12 are the same binary.** The `orthofinder3` environment's package metadata shows
+  that `raxml-8.2.13-h7b50bb2_3` owns the `raxmlHPC-PTHREADS` that ran, and that file's own banner prints
+  "RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018". Upstream did not change the version
+  string for that release, so the run logs and the package list disagree by one patch number while describing
+  one file. 8.2.13 is the package; 8.2.12 is what the program calls itself.
+- **Three tools publish no release number**, so their version is the commit that was built or run: KinOrtho,
+  treePL (which also prints `treePL version 1.0`) and STRPsearch. Each commit is recorded in its row above,
+  taken from the clone the analysis used.
+- **metapredict's network is V3.** The call passes no model argument, and metapredict 3.0.2 sets
+  `DEFAULT_NETWORK = 'V3'` in `metapredict/parameters.py`, so the release default applied.
+- **HyPhy 2.5.101** rests on the job script's banner and the environment record; the GARD log itself prints
+  only the analysis version, which is a property of GARD rather than of HyPhy.
+- **InterProScan's installation no longer exists.** Its outputs remain, and the version is pinned in two
+  places that do survive: the software check and the install directory named in the job scripts.
 
-- **The metapredict model identifier.** It is V3. The call passes no model argument, and metapredict 3.0.2
-  sets `DEFAULT_NETWORK = 'V3'` in `metapredict/parameters.py`, so the release default applied.
-- **The clade delimitation.** The criteria that delimit the remaining clades are not written down, but the
-  assignment itself is published: the supplementary table of species states carries a clade label for all 210
-  species, 31 distinct clades, with no blanks. The result is deposited even though the rule that produced it
-  is not recorded.
+## The clade assignment
+
+Clades are read from the NCBI Taxonomy lineage of each species, retrieved through Entrez EFetch on
+19 September 2026, which gives 31 clades over the 210 species. Three species that NCBI Taxonomy nests within
+Apicomplexa are set aside as Squirmida on published phylogenomic evidence, which takes Apicomplexa from 41
+species to 38 and the roster from 31 clades to 32; every analysis that groups by clade is reported both ways.
+The per-species assignment is published in full in the supplementary table of species states, with a label
+for all 210 species and no blanks, and the working records keep the pre-curation and post-curation
+assignments side by side so that the three changes stay visible.
+
+## The one thing the records do not fix
+
+**The dating script of record.** It was edited after the run that produced the chronogram, and the surviving
+copy's md5 differs from the one the job log stamps. Everything else about that run is recorded: the rooting,
+the calibration set with the five calibrations that entered and the three that were dropped, the model and
+smoothing sweep, the convergence flag, the selection rule and the identity of the resulting file.
+`docs/DATING_GAP.md` states it in full and the Supplementary Methods cites that file.

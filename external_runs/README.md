@@ -20,19 +20,22 @@ surveys, ran no external program: they are computed by the deposited scripts. Th
 
 ## What these files are, and what they are not
 
-**The job scripts themselves are not in this repository.** The command lines below were transcribed into
-`docs/SOFTWARE.md` from those job scripts while they still existed, and this directory carries them at one
-path per program and step. Each file states its own source:
+**The job scripts themselves are not deposited here.** They remain on the cluster that ran the analysis,
+together with the run logs and the receipts some steps wrote. This directory carries their command lines at
+one path per program and step. Each file states its own source:
 
-- *transcribed from `docs/SOFTWARE.md`* means the flag string is the job script's, copied at the time;
+- *the output's own footer or the run's receipt* means the program recorded its settings itself, which is
+  the strongest evidence of all: no transcription step stands between the run and this file;
 - *the deposited script that issues the call* means the command is built in code that is in this
-  repository, and the file names the script and line, which is the stronger evidence of the two;
-- where neither holds, the file says so and gives the documented procedure rather than a flag string. No
-  command line is reconstructed from memory.
+  repository, and the file names the script and line;
+- *transcribed from `docs/SOFTWARE.md`* means the flag string is the job script's, copied at the time;
+- where none of those holds, the file says so and gives the documented procedure rather than a flag string.
+  No command line is reconstructed from memory.
 
-Two programs ran with no surviving command line at all: `treePL` and the `chronos` dating of record.
-`sm1_proteomes_taxonomy_species_tree/chronos_dating.md` records that its script is lost and points to
-`docs/DATING_GAP.md`. Nothing is reconstructed in its place.
+Two programs ran with no surviving command line at all: `treePL`, which is driven by a configuration file
+that is not in the records, and the `chronos` dating of record, whose script is lost.
+`sm1_proteomes_taxonomy_species_tree/chronos_dating.md` records what the logs do fix and points to
+`docs/DATING_GAP.md`. Nothing is reconstructed in either place.
 
 Placeholders are written in angle brackets, for example `<proteome.faa>`. They mark arguments the records do
 not carry, never a flag whose value is known.

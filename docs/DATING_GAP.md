@@ -1,57 +1,90 @@
-# The species-tree dating: the one reproduction gap
+# The species-tree dating: what is recorded, and the one thing that is not
 
-The chronogram of record cannot be reproduced from this repository. This page states exactly what is missing
-and what the records do show. Nothing here is reconstructed. The Supplementary Methods cites this file.
+The chronogram of record is identified exactly, with its inputs, its settings and the rule that selected it.
+What is missing is the text of the script that produced it. This page states both. Nothing here is
+reconstructed. The Supplementary Methods cites this file.
 
-## The script of record is lost
+## The chronogram of record
 
-The job log of the run that produced the chronogram stamps the script's md5 as:
+| Item | Value |
+|---|---|
+| File | `chronos/A2_setA.correlated_l0.1.tre`, published as `species_chronogram_209.treefile` |
+| md5 | `301836d4f15956d8b14ffbfe420a64a9` (the two files are byte-identical) |
+| Rooting | A2 |
+| Calibration set | A, the secondary calibrations |
+| Model | correlated rates, smoothing parameter 0.1 |
+| How 0.1 was chosen | leave-one-calibration-out cross-validation on the correlated model, root A2, set A |
+| Reference for comparison | `chronos/A2_setA.correlated_l1.tre` |
+| Chronograms compared | 86 |
+| Root age | 2,299.0 Ma |
+| Convergence | **`conv=FALSE`** |
 
-```text
-2171c20ab00817e67bf598fffdf2d48a
-```
+The run swept three rooting positions by two calibration sets, and within each the correlated, relaxed,
+discrete and clock models over smoothing values 0, 0.1, 1, 10, 100 and 1,000. LSD2 and treePL were run beside
+it on the same rootings and sets. The selection among all of them is recorded, not reconstructed.
 
-The script was edited after that run. **The surviving copy's md5 differs from the stamped one**, which is how
-the loss was found: the file that still exists is not the file that ran.
+## The calibrations: eight declared, five entered, three dropped
 
-The surviving copy is not in this repository, and neither `docs/SOFTWARE.md` nor any other record here carries
-its md5, so that value is not stated on this page. The script of record is not reconstructed, and the surviving
-copy is not deposited in its place, because it is not the code that produced the result.
+Calibration set A declares eight calibrations, every one a uniform minimum and maximum interval, frozen before
+any dating run. **Five entered the fit of record and three were dropped.**
 
-## The run of record did not converge
+| Calibration | Entered | Node | Interval (Ma) |
+|---|---|---|---|
+| LECA_root | yes | the root, 209 tips | 1,958 to 2,386 |
+| Cryptophyta | yes | 2 tips | 440 to 1,658 |
+| Ochrophyta | yes | 5 tips | 622 to 1,298 |
+| Haptophyta | yes | 2 tips | 579 to 1,943 |
+| Myzozoa | yes | 60 tips | 696 to 1,520 |
+| Archaeplastida | **dropped** | MRCA subtends 31 tips, 29 expected; extra *Cryptomonas paramecium* and *Guillardia theta* | 1,807 to 2,137 |
+| Rhodophyta_crown | **dropped** | MRCA subtends 4 tips, 5 expected; missing *Galdieria sulphuraria* | 1,732 to 1,984 |
+| Fungi_crown | **dropped** | MRCA subtends 19 tips, 22 expected; missing *Paraphelidium tribonemae*, *Paramicrosporidium saccamoebae* and *Rozella allomycis* | 1,078 to 1,759 |
 
-The `chronos` log of the chronogram of record reports:
+A calibration whose MRCA tip set is not exactly the expected lineage is dropped and listed; it is never
+applied to a deeper node. That rule is stated in the frozen calibration file itself.
 
-```text
-conv=FALSE
-```
+**Five, not six.** An earlier version of this page, and of `docs/SOFTWARE.md`, said that six of the eight
+entered and two were dropped. That is the count for **treePL**, a different method in the same run, which
+dropped Archaeplastida and Fungi_crown only. The `chronos` fit of record dropped three.
 
-## Two of eight calibrations did not enter the fit
+## What is missing
 
-Eight calibrations were declared. **Six entered the fit.** Two were dropped because the nodes they constrain
-are not clades of this topology, so there was no node for the calibration to apply to.
+The script that produced the chronogram was edited after the run.
 
-## What the records do show
+| | md5 |
+|---|---|
+| Stamped in the job log of the run | `2171c20ab00817e67bf598fffdf2d48a` |
+| The surviving copy | `6b815479f610ccfe1bca2c126126faf9` |
 
-| Item | Value | Evidence |
-|---|---|---|
-| Program | `chronos`, from the ape R package | the job log |
-| R | 4.5.1, with the home-folder library, not the R 4.5.3 of the cluster steps | the job log |
-| Models fitted | correlated, relaxed, discrete and clock | the job log |
-| Model of record | the correlated-rates clock, smoothing parameter 0.1 | the Supplementary Methods |
-| Calibrations | secondary, taken as uniform intervals from a published eukaryote timescale. Eight declared, six entered the fit | the job log and the Supplementary Methods |
-| Root calibration | a uniform prior of 1,958 to 2,386 million years, among the six that entered | the Supplementary Methods |
-| Command line | none survives | - |
+The two differ, so the file that still exists is not the file that ran. The surviving copy is not deposited
+here in its place, because it is not the code that produced the result, and the script of record is not
+reconstructed.
 
-The Supplementary Methods states the convergence flag and the six-of-eight count in the same terms as the job
-log, so the published description and the record agree. What neither supplies is the script.
+This is the only part of the dating that cannot be reproduced from a record. The inputs, the rooting, the
+calibration set and its drops, the model, the smoothing sweep, the selection rule and the resulting file are
+all recorded.
 
-The two alternative datings do survive as command lines, in
-`external_runs/sm1_proteomes_taxonomy_species_tree/`: LSD2 2.2.3 in `lsd2_dating.sh`, and treePL in
-`treepl_dating.sh`, whose version is not recorded either.
+## Supporting records
 
-## What this means for a reader
+| What | Where |
+|---|---|
+| The stamped md5, with the other scripts of the same job | the job log of the dating run |
+| The calibration file, frozen before any run, with every bound, its source and the quoted passage | `calibrations.tsv` beside the chronogram |
+| The applied and dropped calibrations, with the tip-count reason for each drop | the chronos run log |
+| The full model and smoothing sweep, with log likelihood, root age and convergence flag per fit | the same log |
+| The comparison of all 86 chronograms and the selection of the record | the chronogram report |
 
-The dated species tree is an input to the ancestral-state reconstructions and to the phylogenetic regressions,
-which are deposited in full and run on the tree as given. The tree itself is in the data deposit. What cannot
-be redone from this repository is the dating step that produced it.
+Those records are on the cluster that ran the analysis, not in this repository. The data deposit holds the
+chronogram itself.
+
+## The alternative datings
+
+Both ran on the same rootings and calibration sets, and both survive as command lines in
+`external_runs/sm1_proteomes_taxonomy_species_tree/`.
+
+- **LSD2** 2.2.3: six runs, three rootings by two sets, all returning successfully.
+- **treePL** 1.0: prime, then cross-validation of the smoothing value, then a thorough run, on root A2 under
+  both sets. On set A it dropped two calibrations, Archaeplastida and Fungi_crown; on set B it dropped
+  Bangio_Florideo and Eumetazoa. Its cross-validation chose a smoothing of 1e-05 on set A.
+
+Neither was selected as the chronogram of record: against the reference both fall well short of the
+agreement benchmark, with coefficients of determination near 0.1 to 0.3 against a benchmark of 0.94.
