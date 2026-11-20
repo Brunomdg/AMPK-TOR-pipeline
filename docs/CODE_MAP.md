@@ -56,19 +56,19 @@ object itself is in the supplement; the data behind it are in the data deposit.
 | Table S4 | coccidian AMPKγ copy measurements | Method 6, `build_degeneration_metrics.py` |
 | Table S5 | comparison with the earlier single-species scoring | Method 5, `rbx1_gamma.py`, which reproduces the original `gamma_pocket.tsv` site-1 scores under the primary procedure and reports every difference with its cause |
 | Table S6 | AMP-contact scores per copy | Method 5, `rbx1_gamma.py` (`AMPKg_contact_copy.tsv`) |
-| Table S7 | substitution rate against burial-matched positions | rate4site, run externally (`external_runs/sm4_sequence_phenotypes/rate4site.sh`); the comparison against burial-matched positions is not included |
-| Table S8 | TOR HEAT architecture metrics | Method 4, `resolve_heat_final.py` |
-| Table S9 | mapped length and identity per human HEAT repeat | Method 4, `refine_nterminal_heat.py`, which transfers the 32 N-terminal HEAT repeats of human mTOR to every copy |
-| Table S10 | correlated evolution of the HEAT region and TORC partner loss | Not included; a standard test on the outputs of methods 4 and 2 |
-| Table S11 | identity at TOR partner-contacting surfaces | Not included; built on method 4 |
+| Table S7 | substitution rate against burial-matched positions | rate4site, run externally (`external_runs/sm4_sequence_phenotypes/rate4site.sh`); the 46 runs of the comparison against matched null sets are not included. The site 1 set only |
+| Table S8 | TOR HEAT architecture metrics | Method 4: `resolve_heat_final.py` for the per-copy call over all 246 accepted copies, on the repeat transfer of `refine_nterminal_heat.py`. The filter to one tree-usable copy per species is applied in the figure, not here |
+| Table S9 | mapped length and identity per human HEAT repeat | Method 4, `refine_nterminal_heat.py`, which transfers the 32 UniProt-annotated HEAT repeats of human mTOR (P42345) to every copy through the 246-copy alignment |
+| Table S10 | correlated evolution of the HEAT region and TORC partner loss | Not included; the 17 correlated-evolution fits on the dated tree, built on the HEAT calls of method 4 and the states of method 2 |
+| Table S11 | identity at TOR partner-contacting surfaces | Not included; built on method 4. The contact residues come from the experimental complexes PDB 6BCX (RAPTOR) and 6ZWM (RICTOR), not from this repository |
 | Table S12 | recombination screen | External program only (GARD; `external_runs/sm5_phylogenetic_analyses/hyphy_gard.sh`) |
-| Table S13 | component-state and sequence-feature models | Not included; built on methods 2 and 5 |
-| Table S14 | within- and between-clade decomposition | Not included; a standard test on the method 2 states |
+| Table S13 | component-state and sequence-feature models | Methods 8 and 9: `core18_penalized.R` with the TORC core states of `rbx2_torc_core.py` for the component-state rows, and `ctdx_cross_ampk.R` and `ctdx_upstream.R` for the AMPKγ contact, AMPKα tail and AMPKβ module rows, the site-set and alignment-procedure comparisons, and the cross-feature sensitivities. The mapping sensitivities are the declared predictor swaps (`docs/constants/site1_score_input_variants.tsv`) |
+| Table S14 | within- and between-clade decomposition | Not included; the post hoc decomposition of the method 9 fit of AMPKα tail length on the AMPKβ module score |
 | Table S15 | AMPKα copy measurements | Method 5, `rbx1_alpha.py` |
-| Table S16 | AMPKβ reference-position states | Method 5, `rbx2_ampkb_cbm.py`; the reference panel and the scoring rule are in `docs/constants/ampkb_cbm_reference_and_score.md` |
-| Table S17 | component absence against subunit absence | Not included; a standard test on the method 2 states |
-| Table S18 | all ordered comparisons | Method 8, `network10_refit.R` |
-| Table S19 | rate dependence between absences | Not included; a standard test on the method 2 states |
+| Table S16 | AMPKβ reference-position states | Method 5, `rbx2_ampkb_cbm.py`, whose long table is one row per copy, position and alignment over the seven structural positions; the reference panel and the scoring rule are in `docs/constants/ampkb_cbm_reference_and_score.md`. The models fitted on those states are method 8 and method 9 |
+| Table S17 | component absence against subunit absence | Method 8, `core18_penalized.R`: the nine primary comparisons of TOR, RAPTOR or RICTOR absence with AMPK subunit absence, the same fits the manuscript also carries in Table S13. The species counts, odds ratios and the four-state table are not included |
+| Table S18 | all ordered comparisons | Method 8, `network10_refit.R`: the 90 primary ordered comparisons and the sensitivity refits |
+| Table S19 | rate dependence between absences | Not included; Pagel's test of dependent against independent rates for all 45 unordered pairs on each of the 28 pruned trees, on the method 2 states |
 | Table S20 | candidate replacement comparisons | Not included; the candidate replacements |
 | Table S21 | reconstructed origins | Method 11, `rl_rm_q7_origins.py` |
 | Table S22 | reconstructed co-transitions | Built on method 11; the co-transition count is not included |
@@ -84,7 +84,7 @@ object itself is in the supplement; the data behind it are in the data deposit.
 | Table S32 | proteome completeness | External programs (BUSCO, OMArk; `external_runs/sm1_proteomes_taxonomy_species_tree/`); their summary is not included |
 | Table S33 | species states | Method 2, `rl_pub_t1_t2_active10.py` (the 210-species state matrix, with each species' clade label) |
 | Table S34 | AMP-contact calls per position | Method 5, `rbx1_gamma.py` (`AMPKg_contact_long.tsv`) |
-| Table S35 | AMP-contact reference positions | The frozen panel that method 5 reads (`AMPKg_contact_reference.tsv`, three site sets of ten positions each, in the data deposit); the structures behind the positions are in `docs/constants/ampkg_amp_site_structures.md` |
+| Table S35 | AMP-contact reference positions | The frozen panel that method 5 reads (`AMPKg_contact_reference.tsv`, three site sets of ten positions each, in the data deposit). The positions are a consensus over six crystal structures at 4.0 Å; the structures the repository's own code names, and what they are used for, are in `docs/constants/ampkg_amp_site_structures.md` |
 | Table S36 | per-species input and output for HEAT divergence against partner loss | Not included; the input and output of the test on methods 4 and 2 |
 | Table S37 | numerical estimates of the first additional block | Not included; the block of additional estimates |
 | Table S38 | joint three-response model | Not included; mvMORPH, run on the authors' workstation (`docs/SOFTWARE.md`) |

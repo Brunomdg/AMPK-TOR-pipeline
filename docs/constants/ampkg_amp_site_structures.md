@@ -8,7 +8,7 @@ the authority. Supplementary Methods subsection: structure prediction and AMPKγ
 
 | Accession | Chain | Role | Where it is fixed |
 |---|---|---|---|
-| `2V8Q` | E, rat γ1 | **The reference frame.** The AMP sites are defined on it, the superposition is onto it, and the AMP ligands transplanted into each model are its own | lines 3 to 10, 48, 63 to 76 |
+| `2V8Q` | E, rat γ1 | **The reference frame of the geometry measurement.** The measured site neighbourhoods are taken from it, the superposition is onto it, and the AMP ligands transplanted into each model are its own. It does not define the ten contact positions; see below | lines 3 to 10, 48, 63 to 76 |
 | `4CFE` | E, human γ1 | **Structure control.** Ligands stripped, scored like a predicted model with the pLDDT column set to 100 | lines 16, 135 to 138 |
 
 Two reference sequences are used for the numbering map, not as structures: `P54619`, canonical human γ1, which
@@ -19,12 +19,28 @@ A third accession appears elsewhere in the repository: `1Z0N` is the rat structu
 AMPKβ reference carries, in `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py`. It is a different subunit and has
 no part in the AMPKγ AMP sites.
 
-**The repository records two crystal structures for the AMP-contact geometry, not six.** `2V8Q` and `4CFE` are
-the only PDB accessions in the structure code, and `2V8Q` alone defines the contact positions. If the
-Supplementary Methods names a panel of six, the other four are not in this repository's records and are not
-reconstructed here.
+## Two different things, at two different cutoffs
 
-## How the contact positions are defined
+The contact **positions** and the predicted-model **geometry** do not come from the same place, and the
+difference matters when reading either one.
+
+| | How it is defined | Cutoff | Where it lives |
+|---|---|---|---|
+| The ten site 1 contact positions | a consensus over **six crystal structures** | 4.0 Å | the frozen panel `AMPKg_contact_reference.tsv`, published as the manuscript's table of AMP-contact reference positions |
+| The geometry measured in each predicted model | the γ residues around each AMP in **`2V8Q`** chain E | 5 Å | `p45b_colabfold_analysis.py`, lines 3 to 10 |
+
+**The six crystal structures of the position consensus are not named in this repository.** `2V8Q` and `4CFE`
+are the only PDB accessions in the structure code, and neither is used to define the ten positions: `2V8Q`
+supplies the frame, the superposition target and the transplanted AMP ligands, and `4CFE` is a control. The
+accessions of the six, and the rule that turned them into a consensus, are in the manuscript's own table of
+AMP-contact reference positions and in the Supplementary Methods. They are not reconstructed here.
+
+What the repository can confirm about that panel: each of its three site sets holds exactly ten positions, and
+`rbx1_gamma.py` refuses to run otherwise; the anchor numbering is canonical PRKAG1 plus 9, as the script's own
+comment states and as the published panel's two numbering columns show; and site 1 is primary, with sites 3
+and 4 declared in advance as site-definition sensitivities.
+
+## How the geometry is measured against `2V8Q`
 
 1. The sites are the γ residues within 5 Å of each AMP in `2V8Q` chain E, numbered on canonical human γ1
    (`P54619`).
