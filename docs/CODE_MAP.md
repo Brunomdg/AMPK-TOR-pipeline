@@ -84,7 +84,7 @@ object itself is in the supplement; the data behind it are in the data deposit.
 | Table S32 | proteome completeness | External programs (BUSCO, OMArk; `external_runs/sm1_proteomes_taxonomy_species_tree/`); their summary is not included |
 | Table S33 | species states | Method 2, `rl_pub_t1_t2_active10.py` (the 210-species state matrix, with each species' clade label) |
 | Table S34 | AMP-contact calls per position | Method 5, `rbx1_gamma.py` (`AMPKg_contact_long.tsv`) |
-| Table S35 | AMP-contact reference positions | The frozen panel that method 5 reads (`AMPKg_contact_reference.tsv`, three site sets of ten positions each, in the data deposit). The positions are a consensus over six crystal structures at 4.0 Å; the structures the repository's own code names, and what they are used for, are in `docs/constants/ampkg_amp_site_structures.md` |
+| Table S35 | AMP-contact reference positions | The frozen panel that method 5 reads (`AMPKg_contact_reference.tsv`, three site sets of ten positions each, in the data deposit). The positions are a 4.0 Å consensus over six crystal structures of the mammalian γ1 subunit, computed outside this repository; the six, the consensus and the numbering check are in `docs/constants/ampkg_amp_site_structures.md` |
 | Table S36 | per-species input and output for HEAT divergence against partner loss | Not included; the input and output of the test on methods 4 and 2 |
 | Table S37 | numerical estimates of the first additional block | Not included; the block of additional estimates |
 | Table S38 | joint three-response model | Not included; mvMORPH, run on the authors' workstation (`docs/SOFTWARE.md`) |
@@ -184,7 +184,8 @@ Before these scripts, InterProScan signatures, the AlphaFold models and US-align
 2. `06_tor_heat/signature_screen/refine_nterminal_heat.py`: transfers the 32 N-terminal HEAT repeats of human
    mTOR to every copy.
 3. `06_tor_heat/structural_screen/run_direct_alignment.py`: aligns each model's N-terminal crop to the
-   experimental references and applies the structural acceptance rule.
+   experimental references and applies the structural acceptance rule. The references, the negative controls
+   and both gates of the rule are in `docs/constants/tor_heat_structural_references.md`.
 4. `06_tor_heat/final_calls/resolve_heat_final.py`: the final present or absent call, with its confidence
    tier. The accessions it accepts as HEAT evidence are in
    `docs/constants/tor_heat_evidence_accessions.tsv`.
@@ -459,9 +460,9 @@ script named in each row remains the authority.
 |---|---|---|
 | `docs/constants/tor_heat_evidence_accessions.tsv` | the Pfam, SMART, PROSITE, SUPERFAMILY, Gene3D and FunFam accessions that count as HEAT evidence, by class, with the tier rule | `06_tor_heat/final_calls/resolve_heat_final.py` |
 | `docs/constants/ampkb_cbm_reference_and_score.md` | the AMPKβ reference, its numbering, the module envelope, the two site sets and the scoring rule | `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py` |
-| `docs/constants/ampkg_amp_site_structures.md` | the experimental structures behind the AMP-contact positions, and how the positions are defined on them | `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py` |
+| `docs/constants/ampkg_amp_site_structures.md` | the six crystal structures of the 4.0 Å position consensus, the numbering check, and the separate 5.0 Å geometry measurement against `2V8Q` | the Supplementary Methods for the six; `11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py` for the measurement |
+| `docs/constants/tor_heat_structural_references.md` | the experimental references and negative controls of the TOR HEAT structural screen, and both gates of its acceptance rule | `06_tor_heat/structural_screen/run_direct_alignment.py` |
 | `docs/constants/site1_score_input_variants.tsv` | the three input variants of the site-1 score and the primary input they replace | `07_phylogenetic_regressions/ctd_cross_feature/ctdx_cross_ampk.R` |
 
-Two of these state a limit of the records rather than a value. The AMPKβ residue positions are read at run
-time from a frozen panel that is in the data deposit, not here. The AMP-contact geometry rests on two
-experimental structures in the code, `2V8Q` and `4CFE`, and the repository records no larger panel.
+One of these states a limit of the records rather than a value: the AMPKβ residue positions are read at run
+time from a frozen panel that is in the data deposit, not here.

@@ -35,11 +35,16 @@ are not clades of this topology, so there was no node for the calibration to app
 
 | Item | Value | Evidence |
 |---|---|---|
-| Program | `chronos`, from ape | the job log |
+| Program | `chronos`, from the ape R package | the job log |
 | R | 4.5.1, with the home-folder library, not the R 4.5.3 of the cluster steps | the job log |
 | Models fitted | correlated, relaxed, discrete and clock | the job log |
-| Calibrations | those stated in the Methods; six of the eight declared entered the fit | the job log |
+| Model of record | the correlated-rates clock, smoothing parameter 0.1 | the Supplementary Methods |
+| Calibrations | secondary, taken as uniform intervals from a published eukaryote timescale. Eight declared, six entered the fit | the job log and the Supplementary Methods |
+| Root calibration | a uniform prior of 1,958 to 2,386 million years, among the six that entered | the Supplementary Methods |
 | Command line | none survives | - |
+
+The Supplementary Methods states the convergence flag and the six-of-eight count in the same terms as the job
+log, so the published description and the record agree. What neither supplies is the script.
 
 The two alternative datings do survive as command lines, in
 `external_runs/sm1_proteomes_taxonomy_species_tree/`: LSD2 2.2.3 in `lsd2_dating.sh`, and treePL in

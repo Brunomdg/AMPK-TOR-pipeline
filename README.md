@@ -35,8 +35,9 @@ its main results.
 - `external_runs/` holds the command line of every external program, one file per program and step, each
   naming the Supplementary Methods subsection it serves.
 - `docs/constants/` holds the values that decide a call, as files that can be read without opening a script:
-  the accessions that count as HEAT evidence, the AMPKβ reference and scoring rule, the structures behind
-  the AMPKγ AMP-contact positions, and the three input variants of the site 1 score.
+  the accessions that count as HEAT evidence, the references and acceptance rule of the HEAT structural
+  screen, the AMPKβ reference and scoring rule, the structures behind the AMPKγ AMP-contact positions, and
+  the three input variants of the site 1 score.
 - `docs/DATING_GAP.md` states the one step that cannot be reproduced from this repository.
 - `envs/` holds the complete package lists of the software environments.
 

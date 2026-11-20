@@ -8,5 +8,9 @@
 # <<< deposit header
 
 # Run for AMPK-alpha only. The version is not recorded.
+# The Supplementary Methods records three variants: the published PF00069 query at E 1e-5,
+# the query recut to the declared AMPK-alpha controls, and the BLAST default E 10. Only the
+# flag string below survives from the job script; which flags carried each variant's E value
+# is not recorded, so the three are named here rather than written as three command lines.
 
 kinortho.py -f <full-length queries> -d <kinase-domain queries> -t 32
