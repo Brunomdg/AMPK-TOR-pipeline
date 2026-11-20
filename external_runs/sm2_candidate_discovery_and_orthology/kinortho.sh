@@ -12,10 +12,12 @@
 #
 # Three arms, each over the same 210 proteomes with the same full-length query:
 #
-#   ARM A  the published PF00069 domain query, with no -E passed, so KinOrtho's own default applied.
-#          The arms script's header describes this arm as E=1e-5.
-#   ARM B  the domain query recut with the AMPK-alpha control HMM instead of PF00069, at -E 1e-5.
-#          The recut runs hmmsearch --cpu 8 --domtblout against AMPKa_controls.hmm first.
+#   ARM A  the published PF00069 domain query, with no -E passed. KinOrtho's own default is 1e-5
+#          (`args = {... '-E': '1e-5', ...}` in kinortho.py), so this arm ran at 1e-5, which is what
+#          the arms script's header says. The header and the run agree; nothing is unresolved here.
+#   ARM B  the domain query recut with the AMPK-alpha control HMM instead of PF00069, at -E 1e-5
+#          passed explicitly, so the same threshold as arm A. The recut runs hmmsearch --cpu 8
+#          --domtblout against AMPKa_controls.hmm first. The two arms differ in the query, not the cutoff.
 #   ARM C  the published PF00069 domain query at -E 1e1, the BLAST default of 10.
 #
 # The three lines below are the invocations as the job scripts issue them.
