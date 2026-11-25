@@ -19,14 +19,14 @@ its main results.
 | 1 | Search settings chosen jointly against declared controls and decoys | `02_candidate_discovery/` | the candidate set |
 | 2 | Gene-tree clade criterion anchored on curated controls, with the two-arm rule where the tree abstains | `03_orthology_calls/` | every orthology call and the 210-species state matrix (Figure 1) |
 | 3 | Re-examination of absences and their clade support | `03_orthology_calls/` | Table 1 |
-| 4 | TOR N-terminal HEAT calls from signatures and structural alignment | `06_tor_heat/` | Table 1 |
-| 5 | Sequence measurements of the retained AMPK subunits | `05_sequence_phenotypes/` | Figures 2 and 5 |
-| 6 | Measurements of the coccidian AMPKγ copies | `05_sequence_phenotypes/coccidian_remodelling/` | Figure 3 |
-| 7 | Structure queries that keep every CBS domain, and AMP-site geometry in the predicted models | `11_structure_pocket/` | Figure 3 |
-| 8 | Penalised phylogenetic logistic regression with a multistart search | `07_phylogenetic_regressions/` | Figure 4, Table 2 |
-| 9 | Models of the AMPKα C-terminal tail | `07_phylogenetic_regressions/ctd_cross_feature/` | Figure 6 |
-| 10 | Upstream-kinase classification on reference-masked kinase-domain trees | `07_phylogenetic_regressions/upstream_kinases/` | Figure 5 |
-| 11 | Ancestral-state reconstructions and origins of absence | `08_ancestral_states/` | Figure 7 |
+| 4 | TOR N-terminal HEAT calls from signatures and structural alignment | `06_tor_heat/` | Table 1 and Figure 3 |
+| 5 | Sequence measurements of the retained AMPK subunits | `05_sequence_phenotypes/` | Figures 1, 2 and 4 |
+| 6 | Measurements of the coccidian AMPKγ copies | `05_sequence_phenotypes/coccidian_remodelling/` | Figure 2 |
+| 7 | Structure queries that keep every CBS domain, and AMP-site geometry in the predicted models | `11_structure_pocket/` | Figure 2 |
+| 8 | Penalised phylogenetic logistic regression with a multistart search | `07_phylogenetic_regressions/` | Figure 5 |
+| 9 | Models of the AMPKα C-terminal tail | `07_phylogenetic_regressions/ctd_cross_feature/` | Figure 4 |
+| 10 | Upstream-kinase classification on reference-masked kinase-domain trees | `07_phylogenetic_regressions/upstream_kinases/` | Figure 4 |
+| 11 | Ancestral-state reconstructions and origins of absence | `08_ancestral_states/` | Figure 6 |
 
 - `docs/CODE_MAP.md` maps every table and figure of the article to this code, and lists each method's
   scripts in the order they run. Section 6 maps the eight subsections of the Supplementary Methods to the

@@ -28,8 +28,17 @@ species:
      CONTAMINANT   -> NON_ORTHOLOG (IS_ORTHOLOG=no; the call was made from the gene tree);
   2. Where the tree abstained (AMBIGUOUS) or no tree could place the candidate, two-arm support decides:
      nominated by both arms -> ORTHOLOG (yes); otherwise NON_ORTHOLOG_ARM_RULE (no).
-The tree calls follow the clade criterion of van Dam et al. (2011). The rule was chosen on 16 September
-2026, including the choice that the tree decides for candidates that only one search arm nominated.
+The tree calls are the per-tip calls of rl_phylo_subtree.py, which are nearest labelled neighbour and
+NOT van Dam's own sub-tree rule: a candidate is WITH_CONTROLS when the smallest clade enclosing it that
+contains any DECLARED tip holds a curated control and no boundary marker, CONTAMINANT when that clade
+holds only boundary markers and no control, and AMBIGUOUS when it holds both. The two clade objects,
+IN_CONTROL_CLADE (the smallest clade containing every control) and IN_MAX_INCLUSION (maximum inclusion,
+Yang & Smith 2014: the largest clade containing every control and no boundary marker), are REPORTED
+beside the call and the call is not derived from them. rl_phylo_subtree.py says why clade selection is
+not used here: the tip set is a single family already separated upstream, so our controls do not form a
+clade. The published orthology criterion of van Dam et al. (2011) is the frame, not the per-tip test.
+The rule was chosen on 16 September 2026, including the choice that the tree decides for candidates that
+only one search arm nominated.
 
 Writes 04_final_tables/CORE8_TREE_RULE_RESOLUTION.tsv and never overwrites it. The final table itself
 is not modified; the builder of the publication tables applies this file to the ortholog table (T1)

@@ -37,14 +37,13 @@ object itself is in the supplement; the data behind it are in the data deposit.
 | Item | Data produced by | Notes |
 |---|---|---|
 | Table 1 | Methods 3 and 4 | The other rows are not included: the residue-correspondence test, the genome-grade re-examination, the joint loss-direction fits and proteome completeness |
-| Table 2 | Method 8, `network10_refit.R` | |
-| Figure 1 | Method 2 (the species-state matrix) | Supergroup shares are counts of that matrix |
-| Figure 2 | Method 5 | The per-phylum summaries of the measurements are not included |
-| Figure 3 | Methods 6 and 7 | The plotted values were prepared by hand from the coccidian AMPKγ copy measurements (Table S4) |
-| Figure 4 | Method 8, `rbx2_torc_core.py` and `core18_penalized.R` | |
-| Figure 5 | Method 10 (repertoire) and method 5, `rbx2_ampka_activation.py` (activation-site residue) | |
-| Figure 6 | Method 9, with the measurements of method 5 | |
-| Figure 7 | Method 11 | Panel A summarises sensitivity analyses that are not included |
+| Figure 1 | Method 2 (the species-state matrix), with the measurements of method 5 | Supergroup shares are counts of that matrix |
+| Figure 2 | Methods 6 and 7, with the contact scores of method 5 | The plotted values were prepared by hand from the coccidian AMPKγ copy measurements (Table S4); the per-copy descriptive analyses are not included |
+| Figure 3 | Method 4 | The HEAT-region fits against TORC partner loss are not included |
+| Figure 4 | Method 5, `rbx2_ampka_activation.py` (activation-site residue), method 10 (the repertoire) and method 9 (the tail against the retained module) | |
+| Figure 5 | Method 8, `rbx2_torc_core.py` and `core18_penalized.R` | |
+| Figure 6 | Method 11 | Ranges are across reconstruction blocks and are never summed or averaged |
+| Figure 7 | Not included | The *T. gondii* TOR-knockout strains and their assays. This repository holds no wet-lab code |
 
 ### Supplementary tables
 

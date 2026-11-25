@@ -35,9 +35,21 @@ What the script computes, for one target and one tree:
                      control, and how many withheld controls it holds;
   MAXIMUM_INCLUSION  the side with the most species that holds every binding
                      control and no boundary marker, with a check of whether the
-                     boundary excluded anything beyond itself;
-  the per-tip call   for every tip other than the binding controls and the
-                     boundary markers, the nearest labelled neighbour (TREE_CALL)
+                     boundary excluded anything beyond itself. It has two
+                     declared failure states, both REPORTED and never worked
+                     around: UNCONSTRAINED, where no declared negative and no
+                     declared decoy is present in this tree, so the purity
+                     clause excludes nothing and the satisfying sub-tree is the
+                     whole tree; and NO_SOLUTION, where every split holding all
+                     controls also holds a boundary marker, which means the
+                     family and the known related genes are NOT separated by
+                     this tree, and that is the result. Neither state changes a
+                     per-tip call, because the call does not come from this
+                     object;
+  THE CALL, per tip  this is the object the ortholog table consumes, and it is
+                     neither clade object above. For every tip other than the
+                     binding controls and the boundary markers: the nearest
+                     labelled neighbour (TREE_CALL)
                      and the nearer, by patristic distance, of the closest control
                      and the closest boundary marker (DIST_CALL); this is the
                      contaminant call, written to <T>_contaminants<suffix>.tsv;
