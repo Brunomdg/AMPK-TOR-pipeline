@@ -20,7 +20,9 @@
 ## for review, and the publication tables are not modified.
 import gzip, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx3_common as C  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "upstream_kinases", "lib"))
+import upstream_kinase_tables as C  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 TARGET = sys.argv[1] if len(sys.argv) > 1 else "LKB1"

@@ -21,9 +21,10 @@ _TA210_SCRATCH = __import__("os").environ.get("TA210_SCRATCH") or "/gpfs2/scratc
 # deposit path defaults: end
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx2_common as C  # noqa: E402
-sys.path.insert(0, (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1/16_control_repair/refit/rbx1/scripts"))
-import rbx1_score as S  # noqa: E402
+import phenotype_tables_chain2 as C  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "4_sequence_phenotypes", "lib"))
+import sequence_scoring as S  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 ALN = os.path.join(C.X1, "04_ampka_ctd/AMPKa_CTD_alignment.faa")

@@ -3,7 +3,7 @@
 # Purpose: Apply the clade criterion of van Dam et al. (2011), anchored on curated controls, to one target's gene tree, and make the per-tip contaminant call on that tree.
 # Methods: Orthology calls
 # Inputs:  the target's tree (RAxML_bipartitions.<target>, <target>.treefile, or the tree named in PHYLO_TREE), <target>_labels.tsv and <target>_cropped_out.tsv under 11_phylo_vandam<PHYLO_SET>/<target>/;
-#          declared negatives and decoys from rl_arm1_selection
+#          declared negatives and decoys from select_arm_settings
 # Outputs: <target>_subtree_calls<suffix>.tsv, <target>_subtree_summary<suffix>.tsv, and <target>_contaminants<suffix>.tsv when the tree carries boundary markers
 # Tools:   Python 3 with DendroPy (versions: see envs/)
 # <<< deposit header
@@ -131,8 +131,9 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "search_settings"))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
 # PHYLO_SET names the tip set (for example _boundary or _genecollapsed) and is
 # mandatory. An empty value would use the bare 11_phylo_vandam folder, which holds the
 # earlier design built from search hits only, whose tip sets are not comparable with
@@ -175,13 +176,13 @@ def fmt(x):
 
 def main():
     import dendropy
-    import rl_arm1_selection as A
+    import select_arm_settings as A
 
     target = sys.argv[1]
     d = os.path.join(OUT, target)
 
     # The control set must be named (R59_TAG); there is no untagged default
-    # anywhere in this pipeline. rl_arm1_selection reads R59_TAG itself, and a
+    # anywhere in this pipeline. select_arm_settings reads R59_TAG itself, and a
     # wrong tag here would silently anchor the clade on the wrong controls.
     tag = (os.environ.get("R59_TAG") or "").strip()
     if not tag:

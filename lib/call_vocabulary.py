@@ -23,7 +23,7 @@ values that had drifted apart:
      counted as "no".
 
 Eight scripts each carried their own copy of this set, which is how the copies drift. This module
-follows rl_accession.py, which solved the same problem for accession separators: define the set
+follows accessions.py, which solved the same problem for accession separators: define the set
 once, import it everywhere, and provide a check that tests the assumption instead of asserting it.
 
 The rule enforced here: a line of evidence with no opinion never counts as a vote against.
@@ -63,7 +63,7 @@ def assert_known(values, where=""):
     if unknown:
         raise ValueError(
             "unknown layer value(s) %s%s -- neither a verdict nor a recognised "
-            "no-opinion token. Add it to rl_vocab deliberately; do not let an "
+            "no-opinion token. Add it to call_vocabulary deliberately; do not let an "
             "equality test file it as dissent."
             % (sorted(unknown), (" in " + where) if where else ""))
     return True
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         ok += good
         print("  %-62s %s" % (desc, "PASS" if good else "FAIL got=%r" % (got,)))
 
-    print("rl_vocab self-test")
+    print("call_vocabulary self-test")
     check("NO_LAYER has no opinion (the KinOrtho error)",
           has_opinion("NO_LAYER"), False)
     check("UNRESOLVED has no opinion (the ALL-layers error)",

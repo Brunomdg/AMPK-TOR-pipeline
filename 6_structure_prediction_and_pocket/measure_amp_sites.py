@@ -23,7 +23,7 @@ D=P/'02_derived/all_ampkg_expansion_20260919/domain_preserving_v2'
 O=P/'03_results/all_ampkg_structural_evidence_20260919';O.mkdir(exist_ok=True)
 mode=sys.argv[1] if len(sys.argv)>1 else 'array'
 sys.argv=[sys.argv[0],'library_only']
-source=P/'01_scripts/p45b_colabfold_analysis.py'
+source=Path(os.path.dirname(os.path.abspath(__file__)))/'lib'/'amp_site_measurement.py'
 spec=importlib.util.spec_from_file_location('frozen_pocket_analysis',source);lib=importlib.util.module_from_spec(spec);spec.loader.exec_module(lib)
 lib.W=str(O/'volume_work')
 def rd(path):return list(csv.DictReader((l for l in path.open() if not l.startswith('#')),delimiter='\t'))

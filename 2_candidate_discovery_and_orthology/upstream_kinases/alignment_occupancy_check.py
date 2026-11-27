@@ -8,7 +8,7 @@
 #          the CAMKK membership-tree crop `CAMKK/CAMKK_crop.faa`, for a width comparison only
 # Outputs: `02_inputs/alignment_qc.tsv` (one row per target: tip and column counts, gap fractions, reference
 #          occupancy, reference coverage, the frozen crop width and the QC verdict)
-# Tools:   Python 3 (standard library) and the project module `rbx3_common`; versions: see envs/
+# Tools:   Python 3 (standard library) and the project module `upstream_kinase_tables`; versions: see envs/
 # <<< deposit header
 # The trigger below is the threshold that `rbx3_mask.py` and `rbx3_camkk_calls.py` both cite as fixed before any
 # topology was read: at least half the alignment columns must carry a residue in at least one positive reference,
@@ -21,7 +21,9 @@
 ## stops for masking. No trimming is ever chosen by how the tree looks.
 import os, statistics, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx3_common as C  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "upstream_kinases", "lib"))
+import upstream_kinase_tables as C  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 OCCUPANCY_TRIGGER = 0.50     # declared before reading: fraction of columns occupied by any positive reference

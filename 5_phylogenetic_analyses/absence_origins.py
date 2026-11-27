@@ -3,17 +3,17 @@
 # Purpose: Tabulates the number of independent origins of each trait's absence in every reconstruction block, and
 #          its range per taxon subset, from the per-block reconstruction files.
 # Methods: Ancestral-state reconstructions
-# Inputs:  the per-block reconstruction file of each trait under the standard coding, resolved by `rl_rm_q7_lib.py`;
+# Inputs:  the per-block reconstruction file of each trait under the standard coding, resolved by `reconstruction_paths.py`;
 #          `STANDARD_per_species.tsv` and `STANDARD_vs_R37.tsv`
 # Outputs: `Q7_ORIGINS.tsv` (one row per trait and block) and `Q7_ORIGINS_summary.tsv` (ranges per trait and subset)
 #          in `14_remodeling/Q7_alltargets`, or in the folder named by Q7_OUT
-# Tools:   Python 3 standard library; imports `rl_rm_q7_lib.py`; versions: see envs/
+# Tools:   Python 3 standard library; imports `reconstruction_paths.py`; versions: see envs/
 # <<< deposit header
 """Origins: the independent origins of every `<T>_absent` trait under the standard coding, read from the
 ancestral-state blocks, never recomputed.
 
 What it does. For each trait, one row per block (`TREE`, `ROOT_MODE`, `SUBSET`, `MODEL`) copied from the
-blocks file that rl_rm_q7_lib.read_edges resolves (STANDARD_vs_R37.tsv names which reconstruction that is):
+blocks file that reconstruction_paths.read_edges resolves (STANDARD_vs_R37.tsv names which reconstruction that is):
 ORIGINS is the count of parent-0 to child-1 edges on the hardened reconstruction (what the loss counts report
 as ORIGINS_MODEL for ER, SYM and ARD, and as ORIGINS_PARSIMONY for MPR), with N_STATE1, N_STATE0, N_FLAT_PRIOR
 and AICC beside it. A second file summarises each trait, coding and subset: the minimum and maximum of ORIGINS
@@ -40,7 +40,9 @@ import hashlib
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rl_rm_q7_lib as L                                          # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "5_phylogenetic_analyses", "lib"))
+import reconstruction_paths as L                                          # noqa: E402
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))

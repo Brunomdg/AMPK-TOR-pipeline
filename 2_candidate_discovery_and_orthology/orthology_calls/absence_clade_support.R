@@ -20,6 +20,13 @@
 .TA210_HOME_REAL <- local({v <- Sys.getenv("TA210_HOME_REAL"); if (nzchar(v)) v else "/gpfs1/home/b/d/bdigenov"})
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})
 ## deposit path defaults: end
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, "..", ".."))
+})
+## deposit repo root: end
 ## Basis: the project's review of the literature on the sensitivity of absence calls names this
 ## as the first thing to do with the negatives ("Stratify negatives by phylogenetic
 ## support before anything else ... This requires no invented number and can be applied
@@ -78,7 +85,7 @@ set.seed(SEED)
 
 ROOT <- Sys.getenv("PROJECT_ROOT",
   paste0(.TA210_SCRATCH, "/ms210_phase2/TOR-AMPK_orthologs_across_210_eukaryotes"))
-SELF <- file.path(ROOT, "01_scripts", "rl_absence_support.R")
+SELF <- file.path(.REPO_ROOT, "2_candidate_discovery_and_orthology", "orthology_calls", "absence_clade_support.R")
 CH  <- paste0(.TA210_SCRATCH, "/concord/ms210/P04b_chronogram")
 P04 <- paste0(.TA210_SCRATCH, "/concord/ms210/P04_tree")
 INDEX <- paste0(.TA210_HOME_REAL, "/ref/proteomes/proteome_index.tsv")

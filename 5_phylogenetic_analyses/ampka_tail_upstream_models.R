@@ -10,13 +10,20 @@
 #          `07_tables/CTD_BY_UPSTREAM_ARCHITECTURE_DESCRIPTIVE.tsv`
 # Tools:   R with ape and phylolm 2.6.5 (Pagel's lambda, Brownian motion as a sensitivity); versions: see envs/
 # <<< deposit header
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, ".."))
+})
+## deposit repo root: end
 ## Two upstream-repertoire models specified before the analysis (AMPKα C-terminal length and disorder regressed
 ## on the absence of both captured upstream kinase categories, Holm across the two), four secondary models guided
 ## by that hypothesis (length and disorder on CAMKK-category absence and on LKB1 absence, Holm across the four),
 ## their declared sensitivities, and a descriptive table of the C-terminal region (CTD) by the four known upstream
 ## categories. Species of unknown upstream state are meant never to enter a model of the primary or secondary
 ## families; the count below checks this.
-source(file.path(Sys.getenv("CTDXST"), "ctdx_lib.R"))
+source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "tail_model_lib.R"))
 S <- "ctdx_upstream.R"
 g <- read.delim(file.path(CTDX, "03_reproduction/GAMMA_ALPHA_REPRODUCTION_GATE.tsv"), comment.char = "#")
 if (g$STATUS != "PASS") stop("REFUSED: gamma-alpha reproduction did not pass")

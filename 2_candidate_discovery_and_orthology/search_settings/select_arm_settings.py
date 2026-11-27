@@ -20,7 +20,7 @@ The criterion was written before any of the clusterings it judges existed (this
 file was committed while both clustering jobs were still queued or running), so it
 could not have been shaped by their numbers; `sp2_cov90.sbatch` had set the example
 by writing its tests in advance. It is applied to each target separately. The
-target list comes from TARGET_REGISTRY.tsv through lib/rl_targets; the default set
+target list comes from TARGET_REGISTRY.tsv through lib/targets; the default set
 of eight targets reproduces the original list exactly.
 
     FLOOR   Control recovery for the target must be at least the recovery at the
@@ -85,22 +85,23 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "search_settings"))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
 SPIDX = {}
 
-import rl_accession                                              # noqa: E402
-import rl_declaration                                            # noqa: E402
-import rl_targets                                                # noqa: E402
+import accessions                                              # noqa: E402
+import control_declaration                                            # noqa: E402
+import targets                                                # noqa: E402
 
-norm = rl_accession.normalise
+norm = accessions.normalise
 # The single source of the target list. The environment variable TARGET_SET selects
-# rows of the target registry; for the default set of eight targets, rl_targets checks
+# rows of the target registry; for the default set of eight targets, targets checks
 # that the list equals the fixed list ["TOR", "RAPTOR", "RICTOR", "LST8", "AMPKa",
 # "AMPKb", "AMPKg", "SIN1"], so every script importing this module behaves exactly as
 # before under the default.
-TARGETS = rl_targets.targets()
-SET_SUFFIX = rl_targets.suffix()
+TARGETS = targets.targets()
+SET_SUFFIX = targets.suffix()
 
 OFRUN = os.environ.get("OFRUN_DIR") or (_TA210_SCRATCH + "/ofrun2")
 PAIRWISE_TSV = os.environ.get("PAIRWISE_TSV") or (
@@ -166,7 +167,7 @@ def binding_controls():
     that the declaration holds out stays held out, so a subset can never
     reinstate an excluded control.
     """
-    path, label = rl_declaration.current(ROOT + "/02_reference_data")
+    path, label = control_declaration.current(ROOT + "/02_reference_data")
     out = collections.defaultdict(set)
     with open(path, errors="replace") as fh:
         for r in csv.DictReader((l for l in fh if not l.startswith("##")),
@@ -233,7 +234,7 @@ def negative_controls():
     the declaration holds them out of both the positive and the negative pools,
     and they are excluded here.
     """
-    path, _label = rl_declaration.current(ROOT + "/02_reference_data")
+    path, _label = control_declaration.current(ROOT + "/02_reference_data")
     out = collections.defaultdict(set)
     for r in rows(path):
         t = (r.get("TARGET") or "").strip()
@@ -327,7 +328,7 @@ def declared_decoys():
     # The fixed file, then its companion for the target set (DECOYS_ranked__<set>.tsv)
     # when a target set other than the default is in force. The default eight targets
     # read exactly the fixed file, so every decoy-using step sees the same pool.
-    for r in rl_targets.decoys_ranked_rows(p):
+    for r in targets.decoys_ranked_rows(p):
         t = (r.get("TARGET") or "").strip()
         a = (r.get("PROTEIN_ID") or "").strip()
         if t in TARGETS and a:
@@ -681,7 +682,7 @@ def main():
     lines = ["# Arm 1 clustering: PER-TARGET selection against the pre-declared "
              "criterion\n",
              "FLOOR and SELECT were written before any clustering existed "
-             "(`rl_arm1_selection.py`, committed while both jobs were queued) and "
+             "(`select_arm_settings.py`, committed while both jobs were queued) and "
              "are unchanged. What changed on 2026-09-06 is that they are APPLIED "
              "PER TARGET, which is how FLOOR is written: *control recovery per "
              "target must be >= recovery at the current setting*.\n",

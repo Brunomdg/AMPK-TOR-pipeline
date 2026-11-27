@@ -5,7 +5,7 @@
 #          subunit loss with odds ratios; descriptive only.
 # Methods: Phylogenetic regressions
 # Inputs:  the ten-target three-state table `T2_presence_long.tsv` and the retained ortholog copies (through
-#          `rbx2_common.py`)
+#          `phenotype_tables_chain2.py`)
 # Outputs: `03_torc_core/TORC_core_states.tsv`, `RAPTOR_RICTOR_four_state.tsv` and `core_AMPK_descriptive.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
@@ -16,7 +16,9 @@
 ## assessable absence of another component.
 import math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx2_common as C  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "4_sequence_phenotypes", "lib"))
+import phenotype_tables_chain2 as C  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 Z = 1.959964

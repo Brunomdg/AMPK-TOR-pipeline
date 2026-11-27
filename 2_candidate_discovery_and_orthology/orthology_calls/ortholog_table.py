@@ -50,7 +50,7 @@ who wants to apply a different rule has every number needed to do so.
 
 Where the tree abstained, the two-arm rule decides (see rl_ambiguous_arm_rule.py),
 except for a target whose orthology arm produced no calls, where the rows stay
-AMBIGUOUS. The target list and file names come from the shared helper rl_targets; only
+AMBIGUOUS. The target list and file names come from the shared helper targets; only
 a run on the eight core targets writes the unsuffixed final table, and a run on another
 target set never does.
 
@@ -72,19 +72,20 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/" "TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
-import rl_targets                                                # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import targets                                                # noqa: E402
 
 # Target set. The target registry names the targets in use; the file-name suffix is
 # empty for the eight core targets and "__<set>" otherwise. A run on another target
 # set must read a suffixed tree track and report folder, and only the eight core
 # targets may write the unsuffixed final table.
-SFX = rl_targets.suffix()
+SFX = targets.suffix()
 TRACK = os.environ.get("LOO_BASE") or ("11_phylo_vandam_genecollapsed" + SFX)
-rl_targets.check_track_agreement()
+targets.check_track_agreement()
 BASE = os.path.join(ROOT, TRACK)
 TAG = os.environ.get("R59_TAG") or "setA"
-RPT = rl_targets.report_dir(ROOT, TAG)
+RPT = targets.report_dir(ROOT, TAG)
 CAND = os.path.join(RPT, "06_candidate_list.tsv")
 SCREEN = os.path.join(RPT, "07_contaminant_screen.tsv")
 ARM = os.path.join(RPT, "14_arm_rule_calls.tsv")
@@ -116,7 +117,7 @@ HITS = os.path.join(ROOT, "04_final_tables", "FINAL_ORTHOLOGS__%s.tsv" % SHORT)
 # targets use the bare name.
 OUT_PRIMARY = os.path.join(ROOT, "04_final_tables", "FINAL_ORTHOLOG_TABLE%s.tsv" % SFX)
 HITS_PRIMARY = os.path.join(ROOT, "04_final_tables", "FINAL_ORTHOLOGS%s.tsv" % SFX)
-TARGETS = rl_targets.targets()
+TARGETS = targets.targets()
 
 TREE_TO_DISP = {"WITH_CONTROLS": "ORTHOLOG",
                 "CONTAMINANT": "NON_ORTHOLOG",
@@ -297,7 +298,7 @@ def main():
                  "from a proteome with more than one record per gene, so its tips "
                  "are not independent observations. Both hits are real and retained "
                  "on the record.\n")
-        fh.write("## Written by 01_scripts/rl_final_ortholog_table.py, which refuses "
+        fh.write("## Written by 2_candidate_discovery_and_orthology/orthology_calls/ortholog_table.py, which refuses "
                  "unless every candidate is accounted for exactly once.\n")
         fh.write("## ARM1_INSTRUMENTS / ARM2_INSTRUMENTS / ARM_SUPPORT say HOW THE "
                  "PROTEIN WAS NOMINATED, on every row. ARM2_EVIDENCE carries each "
@@ -336,7 +337,7 @@ def main():
                      "unchanged and is read here as evidence FOR the family. Their "
                      "tree calls are anchored on their own declared controls. Arm 2 "
                      "runs at two-thirds strength for this set exactly as for the "
-                     "eight (G-h1, D4).\n" % rl_targets.set_name())
+                     "eight (G-h1, D4).\n" % targets.set_name())
         fh.write("TARGET\tSPECIES\tPROTEIN_ID\tDISPOSITION\tIS_ORTHOLOG\tBASIS\t"
                  "TREE_CALL\tTREE_TRACK\tHMM_CALL\tPMSF_CALL\tLB_SCORE\t"
                  "ARM1_INSTRUMENTS\tARM2_INSTRUMENTS\tARM_SUPPORT\tARM2_EVIDENCE\t"
@@ -367,7 +368,7 @@ def main():
         shutil.copyfile(OUT, OUT_PRIMARY)
         shutil.copyfile(HITS, HITS_PRIMARY)
         print("primary track (%s): also wrote %s"
-              % (rl_targets.label(), os.path.basename(OUT_PRIMARY)))
+              % (targets.label(), os.path.basename(OUT_PRIMARY)))
     else:
         print("NON-PRIMARY track %s: the un-suffixed FINAL_ORTHOLOG_TABLE.tsv was "
               "NOT touched. The primary is %s (METHODS section 9)."

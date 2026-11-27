@@ -20,7 +20,9 @@
 ## kinase is retained, not whether one is.
 import gzip, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx3_common as C  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "upstream_kinases", "lib"))
+import upstream_kinase_tables as C  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 SUB = "04_camkk_subfamilies"

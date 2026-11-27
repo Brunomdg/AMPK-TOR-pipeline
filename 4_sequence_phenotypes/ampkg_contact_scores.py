@@ -22,8 +22,10 @@
 ## and a position that cannot be scored is never counted as a lost residue.
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx1_lib as L  # noqa: E402
-import rbx1_score as S  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "4_sequence_phenotypes", "lib"))
+import phenotype_tables_chain1 as L  # noqa: E402
+import sequence_scoring as S  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 ANCHOR = "NP_001193638.1"          # anchor of the original analysis; its numbering is canonical PRKAG1 plus 9

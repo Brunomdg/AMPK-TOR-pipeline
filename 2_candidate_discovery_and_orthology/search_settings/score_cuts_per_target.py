@@ -4,13 +4,13 @@
 #          keeps the false-positive rate on the target's same-species decoys at or below 5, 1, 0.5, 0.1 and 0%,
 #          and the recall of the target's own controls at each.
 # Methods: Candidate discovery
-# Inputs:  the current declared-control table (through `rl_declaration`); the decoy sets
+# Inputs:  the current declared-control table (through `control_declaration`); the decoy sets
 #          `02_reference_data/decoys_same_species/<target>_same-species-decoys.faa`; the 210 proteomes
 #          (`concord/null_split/fwd/*.faa`); `panel_v2.hmm`; `PANEL_DECLARATION_v2.tsv`; `THRESHOLD_SOURCES.tsv`
 # Outputs: `06_calibration_and_checks/THRESHOLD_PILOT_PERTARGET.tsv`, or `THRESHOLD_PILOT_PERTARGET__<set>.tsv`
 #          for a non-core target set; the benchmark FASTA and tblout in `threshold_pilot_pertarget<suffix>/`
 # Tools:   HMMER hmmsearch (busco6 environment; --max -E 1e5 --domE 1e5); Python 3 standard library and the
-#          project modules `rl_declaration` and `rl_targets`; versions: see envs/
+#          project modules `control_declaration` and `targets`; versions: see envs/
 # <<< deposit header
 """Threshold pilot by target: every target measured against its own positives and negatives.
 
@@ -60,21 +60,22 @@ _TA210_SCRATCH = __import__("os").environ.get("TA210_SCRATCH") or "/gpfs2/scratc
 import csv, collections, glob, os, subprocess, sys
 
 R     = os.environ.get("PROJECT_ROOT") or (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1")
-sys.path.insert(0, R + "/01_scripts/lib")
-import rl_declaration                                            # noqa: E402
-import rl_targets                                                # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import control_declaration                                            # noqa: E402
+import targets                                                # noqa: E402
 PANEL = R + "/02_reference_data/hmmer_panel/panel_v2.hmm"
 DECL  = R + "/02_reference_data/hmmer_panel/PANEL_DECLARATION_v2.tsv"
-CTRLS = rl_declaration.current(R + "/02_reference_data")[0]     # the current (highest-numbered) control table
+CTRLS = control_declaration.current(R + "/02_reference_data")[0]     # the current (highest-numbered) control table
 DECOY = R + "/02_reference_data/decoys_same_species"
 THR   = R + "/05_method_and_rules/THRESHOLD_SOURCES.tsv"
 PROT  = (_TA210_SCRATCH + "/concord/null_split/fwd")
-SFX   = rl_targets.suffix()
+SFX   = targets.suffix()
 WORK  = (_TA210_SCRATCH + "/ms210_phase2/threshold_pilot_pertarget") + SFX
 BIN   = (_TA210_ENVS + "/busco6/bin")
 OUT   = R + "/06_calibration_and_checks"
 
-TARGETS   = rl_targets.targets()          # from TARGET_SET; default the core eight, in their fixed order
+TARGETS   = targets.targets()          # from TARGET_SET; default the core eight, in their fixed order
 SELF_SRC  = {"project_controls", "project_ampka"}   # declared, not inferred; see "No self-recovery" above
 # A "contaminant" model built from the target's own in-paralogs is the target, not a confusable
 # family. It scores 1,580 bits on a real Arabidopsis RAPTOR against 1,543 for the target pole and
@@ -351,8 +352,8 @@ def main():
         if SFX:
             w.writerow(["## COMPANION of the frozen THRESHOLD_PILOT_PERTARGET.tsv for TARGET_SET=%s "
                         "(L13): rows for these targets only, read after the frozen file by "
-                        "lib/rl_targets.pilot_rows(). Declaration %s; panel %s."
-                        % (rl_targets.set_name(), os.path.basename(CTRLS), os.path.basename(PANEL))])
+                        "lib/targets.pilot_rows(). Declaration %s; panel %s."
+                        % (targets.set_name(), os.path.basename(CTRLS), os.path.basename(PANEL))])
         w.writerow(["## Each target measured against ITS OWN controls (positives) and ITS OWN "
                     "same-species decoys (negatives). CUT_FPRx is the lowest bit cut whose "
                     "false-positive rate on that target's decoys is <= x%, and REC_FPRx the "

@@ -4,11 +4,11 @@
 #          together they recover every declared positive control, maximising the controls recovered minus the
 #          declared negatives called, under a ceiling on calls per species.
 # Methods: Candidate discovery
-# Inputs:  the genome-wide HMMER tblout files (through `rl_evidence_roots`); the CDD and InterProScan scans in
+# Inputs:  the genome-wide HMMER tblout files (through `evidence_roots`); the CDD and InterProScan scans in
 #          `concord/combined`; `THRESHOLD_PILOT_PERTARGET.tsv` (the target-side models);
 #          `07_findings/R59_arm1_settings__<tag>.tsv` and `R59_arm1_cover__<tag>.tsv` (the OrthoFinder and
 #          SonicParanoid settings enumerated in the preceding step); the controls in use, declared decoys
-#          and negative controls, read through `rl_arm1_selection`
+#          and negative controls, read through `select_arm_settings`
 # Outputs: `07_findings/R59_union_settings__<tag>.tsv` (the chosen setting per target and method),
 #          `R59_frontier__<tag>.tsv` and `R59_frontier_cover__<tag>.tsv` (every allowed setting after Pareto
 #          pruning, with the controls it covers) and `R59_union_optimum__<tag>.md` (summary table); <tag> is the
@@ -131,11 +131,12 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
-import rl_arm1_selection as A                                    # noqa: E402
-import rl_targets                                                # noqa: E402
-import rl_evidence_roots                                         # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "search_settings"))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import select_arm_settings as A                                    # noqa: E402
+import targets                                                # noqa: E402
+import evidence_roots                                         # noqa: E402
 
 TBL = ROOT + "/03_evidence_by_method/hmmer_genomewide/tblout"
 COMBINED = (_TA210_SCRATCH + "/concord/combined")
@@ -156,7 +157,7 @@ def _tagged(p):
             "REFUSING: R59_TAG is not set. Writing untagged R59 outputs is how "
             "stale files accumulate: a later reader cannot tell which control "
             "set produced them. Set R59_TAG=setA or R59_TAG=setB.")
-    return rl_targets.tagged(p, _TAG)           # base__<tag><set suffix>.ext
+    return targets.tagged(p, _TAG)           # base__<tag><set suffix>.ext
 # ------------------------------------------------------------------------------
 ARM1_SETTINGS = _tagged(ROOT + "/07_findings/R59_arm1_settings.tsv")
 ARM1_COVER = _tagged(ROOT + "/07_findings/R59_arm1_cover.tsv")
@@ -276,7 +277,7 @@ def hmmer_frontier(allc, neg):
     # The pilot fixed in advance, then its companion for the target set when
     # another target set is in use; the default eight targets read exactly the
     # original file.
-    for r in rl_targets.pilot_rows(PILOT):
+    for r in targets.pilot_rows(PILOT):
         if (r.get("POLE") or "").strip() != "target":
             continue
         t = (r.get("FOR_TARGET") or "").strip()
@@ -294,7 +295,7 @@ def hmmer_frontier(allc, neg):
     # The declared evidence roots: the primary tblout set, plus a supplementary
     # root (models searched separately with identical options) only for another
     # target set.
-    files = rl_evidence_roots.tblout_files()
+    files = evidence_roots.tblout_files()
     for n, f in enumerate(files):
         if n % 60 == 0:
             print("  %d/%d" % (n, len(files)), flush=True)

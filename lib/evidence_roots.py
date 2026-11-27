@@ -5,7 +5,7 @@
 # Inputs:  `03_evidence_by_method/HMMER_EVIDENCE_ROOTS.tsv`; the model-list files it names; the `domtbl/` and
 #          `tblout/` subfolders of each declared folder; the target set in TARGET_SET
 # Outputs: the folders, the model-to-folder map and the file lists, returned (printed when run directly)
-# Tools:   Python 3 standard library and the project module `rl_targets`; versions: see envs/
+# Tools:   Python 3 standard library and the project module `targets`; versions: see envs/
 # <<< deposit header
 """Which folders of HMMER results a run reads, declared in one table.
 
@@ -41,20 +41,20 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rl_targets                                                # noqa: E402
+import targets                                                # noqa: E402
 
 DECL_REL = "03_evidence_by_method/HMMER_EVIDENCE_ROOTS.tsv"
 EXPECT_SPECIES = 210
 
 
 def declaration_path(root=None):
-    return os.path.join(root or rl_targets.project_root(), DECL_REL)
+    return os.path.join(root or targets.project_root(), DECL_REL)
 
 
 def roots(explicit=None, root=None):
     """List of dicts for the folders this TARGET_SET may read, in the row order of the
     declaration table, where the primary folder (SET_SCOPE=all) is meant to come first."""
-    s = rl_targets.set_name(explicit)
+    s = targets.set_name(explicit)
     p = declaration_path(root)
     if not os.path.exists(p):
         raise SystemExit("REFUSING: %s is missing; the evidence roots are declared, not guessed" % p)
@@ -67,7 +67,7 @@ def roots(explicit=None, root=None):
                 continue
             d = r["ROOT"]
             if not os.path.isabs(d):
-                d = os.path.join(root or rl_targets.project_root(), d)
+                d = os.path.join(root or targets.project_root(), d)
             r["ROOT"] = d
             for sub in ("domtbl", "tblout"):
                 n = len(glob.glob(os.path.join(d, sub, "*.gz")))

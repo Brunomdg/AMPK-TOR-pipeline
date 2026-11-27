@@ -20,8 +20,10 @@
 ## sensitivity column and never replaces the primary length.
 import gzip, os, statistics, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx1_lib as L  # noqa: E402
-import rbx1_score as S  # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "4_sequence_phenotypes", "lib"))
+import phenotype_tables_chain1 as L  # noqa: E402
+import sequence_scoring as S  # noqa: E402
 
 SELF = os.path.abspath(__file__)
 ANCHOR = "NP_996790.3"

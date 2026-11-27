@@ -13,6 +13,13 @@
 ## deposit path defaults: begin
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})
 ## deposit path defaults: end
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, ".."))
+})
+## deposit repo root: end
 ## Phylogenetic models on the 209-tip chronogram, which was fixed before these fits.
 ## Binary state models use phylolm::phyloglm (logistic_MPLE, btol = 30), exactly as the regressions of the
 ## publication tables for candidate replacements and for lifestyle associations do.
@@ -23,7 +30,7 @@
 suppressMessages({library(ape); library(phylolm)})
 SEED <- 488761235
 set.seed(SEED)
-source(paste0(.TA210_SCRATCH, "/ms210_phase2/TOR-AMPK_orthologs_10target_R1/20_port_68taxa_analyses/01_scripts/core_multistart_helper.R"))
+source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "multistart_search.R"))
 X <- Sys.getenv("RBX1_ROOT")
 CONCORD <- paste0(.TA210_SCRATCH, "/concord/ms210")
 TREE <- file.path(CONCORD, "P04b_chronogram", "species_chronogram_209.treefile")

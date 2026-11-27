@@ -25,8 +25,8 @@ Five methods in two independent arms, each method reporting only for itself:
     orthology arm   OrthoFinder (full run) and SonicParanoid
     domain arm      the HMMER profile panel, CDD and InterProScan
 
-The target list and the output folder names come from `lib/rl_targets`, and the
-HMMER inputs from the evidence roots in `lib/rl_evidence_roots`; with the default
+The target list and the output folder names come from `lib/targets`, and the
+HMMER inputs from the evidence roots in `lib/evidence_roots`; with the default
 set of eight targets the output is byte-identical to the original.
 
 The governing principle. A protein nominated by several methods is not stronger
@@ -71,14 +71,15 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
 
-import rl_accession                       # noqa: E402
-import rl_declaration                     # noqa: E402
-import rl_vocab                           # noqa: E402
-import rl_targets                         # noqa: E402
-import rl_evidence_roots                  # noqa: E402
-from rl_join import JoinFailed            # noqa: E402
+import accessions                       # noqa: E402
+import control_declaration                     # noqa: E402
+import call_vocabulary                           # noqa: E402
+import targets                         # noqa: E402
+import evidence_roots                  # noqa: E402
+from join import JoinFailed            # noqa: E402
 
 
 # --- The joint-selection outputs are named by control set; a tag is required ---
@@ -100,7 +101,7 @@ def _r59(p, must_exist=True):
     # base__<tag><set suffix>.ext: the tag names the control set and the suffix the
     # target set (empty for the default eight targets). One helper names every
     # tagged file of the joint selection.
-    q = rl_targets.tagged(p, _R59_TAG)
+    q = targets.tagged(p, _R59_TAG)
     if must_exist and not os.path.exists(q):
         raise SystemExit("REFUSING: %s does not exist. Solve that control set "
                          "first; this script will not read an untagged file." % q)
@@ -145,12 +146,12 @@ DECLDIR = ROOT + "/02_reference_data"
 # The report folder is tagged too. Two control sets produce two sets of tables,
 # and an untagged folder would let them overwrite each other, the same kind of
 # collision that made the first parallel solve useless.
-OUT = rl_targets.report_dir(ROOT, _R59_TAG)
+OUT = targets.report_dir(ROOT, _R59_TAG)
 
 # The single source of the target list: the environment variable TARGET_SET selects
 # the rows of the target registry in use; the default set is checked to equal the
 # eight targets fixed in advance, in their fixed order.
-TARGETS = rl_targets.targets()
+TARGETS = targets.targets()
 ARM = {"orthofinder_full": "1_orthology", "sonic": "1_orthology",
        "hmmer": "2_domain", "cdd": "2_domain", "interpro": "2_domain"}
 
@@ -177,7 +178,7 @@ def hmmer_corpus():
     `corpus()` returned; a supplementary root (models searched separately with
     identical options) is read only for another target set, so the tables for the
     eight targets are built from identical bytes."""
-    f = rl_evidence_roots.tblout_files()
+    f = evidence_roots.tblout_files()
     return f[:LIMIT] if LIMIT else f
 
 # Models built from the target's own proteins may not judge them; copied
@@ -205,7 +206,7 @@ FRACTION = re.compile(r"^\d+\s*/\s*\d+$")
 DERIVED_MARKERS = ("layer_calls_domain_scored", "layer_calls_orthology",
                    "/inputs/", "04_final_tables")
 
-norm = rl_accession.normalise
+norm = accessions.normalise
 LOG = []
 
 
@@ -263,9 +264,9 @@ def gate():
     say("  NOTE  hmmer_genomewide is absent from EVIDENCE_MAP.tsv; asserted here "
         "at %d+%d. Recommend registering it." % (EXPECT_SPECIES, EXPECT_SPECIES))
     # Every declared HMMER evidence root that this target set may read is checked
-    # for 210 domtbl and 210 tblout files by rl_evidence_roots.roots() itself, which
+    # for 210 domtbl and 210 tblout files by evidence_roots.roots() itself, which
     # stops on an incomplete root, so a half-written supplementary root cannot be read.
-    for r in rl_evidence_roots.roots():
+    for r in evidence_roots.roots():
         say("  %-18s evidence root   %s (scope %s)"
             % ("hmmer_root", r["ROOT"], r.get("SET_SCOPE") or "all"))
 
@@ -278,7 +279,7 @@ def load_controls():
     REVIEW entry is held out, as in rl_phase2_panelv2_screen.py and
     MASTER_freeze_parameters.py.
     """
-    path, label = rl_declaration.current(DECLDIR)
+    path, label = control_declaration.current(DECLDIR)
     role, binding = {}, collections.defaultdict(set)
     for r in rows(path):
         t = (r.get("TARGET") or "").strip()
@@ -379,7 +380,7 @@ def published_cuts():
     # The pilot fixed in advance, then its companion for the target set
     # (THRESHOLD_PILOT_PERTARGET__<set>.tsv) when another target set is in use; the
     # default eight targets read exactly the original file.
-    for r in rl_targets.pilot_rows(PILOT):
+    for r in targets.pilot_rows(PILOT):
         if r.get("POLE") != "target" or r.get("FOR_TARGET") not in TARGETS:
             continue
         t = r["FOR_TARGET"]
@@ -649,7 +650,7 @@ def arm1_selection():
     HMM models and bit cuts; a single global clustering setting would make every
     target pay for the worst-behaved one. The criterion itself is fixed and was
     declared before any clustering existed; only its application is per target,
-    and `rl_arm1_selection.py` reports the full scored table, including every
+    and `select_arm_settings.py` reports the full scored table, including every
     setting that lost and why.
 
     Returns {} when no selection file exists, in which case both builders fall
@@ -663,7 +664,7 @@ def arm1_selection():
         return {}
     # The two orthology methods are chosen per target and independently of each
     # other, and that is checked here again rather than trusted.
-    # `rl_arm1_selection.py` checks it when it writes this file, but a reader that assumes the writer was
+    # `select_arm_settings.py` checks it when it writes this file, but a reader that assumes the writer was
     # correct is how a broken rule reaches a published table. The file carries
     # CUR_CONTROLS and CUR_SPECIES so that the floor test can be reproduced from
     # the file alone.
@@ -805,7 +806,7 @@ def build_orthofinder(role, binding, spidx, sel=None):
                 seen[t].add(a)
                 out.append((t, ARM["orthofinder_full"], "orthofinder_full",
                             spidx.get(a, "UNMAPPED"), a,
-                            role.get((t, a), "CANDIDATE"), rl_vocab.MEMBER,
+                            role.get((t, a), "CANDIDATE"), call_vocabulary.MEMBER,
                             "genome_wide_210",
                             "not nominated by orthofinder_full under this rule",
                             lab, len(binding[t]), len(members),
@@ -849,7 +850,7 @@ def build_orthofinder(role, binding, spidx, sel=None):
                     seen[t].add(a)
                     out.append((t, ARM["orthofinder_full"], "orthofinder_full",
                                 spidx.get(a, "UNMAPPED"), a,
-                                role.get((t, a), "CANDIDATE"), rl_vocab.MEMBER,
+                                role.get((t, a), "CANDIDATE"), call_vocabulary.MEMBER,
                                 "genome_wide_210",
                                 "not nominated by orthofinder_full under this rule",
                                 og, len(hit), len(members),
@@ -862,7 +863,7 @@ def build_sonic(role, binding, spidx=None, sel=None):
     """SonicParanoid calls: MEMBER under whichever SonicParanoid rule the target was assigned.
 
     Two rules are possible, and which one a target uses is decided by the
-    selection test fixed in advance in `rl_arm1_selection.py`, not here:
+    selection test fixed in advance in `select_arm_settings.py`, not here:
 
     control-sharing-group
         shares an ortholog group with at least one declared control in use,
@@ -916,7 +917,7 @@ def build_sonic(role, binding, spidx=None, sel=None):
             seen[t].add(a)
             out.append((t, ARM["sonic"], "sonic",
                         (spidx or {}).get(a, "UNMAPPED"), a,
-                        role.get((t, a), "CANDIDATE"), rl_vocab.MEMBER,
+                        role.get((t, a), "CANDIDATE"), call_vocabulary.MEMBER,
                         "genome_wide_210",
                         "not nominated by sonic under this rule",
                         rule, len(binding[t]), len(members),
@@ -972,7 +973,7 @@ def build_sonic(role, binding, spidx=None, sel=None):
                         seen[t].add(a)
                         out.append((t, ARM["sonic"], "sonic", sp, a,
                                     role.get((t, a), "CANDIDATE"),
-                                    rl_vocab.MEMBER, "genome_wide_210",
+                                    call_vocabulary.MEMBER, "genome_wide_210",
                                     "not nominated by sonic under this rule",
                                     gid, len(hit), len(members),
                                     "sonicparanoid_210:flat.ortholog_groups.tsv"
@@ -1043,7 +1044,7 @@ def build_domains_from_combined(role, keep):
         for t in TARGETS:
             for acc, (sig, val, thr, kind) in sorted(store[t].items()):
                 out.append((t, ARM[method], method, spof.get(acc, "UNMAPPED"),
-                            acc, role.get((t, acc), "CANDIDATE"), rl_vocab.MEMBER,
+                            acc, role.get((t, acc), "CANDIDATE"), call_vocabulary.MEMBER,
                             "genome_wide_210",
                             "not nominated by %s under this rule" % method,
                             sig, val, "%s>=%s" % (kind, thr)
@@ -1108,7 +1109,7 @@ def build_hmmer(role, cuts, skipped):
     for t in TARGETS:
         for acc, (m, sq, dm, cs, cd, src, sp, rec, fpr) in sorted(best[t].items()):
             out.append((t, ARM["hmmer"], "hmmer", sp, acc,
-                        role.get((t, acc), "CANDIDATE"), rl_vocab.MEMBER,
+                        role.get((t, acc), "CANDIDATE"), call_vocabulary.MEMBER,
                         "genome_wide_210",
                         "not nominated by hmmer under this rule",
                         m, "seq=%.1f/%.1f" % (sq, cs), "dom=%.1f/%.1f" % (dm, cd),
@@ -1134,7 +1135,7 @@ def candidate_list(percall):
     prov = []
     for method, calls in percall.items():
         for r in calls:
-            if r[6] != rl_vocab.MEMBER:
+            if r[6] != call_vocabulary.MEMBER:
                 continue
             key = (r[0], r[3], r[4])              # TARGET, SPECIES, PROTEIN_ID
             cand.add(key)
@@ -1233,7 +1234,7 @@ def verify_screen_equivalence(percall, verdict):
     bad = 0
     for method, calls in percall.items():
         for r in calls:
-            if r[6] != rl_vocab.MEMBER:
+            if r[6] != call_vocabulary.MEMBER:
                 continue
             key = (r[0], r[3], r[4])
             if key not in verdict:
@@ -1255,7 +1256,7 @@ def disagreement_examples(percall):
     by = collections.defaultdict(set)
     for method, calls in percall.items():
         for r in calls:
-            if r[6] == rl_vocab.MEMBER:
+            if r[6] == call_vocabulary.MEMBER:
                 by[(r[0], r[3], r[4])].add(method)
     ex_arm1, ex_arms = [], []
     for key, ms in by.items():
@@ -1313,7 +1314,7 @@ def control_group_concentration(percall, binding):
         for t in TARGETS:
             groups = {}
             for r in percall.get(method, []):
-                if r[0] != t or r[6] != rl_vocab.MEMBER:
+                if r[0] != t or r[6] != call_vocabulary.MEMBER:
                     continue
                 gid, nctl, size = r[9], r[10], r[11]
                 if gid == "":
@@ -1380,7 +1381,7 @@ def copy_number(percall):
         per = collections.Counter()
         sp = collections.defaultdict(set)
         for r in percall.get(method, []):
-            if r[6] == rl_vocab.MEMBER:
+            if r[6] == call_vocabulary.MEMBER:
                 per[r[0]] += 1
                 sp[r[0]].add(r[3])
         bits = []
@@ -1524,14 +1525,14 @@ def main():
     percall["hmmer"] = build_hmmer(role, cuts, skipped)
 
     for method, calls in percall.items():
-        rl_vocab.assert_known({r[6] for r in calls}, "%s calls" % method)
+        call_vocabulary.assert_known({r[6] for r in calls}, "%s calls" % method)
 
     # Verification 3: control recovery, checked before writing; a failure stops the run.
     say("\n  Verification 3  control recovery (blocking):")
     for method, calls in percall.items():
         got = collections.Counter()
         for r in calls:
-            if r[5] in ("CONTROL", "CONTROL_HELDOUT") and r[6] == rl_vocab.MEMBER:
+            if r[5] in ("CONTROL", "CONTROL_HELDOUT") and r[6] == call_vocabulary.MEMBER:
                 got[r[0]] += 1
         # A cell that makes no call by decision (optimisation could not improve
         # the method there) recovers zero controls on purpose; that is not a
@@ -1558,7 +1559,7 @@ def main():
                        for i, t, st, _s, _n in r59ledger)
     abst, lst8_raw, lst8_reason = cdd_lst8_abstention(role, cand, cdd_lst8_r57)
     percall["cdd"] = percall["cdd"] + abst
-    rl_vocab.assert_known({r[6] for r in percall["cdd"]}, "cdd calls with abstention")
+    call_vocabulary.assert_known({r[6] for r in percall["cdd"]}, "cdd calls with abstention")
 
     say("\nSTEP 4  emit RAW-derived method calls")
     files = [("01_orthofinder_full_calls.tsv", "orthofinder_full",
@@ -1697,7 +1698,7 @@ def main():
     per_method_final = []
     for method, calls in percall.items():
         for r in calls:
-            if r[6] != rl_vocab.MEMBER:
+            if r[6] != call_vocabulary.MEMBER:
                 continue
             v = verdict.get((r[0], r[3], r[4]))
             if v and v[0] == "CONTAMINANT":

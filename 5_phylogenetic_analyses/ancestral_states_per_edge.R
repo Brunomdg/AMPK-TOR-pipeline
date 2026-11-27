@@ -15,6 +15,13 @@
 .TA210_ENVS <- local({v <- Sys.getenv("TA210_ENVS"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov/envs"})
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})
 ## deposit path defaults: end
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, ".."))
+})
+## deposit repo root: end
 ## Per-edge ancestral states for the replacement analysis: the reconstruction behind the test that separates
 ## decay (a candidate replacement is lost as well) from reassignment (the replacement is kept where the core
 ## component was lost).
@@ -73,10 +80,10 @@ set.seed(SEED)
 ROOT <- Sys.getenv("PROJECT_ROOT",
   paste0(.TA210_SCRATCH, "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
 SCR  <- file.path(ROOT, "14_remodeling", "scripts")
-SELF <- file.path(ROOT, "19_asr_repair", "scripts", "rl_rm_q0_asr.R")
-source(file.path(SCR, "rl_rm_prov.R"))
+SELF <- file.path(.REPO_ROOT, "5_phylogenetic_analyses", "ancestral_states_per_edge.R")
+source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "output_provenance.R"))
 ## The library is read from its repaired copy; rl_rm_prov.R, above, is unchanged and still read from SCR.
-source(file.path(ROOT, "19_asr_repair", "scripts", "rl_rm_asr_lib.R"))
+source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "ancestral_state_lib.R"))
 CONCORD <- Sys.getenv("CONCORD_MS210", paste0(.TA210_SCRATCH, "/concord/ms210"))
 CH  <- file.path(CONCORD, "P04b_chronogram")
 P04 <- file.path(CONCORD, "P04_tree")

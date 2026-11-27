@@ -12,7 +12,7 @@
 ## species summary, which is computed the same way whatever the trait.
 import hashlib, os, statistics, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import rbx1_lib as L  # noqa: E402
+import phenotype_tables_chain1 as L  # noqa: E402
 
 GAP = "-"
 

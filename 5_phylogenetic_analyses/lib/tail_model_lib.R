@@ -1,3 +1,10 @@
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, "..", ".."))
+})
+## deposit repo root: end
 ## TEN-TARGET REFIT of ctdx_lib.R (Bruno 2026-09-16). Inputs are the sister's ten-target T2 and the rebuilt
 ## RBX1, RBX2 and RBX3 layers; the engine and the chronogram are the frozen ones and their pins are unchanged.
 ## GOVERNED BY: CTD_CROSSFEATURE_EXECUTION_CURRENT.md, shared by z1 to z4. Loads the frozen RBX1 engine preamble
@@ -23,7 +30,7 @@ SHA <- list(
   ARCH3 = "7e2f7bfc2b78fc37979602a02bd6f7ddcd02ea1ac053863e8667e9e8866092f6")
 B <- "/gpfs2/scratch/bdigenov/ms210_phase2"
 PATHS <- list(
-  ENGINE = "/gpfs2/scratch/bdigenov/ms210_phase2/TOR-AMPK_orthologs_10target_R1/16_control_repair/refit/rbx1/scripts/rbx1_models.R",
+  ENGINE = file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "model_engine.R"),
   TREE = "/gpfs2/scratch/bdigenov/concord/ms210/P04b_chronogram/species_chronogram_209.treefile",
   T2 = "/gpfs2/scratch/bdigenov/ms210_phase2/TOR-AMPK_orthologs_10target_R1/07_findings/publication_tables/T2_presence_long.tsv",
   CTD = "/gpfs2/scratch/bdigenov/ms210_phase2/TOR-AMPK_orthologs_10target_R1/16_control_repair/refit/rbx1/04_ampka_ctd/AMPKa_CTD_species.tsv",

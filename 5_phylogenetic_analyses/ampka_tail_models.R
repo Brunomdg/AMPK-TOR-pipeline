@@ -9,12 +9,19 @@
 #          `CTD_cross_AMPK_sensitivity.tsv`, `sample_flow_cross_ampk.tsv` and `encoding_checks_cross_ampk.tsv`
 # Tools:   R with ape and phylolm 2.6.5 (Pagel's lambda, Brownian motion as a sensitivity); versions: see envs/
 # <<< deposit header
+## deposit repo root: begin
+.REPO_ROOT <- local({
+  a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])
+  d <- if (length(f)) dirname(f[1]) else "."
+  normalizePath(file.path(d, ".."))
+})
+## deposit repo root: end
 ## The six cross-subunit models of the AMPKα C-terminal region (CTD), specified before the analysis: tail length
 ## and mean predicted disorder regressed on AMPKγ absence, AMPKβ absence and the retained AMPKβ module score
 ## (CORE5), with Holm adjustment across exactly these six; their declared sensitivities, each changing one
 ## dimension; and the declared sensitivities of the two reproduced models of tail length and disorder on the
 ## AMPKγ contact score (REPRODUCED_PRIMARY_EXTENSION, outside every Holm family).
-source(file.path(Sys.getenv("CTDXST"), "ctdx_lib.R"))
+source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "tail_model_lib.R"))
 S <- "ctdx_cross_ampk.R"
 g <- read.delim(file.path(CTDX, "03_reproduction/GAMMA_ALPHA_REPRODUCTION_GATE.tsv"), comment.char = "#")
 if (g$STATUS != "PASS") stop("REFUSED: gamma-alpha reproduction did not pass")

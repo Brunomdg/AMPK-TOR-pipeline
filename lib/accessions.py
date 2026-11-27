@@ -48,8 +48,8 @@ def normalise(acc):
     both sides; until 4 September 2026 the project had three, so the requirement looked met while
     it was not:
 
-        rl_accession.normalise  ':' and '@' -> '_'
-        rl_join.normalise       the same, plus removal of an InterProScan
+        accessions.normalise  ':' and '@' -> '_'
+        join.normalise       the same, plus removal of an InterProScan
                                 'Species||ACCESSION' prefix
         .split(":")[0]          truncation at ':', written by hand in 16 scripts
 
@@ -59,7 +59,7 @@ def normalise(acc):
 
     The '||' removal is included here because it is the superset and changes nothing on this
     proteome set: none of the 6,288 accessions in the master call table contains '||' (measured,
-    not assumed). rl_join now imports this function instead of defining a second one.
+    not assumed). join now imports this function instead of defining a second one.
 
     Truncation is not used: it discards the isoform suffix, so it cannot be mapped back to the
     real accession and it can merge two isoforms of one gene. collide() checks that no merge has

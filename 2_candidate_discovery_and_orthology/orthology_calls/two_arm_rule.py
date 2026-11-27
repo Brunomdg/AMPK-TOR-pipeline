@@ -21,7 +21,7 @@ that support.
 The script itself decides nothing. It only writes the column `R66_CALL`. Whether that
 call is applied is decided in rl_final_ortholog_table.py, only for candidates the tree
 left AMBIGUOUS, and it can be switched off with ARM_RULE=none. The list of targets and
-the names of the output folders come from the shared helper rl_targets.
+the names of the output folders come from the shared helper targets.
 
 The two-arm rule (chosen on 8 September 2026):
     nominated by at least one orthology-arm method
@@ -86,13 +86,14 @@ def _project_root_from_file(start):
 
 
 ROOT = os.environ.get("PROJECT_ROOT") or _project_root_from_file(__file__)
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
-import rl_targets                                                # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import targets                                                # noqa: E402
 
 TAG = os.environ.get("R59_TAG") or "setA"
-SFX = rl_targets.suffix()
-rl_targets.check_track_agreement()
-RPT = rl_targets.report_dir(ROOT, TAG)
+SFX = targets.suffix()
+targets.check_track_agreement()
+RPT = targets.report_dir(ROOT, TAG)
 CAND = os.path.join(RPT, "06_candidate_list.tsv")
 OUT = os.path.join(RPT, "14_arm_rule_calls.tsv")
 BENCH = os.path.join(RPT, "14_arm_rule_benchmark.tsv")
@@ -104,7 +105,7 @@ BENCH = os.path.join(RPT, "14_arm_rule_benchmark.tsv")
 # after its effect on the calls has been measured.
 ARM1 = ["orthofinder_full", "sonic"]
 ARM2 = ["cdd", "hmmer", "interpro"]
-TARGETS = rl_targets.targets()
+TARGETS = targets.targets()
 
 
 def rows(p):
@@ -260,7 +261,7 @@ def main():
     track = os.environ.get("LOO_BASE") or "11_phylo_vandam_boundary"
     if SFX and not os.environ.get("LOO_BASE"):
         sys.exit("REFUSED: %s needs LOO_BASE set to the set's track (e.g. "
-                 "11_phylo_vandam_genecollapsed%s)" % (rl_targets.label(), SFX))
+                 "11_phylo_vandam_genecollapsed%s)" % (targets.label(), SFX))
     for t in TARGETS:
         for r in rows(os.path.join(ROOT, track, t,
                                    "%s_subtree_calls_iqtree.tsv" % t)):

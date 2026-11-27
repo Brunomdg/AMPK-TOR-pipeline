@@ -6,11 +6,11 @@
 # Methods: Candidate discovery
 # Inputs:  the OrthoFinder run folder and its saved similarity graph; the SonicParanoid run folders and their
 #          pairwise ortholog tables; the controls, declared decoys and negative controls read through
-#          `rl_arm1_selection`
+#          `select_arm_settings`
 # Outputs: `07_findings/R59_arm1_settings__<tag>.tsv` (every setting, with its cover and cost) and
 #          `R59_arm1_cover__<tag>.tsv` (which controls each setting recovers, long form); <tag> is the control set
 #          named in `R59_TAG` plus the target-set suffix
-# Tools:   Python 3 standard library and the project modules `rl_arm1_selection` and `rl_targets`; reads
+# Tools:   Python 3 standard library and the project modules `select_arm_settings` and `targets`; reads
 #          OrthoFinder and SonicParanoid results without running them; versions: see envs/
 # <<< deposit header
 # Step 2 of method 1, and the step `rl_r59_union_optimum.py` reads: that script solves the joint choice over the
@@ -18,7 +18,7 @@
 # deposit path defaults: begin
 _TA210_SCRATCH = __import__("os").environ.get("TA210_SCRATCH") or "/gpfs2/scratch/bdigenov"
 # deposit path defaults: end
-## GOVERNED BY: R59, L15 (output names carry the TARGET_SET suffix through lib/rl_targets.tagged)
+## GOVERNED BY: R59, L15 (output names carry the TARGET_SET suffix through lib/targets.tagged)
 """Every OrthoFinder and SonicParanoid setting we hold, with its cover and cost.
 
 WHY THIS EXISTS. R59 chooses settings jointly so the UNION recovers every declared
@@ -78,10 +78,11 @@ import sys
 
 ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
-import rl_arm1_selection as A                                    # noqa: E402
-import rl_targets                                                # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "2_candidate_discovery_and_orthology", "search_settings"))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import select_arm_settings as A                                    # noqa: E402
+import targets                                                # noqa: E402
 
 OF2 = (_TA210_SCRATCH + "/ofrun2/I1.2/Results_Sep06")
 WD = OF2 + "/WorkingDirectory"
@@ -100,7 +101,7 @@ def _tagged(p):
             "REFUSING: R59_TAG is not set. Writing untagged R59 outputs is how "
             "stale files accumulate: a later reader cannot tell which control "
             "set produced them. Set R59_TAG=setA or R59_TAG=setB.")
-    return rl_targets.tagged(p, _TAG)           # base__<tag><set suffix>.ext (L15)
+    return targets.tagged(p, _TAG)           # base__<tag><set suffix>.ext (L15)
 # ------------------------------------------------------------------------------
 OUT_SET = _tagged(ROOT + "/07_findings/R59_arm1_settings.tsv")
 OUT_COV = _tagged(ROOT + "/07_findings/R59_arm1_cover.tsv")

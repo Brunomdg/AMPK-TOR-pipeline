@@ -9,7 +9,7 @@
 #          the species is named in the environment variable ARS_SPECIES
 # Outputs: `_absence_research_parts/<species>.tsv` (the top five clean proteins per target) and
 #          `<species>.tsv.gate` (counts of agreement with the contaminant screen)
-# Tools:   Python 3 standard library and rl_accession.py; reads HMMER hmmsearch output; versions: see envs/
+# Tools:   Python 3 standard library and accessions.py; reads HMMER hmmsearch output; versions: see envs/
 # <<< deposit header
 """Re-examine every absence against the genome-wide profile search run without score thresholds, and
 report both bit-score statistics.
@@ -30,11 +30,11 @@ This is the second version of the script. Three problems of the first version, f
      state; both disagreements with the screen in version 1 came from this. Each side now starts as
      None, and NO_SCORES exists.
   2. The accession normalisation was wrong. Version 1 used a bare `.split("||")[-1]`. The project uses
-     one normalisation, rl_accession.normalise, because on 'Trypanosoma_vivax||TvY486_0303830:mRNA-p1'
+     one normalisation, accessions.normalise, because on 'Trypanosoma_vivax||TvY486_0303830:mRNA-p1'
      three different hand-written rules give three different keys. Version 1's rule dropped
      Trypanosoma vivax, Monocystis agilis and Heliospora caprellae from the agreement check with the
      screen, and with them 26 of the screen's 2,726 rows; the check then reported 2,698 of 2,700
-     against a denominator it had itself narrowed. This version imports rl_accession, and the
+     against a denominator it had itself narrowed. This version imports accessions, and the
      denominator of the check is every row of the screen.
   3. One statistic was wrong for at least one target. Version 1 read only the full-sequence score
      (domtbl field 8). That score sums every repeat hit, and the project had already measured it to be
@@ -103,8 +103,9 @@ def _project_root_from_file(start):
 
 
 ROOT = os.environ.get("PROJECT_ROOT") or _project_root_from_file(__file__)
-sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
-import rl_accession                                            # noqa: E402
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+sys.path.insert(0, os.path.join(_REPO_ROOT, "lib"))
+import accessions                                            # noqa: E402
 
 DOMT = os.path.join(ROOT, "03_evidence_by_method/hmmer_genomewide/domtbl")
 PANEL = os.path.join(ROOT, "02_reference_data/hmmer_panel/PANEL_DECLARATION_v2.tsv")
@@ -184,7 +185,7 @@ def pass1(f, model_t, model_c):
                 db = float(p[F_DOMBITS])
             except ValueError:
                 continue
-            pid = rl_accession.normalise(p[F_TARGET])
+            pid = accessions.normalise(p[F_TARGET])
             d = best[pid]
             for pole, names in ((0, ts), (1, cs)):
                 if not names:
@@ -223,7 +224,7 @@ def pass2(f, wanted):
                 fb = float(p[F_FULLBITS])
             except ValueError:
                 continue
-            pid = rl_accession.normalise(p[F_TARGET])
+            pid = accessions.normalise(p[F_TARGET])
             iv[m][pid].append((a, b))
             sc[m][pid] = fb
             qlen[m] = int(p[F_QLEN])
@@ -289,11 +290,11 @@ def main():
     known = collections.defaultdict(set)
     for r in rows(FINAL):
         if r["SPECIES"] == sp:
-            known[r["TARGET"]].add(rl_accession.normalise(r["PROTEIN_ID"]))
+            known[r["TARGET"]].add(accessions.normalise(r["PROTEIN_ID"]))
     screen = {}
     for r in rows(SCREEN):
         if r["SPECIES"] == sp:
-            screen[(r["TARGET"], rl_accession.normalise(r["PROTEIN_ID"]))] = r["CALL"]
+            screen[(r["TARGET"], accessions.normalise(r["PROTEIN_ID"]))] = r["CALL"]
 
     # ---- The call, made as the contaminant screen makes it: a side never hit counts as minus
     # infinity, and a protein with no score on either side is NO_SCORES.

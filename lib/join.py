@@ -5,7 +5,7 @@
 # Methods: Candidate discovery
 # Inputs:  the two key sets and the control keys passed by the calling script
 # Outputs: the matched keys and the number of controls found, returned; a self-test report when run directly
-# Tools:   Python 3 standard library and the project module `rl_accession`; versions: see envs/
+# Tools:   Python 3 standard library and the project module `accessions`; versions: see envs/
 # <<< deposit header
 """A join across tools that must show it works before its result is believed.
 
@@ -27,13 +27,15 @@ rl_job_state (no job state that was not read from SLURM): a check that fails, no
 remember.
 """
 import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-# One definition, in rl_accession. This module used to carry a second normalise() that differed
-# from rl_accession's by the removal of the '||' prefix, so the project had two functions that each
+# One definition, in accessions. This module used to carry a second normalise() that differed
+# from accessions's by the removal of the '||' prefix, so the project had two functions that each
 # claimed to be the single accession normalisation. The behaviour kept is this module's (the
-# superset); it now lives in rl_accession and is re-exported here so existing imports keep working.
-from rl_accession import normalise  # noqa: F401
+# superset); it now lives in accessions and is re-exported here so existing imports keep working.
+from accessions import normalise  # noqa: F401
 
 
 class JoinFailed(RuntimeError):
@@ -82,7 +84,7 @@ if __name__ == "__main__":
         ok += good
         print("  %-62s %s" % (desc, "PASS" if good else "FAIL"))
 
-    print("rl_join self-test")
+    print("join self-test")
     ipr = ["Homo_sapiens||NP_996790.3", "Mus_musculus||NP_001013385.1"]
     proj = ["NP_996790.3", "NP_001013385.1"]
 
