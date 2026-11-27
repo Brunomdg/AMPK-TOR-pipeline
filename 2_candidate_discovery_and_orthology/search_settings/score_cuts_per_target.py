@@ -12,6 +12,7 @@
 # Tools:   HMMER hmmsearch (busco6 environment; --max -E 1e5 --domE 1e5); Python 3 standard library and the
 #          project modules `control_declaration` and `targets`; versions: see envs/
 # <<< deposit header
+# Ran as: rl_threshold_pilot_pertarget.py
 """Threshold pilot by target: every target measured against its own positives and negatives.
 
 Why this exists. rl_threshold_pilot.py sets POS = {"POSITIVE_AMPK"}: it scored all 229 models

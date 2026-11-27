@@ -11,6 +11,7 @@
 #          and `SHA256SUMS.txt`
 # Tools:   Python 3 standard library only; versions: see envs/
 # <<< deposit header
+# Ran as: refine_nterminal_heat.py
 from pathlib import Path
 import csv,json,re,hashlib,collections
 D=Path(__file__).resolve().parent

@@ -7,6 +7,7 @@
 # Outputs: the matched keys and the number of controls found, returned; a self-test report when run directly
 # Tools:   Python 3 standard library and the project module `accessions`; versions: see envs/
 # <<< deposit header
+# Ran as: rl_join.py
 """A join across tools that must show it works before its result is believed.
 
 Why this exists. On 2 September 2026 a join between the project's protein identifiers and the raw

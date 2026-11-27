@@ -11,6 +11,7 @@
 # Tools:   Python 3 (standard library); the two check scripts run with Python 3.12 of the ms210_phase2
 #          environment [env record]
 # <<< deposit header
+# Ran as: rbx2_common.py
 ## Shared library of the second sequence-phenotype chain: the output check, the input check, the writer of table
 ## headers, and the state coding helpers. The chain writes only inside its own root; the earlier result folders
 ## (the twenty-target tables, the baseline, the earlier publication tables, the main project folder and the earlier

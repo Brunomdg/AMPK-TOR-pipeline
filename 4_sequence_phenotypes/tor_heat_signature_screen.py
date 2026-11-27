@@ -10,6 +10,7 @@
 #          folder's sequence, table, JSON and script files)
 # Tools:   Python 3 standard library only; versions: see envs/
 # <<< deposit header
+# Ran as: classify_tor_heat.py
 from pathlib import Path
 import csv,json,hashlib,collections,statistics
 D=Path(__file__).resolve().parent

@@ -11,6 +11,7 @@
 #          `CAMKK_constituent_class_validation.tsv`, `CAMKK_reference_loo_detail.tsv`, `CAMKK_constituent_counts.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_camkk_calls.py
 ## The primary CAMKK tree is the reference-masked one and the unmasked tree is the sensitivity analysis. This order
 ## was fixed by the alignment check (rbx3_aln_qc.py), whose occupancy threshold was set before any topology was read
 ## and which the unmasked CAMKK alignment failed; it was not chosen by which tree gives cleaner subfamilies. A copy

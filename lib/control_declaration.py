@@ -7,6 +7,7 @@
 # Outputs: the path and version label, returned (printed when run directly)
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_declaration.py
 """Which version of the declared-control table is current?
 
 Each round of review writes a new numbered version of the control table instead of editing the

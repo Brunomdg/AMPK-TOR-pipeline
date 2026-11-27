@@ -10,6 +10,7 @@
 #          copy needs review, `10_validation/R2_CANDIDATE_CHANGE_REQUIRED.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_calls.py
 ## Turns the tree-based assignments of rbx3_tree_calls.R into per-copy LKB1 sequence-support statuses (strongly
 ## supported, compatible or unresolved), which combine the tree placement with the ProSite kinase signatures and
 ## the kinase-domain length. The script refuses CAMKK, which rbx3_camkk_calls.py handles, so its CAMKK branch below

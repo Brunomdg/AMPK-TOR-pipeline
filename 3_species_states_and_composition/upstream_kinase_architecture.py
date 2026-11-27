@@ -10,6 +10,7 @@
 #          `architecture_by_AMPKa_state.tsv`, `TOR_upstream_decomposition.tsv`, `CAMKK_constituent_by_clade.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_architecture.py
 ## Assigns each of the 210 species an upstream-kinase state from its LKB1 and CAMKK-category states and writes
 ## descriptive breakdowns. The state describes which upstream kinases were found and does not require AMPKα; AMPKα
 ## presence is a column, so the subset of species that retain AMPKα can be taken later. The TORC1 and TORC2 core

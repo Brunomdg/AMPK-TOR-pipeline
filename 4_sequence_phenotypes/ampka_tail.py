@@ -13,6 +13,7 @@
 # Tools:   metapredict 3.0.2 (version checked at start); MAFFT 7.526 [env record] from the orthofinder3
 #          environment (--globalpair --maxiterate 1000); Python 3; versions: see envs/
 # <<< deposit header
+# Ran as: rbx1_alpha.py
 ## Job x2 of this chain, AMPKα branch. Repeats the original AMPKα C-terminal measurement (folder `P03_actd`) on
 ## every accepted AMPKα ortholog copy: the length C-terminal of the residue homologous to canonical PRKAA1 residue
 ## 290 (residue 305 of the anchor NP_996790.3), and the metapredict disorder over that region. Runs in the

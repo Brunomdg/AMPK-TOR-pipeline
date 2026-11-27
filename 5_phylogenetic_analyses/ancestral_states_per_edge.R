@@ -11,6 +11,7 @@
 # Tools:   R 4.5.3 with ape 5.8.1, corHMM 2.8, phangorn 2.12.1 and phytools 2.5.2 (the ms210_phase2 environment,
 #          versions as noted on 9 September 2026 in its job script)
 # <<< deposit header
+# Ran as: rl_rm_q0_asr.R
 ## deposit path defaults: begin
 .TA210_ENVS <- local({v <- Sys.getenv("TA210_ENVS"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov/envs"})
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})

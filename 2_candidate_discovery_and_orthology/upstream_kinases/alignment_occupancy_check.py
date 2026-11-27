@@ -10,6 +10,7 @@
 #          occupancy, reference coverage, the frozen crop width and the QC verdict)
 # Tools:   Python 3 (standard library) and the project module `upstream_kinase_tables`; versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_aln_qc.py
 # The trigger below is the threshold that `rbx3_mask.py` and `rbx3_camkk_calls.py` both cite as fixed before any
 # topology was read: at least half the alignment columns must carry a residue in at least one positive reference,
 # or the lane stops and the deterministic reference-occupancy mask is applied. No column is ever trimmed because

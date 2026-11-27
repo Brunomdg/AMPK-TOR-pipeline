@@ -8,6 +8,7 @@
 # Tools:   R with ape, corHMM, phangorn and phytools attached by the caller; R 4.5.3, ape 5.8.1, corHMM 2.8,
 #          phangorn 2.12.1 and phytools 2.5.2 in the ms210_phase2 environment (noted on 9 September 2026)
 # <<< deposit header
+# Ran as: rl_rm_asr_lib.R
 ## Shared functions for the count of independent losses of each component (rl_rm_asr.R) and for the per-edge
 ## reconstruction used by the replacement analysis and the co-transition analysis (rl_rm_q0_asr.R).
 ##

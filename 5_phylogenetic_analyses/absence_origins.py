@@ -9,6 +9,7 @@
 #          in `14_remodeling/Q7_alltargets`, or in the folder named by Q7_OUT
 # Tools:   Python 3 standard library; imports `reconstruction_paths.py`; versions: see envs/
 # <<< deposit header
+# Ran as: rl_rm_q7_origins.py
 """Origins: the independent origins of every `<T>_absent` trait under the standard coding, read from the
 ancestral-state blocks, never recomputed.
 

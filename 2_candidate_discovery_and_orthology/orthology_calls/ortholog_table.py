@@ -11,6 +11,7 @@
 #          primary (gene-collapsed) track also FINAL_ORTHOLOG_TABLE.tsv and FINAL_ORTHOLOGS.tsv
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rl_final_ortholog_table.py
 """The final ortholog table: every candidate hit, with the non-orthologs removed.
 
 The aim is a trustworthy ortholog table per target across 210 eukaryotic proteomes.

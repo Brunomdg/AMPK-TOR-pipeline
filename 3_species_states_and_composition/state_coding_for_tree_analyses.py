@@ -8,6 +8,7 @@
 # Outputs: `STANDARD_per_species.tsv`, `STANDARD_changes.tsv` and `STANDARD_vs_R37.tsv` in `14_remodeling/Q7_alltargets`
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_rm_q7_standard.py
 """Build the standard per-species coding of the ten active targets from the ten-target presence table (T2).
 
 One rule for every trait: `<T>_absent` p1 = 0.0 where T2 says `PRESENT` (an ortholog was called, whatever the

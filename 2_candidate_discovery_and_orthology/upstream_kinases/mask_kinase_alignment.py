@@ -7,6 +7,7 @@
 # Outputs: `<target>_kinase_domain.masked.aln.faa`, `<target>_alignment_mask_accounting.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_mask.py
 ## Applies the reference-occupancy mask that the alignment check (rbx3_aln_qc.py) fixed before any number was
 ## read: keep only the alignment columns that carry a residue in at least one positive reference sequence. The
 ## mask depends only on the reference sequences, never on the candidates or on the tree topology. The unmasked

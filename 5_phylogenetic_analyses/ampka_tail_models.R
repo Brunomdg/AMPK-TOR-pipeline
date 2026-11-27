@@ -9,6 +9,7 @@
 #          `CTD_cross_AMPK_sensitivity.tsv`, `sample_flow_cross_ampk.tsv` and `encoding_checks_cross_ampk.tsv`
 # Tools:   R with ape and phylolm 2.6.5 (Pagel's lambda, Brownian motion as a sensitivity); versions: see envs/
 # <<< deposit header
+# Ran as: ctdx_cross_ampk.R
 ## deposit repo root: begin
 .REPO_ROOT <- local({
   a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])

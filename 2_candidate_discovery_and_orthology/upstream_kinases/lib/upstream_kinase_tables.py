@@ -9,6 +9,7 @@
 # Outputs: none of its own; write() and record_outputs() write each step's tables and `11_logs/outputs_<step>.tsv`
 # Tools:   Python 3 (standard library); paths of MAFFT and IQ-TREE 3 (orthofinder3 environment); versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_common.py
 ## Shared helpers for the upstream-kinase refit scripts in this folder: folder locations, the check of the input
 ## tables, the banner line written at the top of every output table, the table writer and the species-state
 ## helpers, adapted from rbx2c_common.py with the folders changed. The scripts write only inside this refit's own

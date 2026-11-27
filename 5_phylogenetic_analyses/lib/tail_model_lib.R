@@ -1,3 +1,18 @@
+# >>> deposit header
+# Purpose: The shared library of the AMPKa tail models: builds the model frames, encodes every state once,
+#          applies the Holm adjustment within each declared family, runs the model catalogue and writes the
+#          result, sensitivity and sample-flow tables. Loads the preamble of the model engine.
+# Methods: Phylogenetic analyses
+# Inputs:  `lib/model_engine.R` (its preamble only, up to the Analysis 1 marker); the dated chronogram; the
+#          ten-target species-state table; the AMPKa tail, AMPKg contact, AMPKb module, upstream-kinase and
+#          architecture species tables
+# Outputs: none of its own; the two calling scripts write through `write_tsv()`
+# Tools:   R with ape and phylolm 2.6.5; versions: see environment/
+# <<< deposit header
+# Ran as: ctdx_lib.R
+# It carried no header in the first deposit because other scripts verified its checksum. Those checks are
+# gone, so it is documented like every other file.
+# Ran as: ctdx_lib.R
 ## deposit repo root: begin
 .REPO_ROOT <- local({
   a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])

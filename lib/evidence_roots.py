@@ -7,6 +7,7 @@
 # Outputs: the folders, the model-to-folder map and the file lists, returned (printed when run directly)
 # Tools:   Python 3 standard library and the project module `targets`; versions: see envs/
 # <<< deposit header
+# Ran as: rl_evidence_roots.py
 """Which folders of HMMER results a run reads, declared in one table.
 
 Why. The genome-wide search (03_evidence_by_method/hmmer_genomewide) scored every protein of the

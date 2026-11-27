@@ -13,6 +13,7 @@
 # Tools:   Python 3 standard library and the project modules `select_arm_settings` and `targets`; reads
 #          OrthoFinder and SonicParanoid results without running them; versions: see envs/
 # <<< deposit header
+# Ran as: rl_arm1_all_settings.py
 # Step 2 of method 1, and the step `rl_r59_union_optimum.py` reads: that script solves the joint choice over the
 # frontier enumerated here and stops with "Run rl_arm1_all_settings.py first" if this output is absent.
 # deposit path defaults: begin

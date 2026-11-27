@@ -8,6 +8,7 @@
 # Outputs: filtered calls and counts, returned; a self-test report when run directly
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_vocab.py
 """One set of call values for every line of evidence, so that "no opinion" cannot be read as a
 vote against.
 

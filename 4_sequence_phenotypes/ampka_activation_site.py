@@ -11,6 +11,7 @@
 #          `AMPKa_activation_gates.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx2_ampka_activation.py
 ## Job y3 of the second chain. Upstream-kinase repertoire states and the AMPKα activation-loop site, scored through
 ## the AMPKα alignment of the first chain against the motif-anchored reference coordinates written by job y0.
 ## "Thr172" is only the conventional name; the sequence index comes from the reference table. NEITHER_CAPTURED

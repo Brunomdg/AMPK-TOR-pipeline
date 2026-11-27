@@ -10,6 +10,7 @@
 #          including this script and its helper) and `DONE.txt`
 # Tools:   R; phylolm 2.6.5 (through `lib/multistart_search.R`); ape (version: see envs/)
 # <<< deposit header
+# Ran as: network10_refit.R
 ## deposit path defaults: begin
 .TA210_ENVS <- local({v <- Sys.getenv("TA210_ENVS"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov/envs"})
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})

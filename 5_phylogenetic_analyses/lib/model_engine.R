@@ -13,6 +13,7 @@
 # Tools:   R with ape and phylolm 2.6.5 (phyloglm logistic_MPLE btol = 30; phylolm lambda primary, BM
 #          sensitivity); versions: see envs/
 # <<< deposit header
+# Ran as: rbx1_models.R
 # Two things a reader needs to know about this file, both recorded in `docs/deposit_gaps.md`.
 #
 # 1. This is not the revision that produced the published tail models. `ctdx_lib.R` pins the engine at sha256

@@ -16,6 +16,7 @@
 # Tools:   R with ape, phangorn and phytools; versions: see envs/ (the R, ape and phangorn versions
 #          are also written into the outputs)
 # <<< deposit header
+# Ran as: rl_absence_support.R
 ## deposit path defaults: begin
 .TA210_HOME_REAL <- local({v <- Sys.getenv("TA210_HOME_REAL"); if (nzchar(v)) v else "/gpfs1/home/b/d/bdigenov"})
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})

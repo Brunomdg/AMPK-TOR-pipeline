@@ -1,6 +1,6 @@
 # The TOR N-terminal HEAT structural screen: references and acceptance rule
 
-Sources: `06_tor_heat/structural_screen/run_direct_alignment.py` for the rule, which is the authority for what
+Sources: `4_sequence_phenotypes/tor_heat_structural_screen.py` for the rule, which is the authority for what
 the code does, and the Supplementary Methods, sequence phenotypes of the present subunits, for the identity
 of the reference structures. Supplementary Methods subsection: sequence phenotypes of the present subunits.
 
@@ -57,5 +57,5 @@ stops the screen rather than being reported alongside it.
 The crop itself is chosen by transferring human HEAT alignment coordinates and capping before the observed FAT
 domain. The script records that in every summary it writes: region selection only, not proof of HEAT. The
 structural screen tests the crop; it does not define it. The final present or absent call is made downstream
-by `06_tor_heat/final_calls/resolve_heat_final.py`, on the accessions in
+by `4_sequence_phenotypes/tor_heat_final_calls.py`, on the accessions in
 `tor_heat_evidence_accessions.tsv`.

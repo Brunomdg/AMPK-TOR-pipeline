@@ -7,6 +7,7 @@
 # Outputs: none of its own (alignment files written where the calling script asks)
 # Tools:   Python 3 (standard library); MAFFT 7.526 [env record] from the orthofinder3 conda environment
 # <<< deposit header
+# Ran as: rbx1_score.py
 ## Sequence functions shared by the extraction, alignment and species steps of this chain (jobs x1, x2 and x3):
 ## FASTA reading and writing, the MAFFT procedure fixed before scoring, whether a position can be scored, and the
 ## species summary, which is computed the same way whatever the trait.

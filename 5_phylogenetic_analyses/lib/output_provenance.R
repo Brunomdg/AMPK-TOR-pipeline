@@ -7,6 +7,7 @@
 # Outputs: none written; returns the `##` lines
 # Tools:   R (tools::md5sum); reports the versions of ape, corHMM, phangorn and phytools it finds; versions: see envs/
 # <<< deposit header
+# Ran as: rl_rm_prov.R
 ## Shared header lines for every output under `14_remodeling`.
 ## Why: an output that cannot name the version of its inputs cannot be traced to them (the trait tables
 ## changed three times on 9 September 2026). So every output names the script that wrote it and that

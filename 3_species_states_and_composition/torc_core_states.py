@@ -9,6 +9,7 @@
 # Outputs: `03_torc_core/TORC_core_states.tsv`, `RAPTOR_RICTOR_four_state.tsv` and `core_AMPK_descriptive.tsv`
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rbx2_torc_core.py
 ## Job y1 of the second chain. Canonical TORC1 and TORC2 core-complement states derived by fixed rules from the
 ## ten-target three-state table, the descriptive four combined RAPTOR and RICTOR states, and the six two-by-two
 ## tables of core state against AMPK subunit loss. One absence in a proteome where absence can be assessed disrupts

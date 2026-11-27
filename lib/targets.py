@@ -7,6 +7,7 @@
 # Outputs: target lists, suffixes, file names and table rows, returned (printed when run directly)
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_targets.py
 """The single source of the target list. Every script that used to carry the literal
 ["TOR", "RAPTOR", "RICTOR", "LST8", "AMPKa", "AMPKb", "AMPKg", "SIN1"] reads it from here, and this
 module reads it from 05_method_and_rules/TARGET_REGISTRY.tsv.

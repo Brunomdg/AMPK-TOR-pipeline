@@ -10,6 +10,7 @@
 # Tools:   R with ape, stats (glm, p.adjust) and phylolm 2.6.5 (phyloglm, logistic_MPLE, btol = 30); sources
 #          `core_multistart_helper.R`; other versions: see envs/
 # <<< deposit header
+# Ran as: core18_penalized.R
 ## deposit path defaults: begin
 .TA210_SCRATCH <- local({v <- Sys.getenv("TA210_SCRATCH"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov"})
 ## deposit path defaults: end

@@ -1,6 +1,6 @@
 # The AMPKβ carbohydrate-binding module: reference, positions and scoring rule
 
-Source: `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py`. This page states what that script fixes; the script
+Source: `4_sequence_phenotypes/ampkb_module_score.py`. This page states what that script fixes; the script
 remains the authority. Supplementary Methods subsection: sequence phenotypes of the present subunits.
 
 ## The reference
@@ -11,7 +11,7 @@ remains the authority. Supplementary Methods subsection: sequence phenotypes of 
 | Reference sequence | read from `CLEAN_literature_controls.tsv`, the frozen literature controls | `reference()`, lines 40 to 46 |
 | Numbering | the numbering of the rat structure 1Z0N at offset zero | the script's own note, lines 14 and 15 |
 | Module envelope on the reference | residues 78 to 161 | `CBM_FROM`, `CBM_TO`, line 31; taken from the genome-wide HMMER domain table |
-| Primary alignment | each copy against the reference, pairwise, MAFFT `--globalpair --maxiterate 1000 --anysymbol` | `rbx1_score.py`, line 57 |
+| Primary alignment | each copy against the reference, pairwise, MAFFT `--globalpair --maxiterate 1000 --anysymbol` | `sequence_scoring.py`, line 57 |
 | Declared sensitivity | one joint alignment of the reference with every copy | `main()`, line 116 |
 
 ## The two site sets

@@ -6,7 +6,7 @@ code in this repository. Conflating them is easy and gives the wrong reading of 
 | | What it fixes | Cutoff | Structures | Computed where |
 |---|---|---|---|---|
 | **The position consensus** | the three ten-position site definitions scored on every copy | 4.0 Å, heavy atom | **six**, listed below | not in this repository; the result is the frozen reference panel |
-| **The geometry measurement** | what is measured in each predicted model | 5.0 Å, neighbour search | `2V8Q`, with `4CFE` as control | `p45b_colabfold_analysis.py` |
+| **The geometry measurement** | what is measured in each predicted model | 5.0 Å, neighbour search | `2V8Q`, with `4CFE` as control | `amp_site_measurement.py` |
 
 Source for the first row: the Supplementary Methods, sequence phenotypes of the present subunits, and the
 manuscript's table of AMP-contact reference positions. Source for the second: the script named, which remains
@@ -31,7 +31,7 @@ site. Those 30 selections are the rows of the reference table. Site 1 is primary
 under identical rules as sensitivities declared in advance, and the three sets are reported separately and
 never pooled.
 
-**This repository does not perform that computation.** It consumes its result: `rbx1_gamma.py` reads the
+**This repository does not perform that computation.** It consumes its result: `ampkg_contact_scores.py` reads the
 frozen panel `AMPKg_contact_reference.tsv`, which is in the data deposit, and refuses to run unless each of
 its three site sets holds exactly ten positions.
 
@@ -39,7 +39,7 @@ its three site sets holds exactly ten positions.
 
 Published site positions are numbered on canonical human γ1, UniProt `P54619`, 331 residues. The scoring code
 indexes into RefSeq `NP_001193638.1`, which is nine residues longer, so the anchor index is the canonical
-position plus 9. `rbx1_gamma.py` states that offset in its own comment (`ANCHOR`, line 29).
+position plus 9. `ampkg_contact_scores.py` states that offset in its own comment (`ANCHOR`, line 29).
 
 The offset was verified by recovering 29 of the 30 published site residues with it, against 1 of 30 without
 it. The reference table carries that check per row, which is why exactly one of its 30 rows is marked
@@ -47,7 +47,7 @@ unverified.
 
 ## The geometry measurement, in this repository
 
-`11_structure_pocket/panel_86_queries/p45b_colabfold_analysis.py` is the measurement library that both
+`6_structure_prediction_and_pocket/lib/amp_site_measurement.py` is the measurement library that both
 structure scripts load after checking its checksum.
 
 1. Three AMP sites are defined on chain E of `2V8Q` by a 5.0 Å neighbour search around every atom of the bound
@@ -76,4 +76,4 @@ structures of the consensus play no part in the code here.
 ## A third accession, for a different subunit
 
 `1Z0N` is the rat structure whose numbering the human AMPKβ reference carries, in
-`05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py`. It has no part in the AMPKγ AMP sites.
+`4_sequence_phenotypes/ampkb_module_score.py`. It has no part in the AMPKγ AMP sites.

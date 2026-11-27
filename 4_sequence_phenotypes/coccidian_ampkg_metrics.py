@@ -12,6 +12,7 @@
 #          Table S4
 # Tools:   Python 3 with pandas, NumPy and SciPy (scipy.stats.mannwhitneyu); versions: see envs/
 # <<< deposit header
+# Ran as: build_degeneration_metrics.py
 """Descriptive measurements of the coccidian AMPKγ copies: extraction from existing tables and summary statistics.
 
 No new alignment, refit or model. All inputs are existing tables, and the SHA-256 checksum of each is written to

@@ -42,7 +42,7 @@ any dating run. **Five entered the fit of record and three were dropped.**
 A calibration whose MRCA tip set is not exactly the expected lineage is dropped and listed; it is never
 applied to a deeper node. That rule is stated in the frozen calibration file itself.
 
-**Five, not six.** An earlier version of this page, and of `docs/SOFTWARE.md`, said that six of the eight
+**Five, not six.** An earlier version of this page, and of `docs/software.md`, said that six of the eight
 entered and two were dropped. That is the count for **treePL**, a different method in the same run, which
 dropped Archaeplastida and Fungi_crown only. The `chronos` fit of record dropped three.
 
@@ -79,7 +79,7 @@ chronogram itself.
 ## The alternative datings
 
 Both ran on the same rootings and calibration sets, and both survive as command lines in
-`external_runs/sm1_proteomes_taxonomy_species_tree/`.
+`1_proteomes_taxonomy_species_tree/external_runs/`.
 
 - **LSD2** 2.2.3: six runs, three rootings by two sets, all returning successfully.
 - **treePL** 1.0: prime, then cross-validation of the smoothing value, then a thorough run, on root A2 under

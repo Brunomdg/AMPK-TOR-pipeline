@@ -1,5 +1,5 @@
 ## The accessions that count as HEAT evidence in the final TOR N-terminal HEAT call.
-## Source: 06_tor_heat/final_calls/resolve_heat_final.py, function evi_class (lines 94 to 105). This file is a
+## Source: 4_sequence_phenotypes/tor_heat_final_calls.py, function evi_class (lines 94 to 105). This file is a
 ## transcription of that function; the function remains the authority.
 ## Rule: HEAT_PRESENT if at least one accession of class A, B or C overlaps the N-terminal region by at least one
 ## residue; otherwise HEAT_ABSENT, meaning the region was evaluated and no HEAT-indicative evidence was found.

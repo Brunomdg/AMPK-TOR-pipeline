@@ -12,6 +12,7 @@
 #          `STRUCTURAL_PREPARATION.json` (counts); existing FASTA outputs are never overwritten
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: prepare_ampkg_domain_preserving.py
 # deposit path defaults: begin
 _TA210_SCRATCH = __import__("os").environ.get("TA210_SCRATCH") or "/gpfs2/scratch/bdigenov"
 # deposit path defaults: end

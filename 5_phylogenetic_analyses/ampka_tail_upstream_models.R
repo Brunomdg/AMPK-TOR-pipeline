@@ -10,6 +10,7 @@
 #          `07_tables/CTD_BY_UPSTREAM_ARCHITECTURE_DESCRIPTIVE.tsv`
 # Tools:   R with ape and phylolm 2.6.5 (Pagel's lambda, Brownian motion as a sensitivity); versions: see envs/
 # <<< deposit header
+# Ran as: ctdx_upstream.R
 ## deposit repo root: begin
 .REPO_ROOT <- local({
   a <- commandArgs(trailingOnly = FALSE); f <- sub("^--file=", "", a[grep("^--file=", a)])

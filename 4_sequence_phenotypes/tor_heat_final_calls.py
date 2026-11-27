@@ -12,6 +12,7 @@
 # Outputs: `TOR_HEAT_FINAL_CALLS.tsv` (all 246 copies); `CONTROL_CALIBRATION.json`
 # Tools:   Python 3 with pandas; versions: see envs/
 # <<< deposit header
+# Ran as: resolve_heat_final.py
 """
 resolve_heat_final.py: final two-state HEAT calls (present or absent) for the 204 TOR proteins that the
 signature and structural screens left unresolved.

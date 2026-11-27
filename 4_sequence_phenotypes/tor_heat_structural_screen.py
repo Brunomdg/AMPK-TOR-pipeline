@@ -12,6 +12,7 @@
 #          `direct_alignment_v1/PRODUCTION_CROP_PREFLIGHT.json` (pilot)
 # Tools:   US-align (-mol prot); Biopython; versions: see envs/
 # <<< deposit header
+# Ran as: run_direct_alignment.py
 from pathlib import Path
 import csv,json,subprocess,sys,hashlib,re,statistics
 from Bio.PDB import PDBParser,PDBIO,Structure,Model,Chain

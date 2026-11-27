@@ -14,6 +14,7 @@
 # Tools:   Python 3 standard library; reads OrthoFinder and SonicParanoid results without running them;
 #          versions: see envs/
 # <<< deposit header
+# Ran as: rl_arm1_selection.py
 """Choose the OrthoFinder and SonicParanoid settings of the orthology arm, per target.
 
 The criterion was written before any of the clusterings it judges existed (this

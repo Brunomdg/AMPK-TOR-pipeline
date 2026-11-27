@@ -1,4 +1,21 @@
 #!/usr/bin/env python3
+# >>> deposit header
+# Purpose: The measurement library of the structure predictions: defines the three AMP sites on chain E of
+#          PDB 2V8Q by a 5.0 A neighbour search, superposes each model's site alpha-carbons on that reference,
+#          transfers the reference AMP under the same transform, and measures the superposition deviation, the
+#          shortest heavy-atom distance to the ligand, the site pLDDT and the pocket volume.
+# Methods: Structure prediction and AMPKg pocket geometry
+# Inputs:  none of its own; the calling script passes each query's model files. Reads 2V8Q and 4CFE as
+#          structure controls
+# Outputs: none of its own; returns the measurements to the calling script
+# Tools:   Python 3 with numpy, Biopython and pyKVFinder 0.9.5 (the p68_kvf environment); versions: see
+#          environment/
+# <<< deposit header
+# Ran as: p45b_colabfold_analysis.py
+# It carried no header in the first deposit because the measurement scripts verified its checksum before
+# loading it. That check is gone, so it is documented like every other file. The planning documents its notes
+# below cite (PLAN.md and the three LITERATURE_BASIS files) are not part of this deposit.
+# Ran as: p45b_colabfold_analysis.py
 ## New code for the old ColabFold + Fpocket analysis, step b (analysis). Design (PLAN.md row 18; NOCODE_LITERATURE_BASIS.md,
 ## ColabFold + Fpocket): sites = gamma residues within 5 A of each AMP in 2V8Q (rat gamma1, chain E), numbered on canonical
 ## human gamma1 (P54619); site 1 = the AMP whose site overlaps the ten official site-1 contacts. Per model (25 per query):

@@ -10,6 +10,7 @@
 # Tools:   Python 3 (standard library); the two check scripts run with Python 3.12 of the ms210_phase2
 #          environment [env record]
 # <<< deposit header
+# Ran as: rbx1_lib.py
 ## Shared library of this chain, as rerun on 16 September 2026 on the ten-target ortholog set: the ortholog table
 ## had changed, so the AMPKα C-terminal and AMPKγ pocket measurements were recomputed and the earlier values set
 ## aside. The functions are those of the earlier version of this library, so the other scripts of the chain run

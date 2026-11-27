@@ -17,6 +17,7 @@
 #          `evidence_roots`; reads HMMER, CDD, InterProScan, OrthoFinder and SonicParanoid output without
 #          running them; versions: see envs/
 # <<< deposit header
+# Ran as: rl_r59_union_optimum.py
 """The joint optimum of the search settings, chosen at the union of all methods.
 
     choose one setting s_i per method

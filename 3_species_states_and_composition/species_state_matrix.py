@@ -8,6 +8,7 @@
 #          16_control_repair/CORE8_T2_DIFFERENCES_FROM_R1.tsv
 # Tools:   Python 3 standard library (versions: see envs/)
 # <<< deposit header
+# Ran as: rl_pub_t1_t2_active10.py
 # Choices behind this build, made on 16 September 2026: the tables are rebuilt for
 # the active set of ten targets under new names (without the _all20 suffix), and
 # TARGET_REGISTRY.tsv is left unchanged; T2 uses one three-state coding for every

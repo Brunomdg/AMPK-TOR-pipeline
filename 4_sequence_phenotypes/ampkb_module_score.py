@@ -11,6 +11,7 @@
 # Tools:   MAFFT 7.526 [env record] from the orthofinder3 environment (--globalpair --maxiterate 1000); Python 3;
 #          versions: see envs/
 # <<< deposit header
+# Ran as: rbx2_ampkb_cbm.py
 ## Job y4 of the second chain. The AMPKβ carbohydrate-binding module, scored on every accepted AMPKβ ortholog copy
 ## against the human PRKAB1 reference (NP_006244.2), which carries the numbering of the rat structure 1Z0N at
 ## offset zero. The primary alignment is each copy against the reference, pairwise; one joint alignment of all

@@ -9,6 +9,7 @@
 # Outputs: none of its own (imported by `rl_rm_q7_origins.py` and by the co-transition count)
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_rm_q7_lib.py
 """Shared path resolver for the origin and co-transition analyses under the standard coding.
 
 The standard coding (STANDARD_per_species.tsv) uses one rule and one `<T>_absent` name for every

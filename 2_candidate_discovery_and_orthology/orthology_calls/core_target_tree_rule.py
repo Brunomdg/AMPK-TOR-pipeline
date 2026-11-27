@@ -8,6 +8,7 @@
 # Outputs: 04_final_tables/CORE8_TREE_RULE_RESOLUTION.tsv (written only with --apply; never overwritten)
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rl_core8_tree_rule.py
 """Tree rule for the eight core targets: resolve the candidates the final table leaves unresolved.
 
 The final ortholog table of the ten active targets (04_final_tables/FINAL_ORTHOLOG_TABLE__active10.tsv,

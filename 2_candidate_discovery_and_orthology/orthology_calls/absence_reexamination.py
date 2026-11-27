@@ -11,6 +11,7 @@
 #          `<species>.tsv.gate` (counts of agreement with the contaminant screen)
 # Tools:   Python 3 standard library and accessions.py; reads HMMER hmmsearch output; versions: see envs/
 # <<< deposit header
+# Ran as: rl_absence_research.py
 """Re-examine every absence against the genome-wide profile search run without score thresholds, and
 report both bit-score statistics.
 

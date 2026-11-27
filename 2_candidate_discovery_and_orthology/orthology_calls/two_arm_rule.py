@@ -9,6 +9,7 @@
 #          (held-out controls recovered and boundary markers wrongly promoted, per target)
 # Tools:   Python 3 (standard library); versions: see envs/
 # <<< deposit header
+# Ran as: rl_ambiguous_arm_rule.py
 """Support from the two search arms for every candidate, and the call it implies.
 
 The gene tree returns AMBIGUOUS for a candidate when the smallest clade that encloses

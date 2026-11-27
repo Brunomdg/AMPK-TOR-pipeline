@@ -7,6 +7,7 @@
 # Outputs: the tree-call table (for example `CAMKK_tree_calls_masked.tsv`) and `<target>_reroot_invariance.tsv`
 # Tools:   R with ape; versions: see envs/
 # <<< deposit header
+# Ran as: rbx3_tree_calls.R
 ## Classifies each candidate and reference tip of a CAMKK or LKB1 kinase-domain tree by a fixed rule, set before
 ## any tree was examined. IQ-TREE produces an unrooted maximum-likelihood tree, so the rule is defined on
 ## bipartitions (splits), never on a displayed root: for each tip, take the smallest side of any split that holds

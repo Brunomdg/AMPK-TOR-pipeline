@@ -18,6 +18,7 @@
 #          `call_vocabulary`, `targets`, `evidence_roots` and `join`; reads the output of OrthoFinder,
 #          SonicParanoid, HMMER, CDD and InterProScan without running them; versions: see envs/
 # <<< deposit header
+# Ran as: rl_per_method_report.py
 """Per-method ortholog calls derived from raw method output, for 8 targets in 210 species.
 
 Five methods in two independent arms, each method reporting only for itself:

@@ -7,6 +7,7 @@
 # Outputs: when run directly: counts of rewritten accessions and of genomes with merged accessions, printed
 # Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
+# Ran as: rl_accession.py
 """One normalisation of protein accessions, shared by every script that joins evidence across tools.
 
 Why this exists. Each tool rewrites characters it cannot carry, and each rewrite was once found

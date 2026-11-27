@@ -12,6 +12,7 @@
 # Tools:   Python 3 with numpy; Biopython and pyKVFinder through `p45b_colabfold_analysis.py` (pyKVFinder 0.9.5
 #          is held only in the `p68_kvf` environment [env record]); versions: see envs/
 # <<< deposit header
+# Ran as: analyze_all_ampkg_structures.py
 # deposit path defaults: begin
 _TA210_SCRATCH = __import__("os").environ.get("TA210_SCRATCH") or "/gpfs2/scratch/bdigenov"
 # deposit path defaults: end

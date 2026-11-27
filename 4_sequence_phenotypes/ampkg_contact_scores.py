@@ -13,6 +13,7 @@
 # Tools:   MAFFT 7.526 [env record] from the orthofinder3 environment (--globalpair --maxiterate 1000); Python 3;
 #          versions: see envs/
 # <<< deposit header
+# Ran as: rbx1_gamma.py
 ## Job x2 of this chain, AMPKγ branch. The alignment rule for the AMP-contact score was chosen on 14 September
 ## 2026: the primary method (PAIRWISE_LEGACY_P02) aligns each copy to the anchor pairwise, exactly as the original
 ## AMPKγ pocket analysis (folder `P02_gamma_pocket`) did, because that keeps this phenotype continuous with the

@@ -1,7 +1,7 @@
 ## The three input variants of the AMPKγ site-1 score, and the primary input they replace.
-## Source: 07_phylogenetic_regressions/ctd_cross_feature/ctdx_cross_ampk.R, lines 45 to 47 (the predictor swaps),
-## with the column list in ctdx_lib.R line 102. The scores themselves are produced by
-## 05_sequence_phenotypes/rbx1_chain/rbx1_gamma.py and summarised per species.
+## Source: 5_phylogenetic_analyses/ampka_tail_models.R, lines 45 to 47 (the predictor swaps),
+## with the column list in tail_model_lib.R line 102. The scores themselves are produced by
+## 4_sequence_phenotypes/ampkg_contact_scores.py and summarised per species.
 ## Each variant is a declared sensitivity: it swaps one species-level column for the primary one in the two
 ## AMPKγ contact-score models (GA_CONTACT_LEN and GA_CONTACT_DIS) and changes nothing else. The variants are
 ## never averaged with the primary and never chosen per species.

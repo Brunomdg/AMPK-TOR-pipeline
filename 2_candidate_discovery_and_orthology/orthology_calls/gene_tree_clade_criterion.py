@@ -7,6 +7,7 @@
 # Outputs: <target>_subtree_calls<suffix>.tsv, <target>_subtree_summary<suffix>.tsv, and <target>_contaminants<suffix>.tsv when the tree carries boundary markers
 # Tools:   Python 3 with DendroPy (versions: see envs/)
 # <<< deposit header
+# Ran as: rl_phylo_subtree.py
 """The gene-tree clade criterion of van Dam et al. (2011), anchored on the curated
 positive controls, and the per-tip contaminant call made on the same tree.
 
