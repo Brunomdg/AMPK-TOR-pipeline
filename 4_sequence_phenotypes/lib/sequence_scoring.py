@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # >>> deposit header
-# Purpose: Sequence functions shared by the scripts that measure the retained subunits: FASTA reading and writing,
+# Purpose: Sequence functions shared by the scripts that measure the present subunits: FASTA reading and writing,
 #          MAFFT alignment, the state of a reference position in a copy, and the species summary over copies.
 # Methods: Sequence phenotypes of the present subunits
 # Inputs:  none of its own (sequences and FASTA files passed in by the calling scripts)

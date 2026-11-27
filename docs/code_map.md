@@ -195,7 +195,7 @@ Before these scripts, InterProScan signatures, the AlphaFold models and US-align
    tier. The accessions it accepts as HEAT evidence are in
    `docs/constants/tor_heat_evidence_accessions.tsv`.
 
-### Method 5. Sequence measurements of the retained subunits
+### Method 5. Sequence measurements of the present subunits
 
 1. `4_sequence_phenotypes/ampkg_contact_scores.py`: scores the AMP-contact positions of every AMPKγ copy
    against the human reference.

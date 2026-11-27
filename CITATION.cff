@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code, please cite the article and this software."
-title: "Code for: Divergence of TOR and AMPK regulators across 210 eukaryotes predicts TOR dispensability in Toxoplasma gondii"
+title: "Code for: Divergence of TOR and AMPK regulators across 210 eukaryotes predicts a dispensable TOR in Toxoplasma gondii"
 version: 1.1.0
 date-released: 2026-11-27
 license: MIT
@@ -31,7 +31,7 @@ keywords:
   - Apicomplexa
 preferred-citation:
   type: article
-  title: "Divergence of TOR and AMPK regulators across 210 eukaryotes predicts TOR dispensability in Toxoplasma gondii"
+  title: "Divergence of TOR and AMPK regulators across 210 eukaryotes predicts a dispensable TOR in Toxoplasma gondii"
   authors:
     - family-names: Patwardhan
       given-names: Aditya

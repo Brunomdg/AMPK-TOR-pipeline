@@ -1,4 +1,4 @@
-# Code for "Divergence of TOR and AMPK regulators across 210 eukaryotes predicts TOR dispensability in *Toxoplasma gondii*"
+# Code for "Divergence of TOR and AMPK regulators across 210 eukaryotes predicts a dispensable TOR in *Toxoplasma gondii*"
 
 Version 1.1.0
 
@@ -20,7 +20,7 @@ to look.
 | `1_proteomes_taxonomy_species_tree/` | Proteomes, taxonomy, and the species tree | External programs only. Their command lines are here; the dating of record cannot be reproduced (`docs/dating_gap.md`) |
 | `2_candidate_discovery_and_orthology/` | Candidate discovery and orthology calls | The search settings chosen jointly against declared controls and decoys; the gene-tree clade criterion anchored on curated controls, with the two-arm rule where the tree abstains; the re-examination of absences and their clade support; the upstream-kinase classification |
 | `3_species_states_and_composition/` | Species states and composition | The candidate table and the 210-species state matrix, the canonical TORC core states, each species' upstream-kinase state, and the coding used by the tree analyses |
-| `4_sequence_phenotypes/` | Sequence phenotypes of the present subunits | The four measurements on the retained AMPK subunits, the coccidian AMPKγ comparison, and the TOR N-terminal HEAT calls |
+| `4_sequence_phenotypes/` | Sequence phenotypes of the present subunits | The four measurements on the present AMPK subunits, the coccidian AMPKγ comparison, and the TOR N-terminal HEAT calls |
 | `5_phylogenetic_analyses/` | Phylogenetic analyses | Penalised phylogenetic logistic regression with a multistart search, every ordered pair of the ten targets, the AMPKα tail models, and the ancestral-state reconstructions with the origins of absence |
 | `6_structure_prediction_and_pocket/` | Structure prediction and AMPKγ pocket geometry | The domain-preserving prediction queries and the AMP-site geometry of the predicted models |
 
