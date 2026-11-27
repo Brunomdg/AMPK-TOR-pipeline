@@ -10,7 +10,7 @@ The directories follow the eight Supplementary Methods subsections:
 |---|---|
 | `sm1_proteomes_taxonomy_species_tree/` | Proteomes, taxonomy and the species tree |
 | `sm2_candidate_discovery_and_orthology/` | Candidate discovery and orthology calls |
-| `sm4_sequence_phenotypes/` | Sequence phenotypes of the retained subunits |
+| `sm4_sequence_phenotypes/` | Sequence phenotypes of the present subunits |
 | `sm5_phylogenetic_analyses/` | Phylogenetic analyses |
 | `sm6_structure_prediction_and_pocket/` | Structure prediction and AMPK-gamma pocket geometry |
 

@@ -2,7 +2,7 @@
 # Program:  rate4site
 # Version:  3.0.0, compiled from source
 # Evidence: banner
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   docs/SOFTWARE.md, which copied the command line from the job script. The job script itself is not in this repository
 # Outputs:  per-site rates, for the comparison against burial-matched positions
 # <<< deposit header

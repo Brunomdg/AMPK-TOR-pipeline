@@ -8,7 +8,7 @@ code in this repository. Conflating them is easy and gives the wrong reading of 
 | **The position consensus** | the three ten-position site definitions scored on every copy | 4.0 Å, heavy atom | **six**, listed below | not in this repository; the result is the frozen reference panel |
 | **The geometry measurement** | what is measured in each predicted model | 5.0 Å, neighbour search | `2V8Q`, with `4CFE` as control | `p45b_colabfold_analysis.py` |
 
-Source for the first row: the Supplementary Methods, sequence phenotypes of the retained subunits, and the
+Source for the first row: the Supplementary Methods, sequence phenotypes of the present subunits, and the
 manuscript's table of AMP-contact reference positions. Source for the second: the script named, which remains
 the authority for what it does.
 

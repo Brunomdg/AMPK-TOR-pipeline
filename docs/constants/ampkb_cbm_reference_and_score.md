@@ -1,7 +1,7 @@
 # The AMPKβ carbohydrate-binding module: reference, positions and scoring rule
 
 Source: `05_sequence_phenotypes/rbx2/rbx2_ampkb_cbm.py`. This page states what that script fixes; the script
-remains the authority. Supplementary Methods subsection: sequence phenotypes of the retained subunits.
+remains the authority. Supplementary Methods subsection: sequence phenotypes of the present subunits.
 
 ## The reference
 

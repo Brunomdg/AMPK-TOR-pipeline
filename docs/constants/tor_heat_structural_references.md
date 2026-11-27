@@ -1,8 +1,8 @@
 # The TOR N-terminal HEAT structural screen: references and acceptance rule
 
 Sources: `06_tor_heat/structural_screen/run_direct_alignment.py` for the rule, which is the authority for what
-the code does, and the Supplementary Methods, sequence phenotypes of the retained subunits, for the identity
-of the reference structures. Supplementary Methods subsection: sequence phenotypes of the retained subunits.
+the code does, and the Supplementary Methods, sequence phenotypes of the present subunits, for the identity
+of the reference structures. Supplementary Methods subsection: sequence phenotypes of the present subunits.
 
 ## The reference structures
 

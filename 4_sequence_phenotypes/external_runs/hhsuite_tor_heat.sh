@@ -2,7 +2,7 @@
 # Program:  HH-suite (hhsearch, HHrepID)
 # Version:  3.3.0
 # Evidence: env
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   docs/SOFTWARE.md, which copied the command line from the job script. The job script itself is not in this repository
 # Outputs:  remote-homology and repeat evidence for the TOR N-terminal region
 # <<< deposit header

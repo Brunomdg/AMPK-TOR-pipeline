@@ -374,7 +374,7 @@ External programs: `external_runs/sm2_candidate_discovery_and_orthology/`.
 
 No external programs.
 
-### Sequence phenotypes of the retained subunits
+### Sequence phenotypes of the present subunits
 
 | Script | What it does |
 |---|---|
@@ -438,7 +438,7 @@ script, one file per program and step, each naming the Supplementary Methods sub
 |---|---|
 | `external_runs/sm1_proteomes_taxonomy_species_tree/` | Proteomes, taxonomy and the species tree |
 | `external_runs/sm2_candidate_discovery_and_orthology/` | Candidate discovery and orthology calls |
-| `external_runs/sm4_sequence_phenotypes/` | Sequence phenotypes of the retained subunits |
+| `external_runs/sm4_sequence_phenotypes/` | Sequence phenotypes of the present subunits |
 | `external_runs/sm5_phylogenetic_analyses/` | Phylogenetic analyses |
 | `external_runs/sm6_structure_prediction_and_pocket/` | Structure prediction and AMPKγ pocket geometry |
 

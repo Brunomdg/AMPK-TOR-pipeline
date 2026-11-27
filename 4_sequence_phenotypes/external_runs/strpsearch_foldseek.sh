@@ -2,7 +2,7 @@
 # Program:  STRPsearch, with Foldseek
 # Version:  Foldseek 10.941cd33; STRPsearch commit ed325a7f6b77578ee96753f31dbdcfda4931cca8 (branch master)
 # Evidence: env, source clone
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   the run's own receipt file, which records the command as executed, argument by argument
 # Outputs:  one structured tandem-repeat result directory per structure
 # <<< deposit header

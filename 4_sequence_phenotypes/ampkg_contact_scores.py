@@ -3,7 +3,7 @@
 # Purpose: Scores the nucleotide-contact positions of every retained AMPKγ copy: for three sets of ten positions,
 #          how many can be scored and how many are identical to the human anchor, under a pairwise (primary) and a
 #          joint alignment, with the identity of the non-contact CBS positions as a background.
-# Methods: Sequence phenotypes of the retained subunits
+# Methods: Sequence phenotypes of the present subunits
 # Inputs:  `03_ampkg_contacts/AMPKg_orthologs_fulllength.faa` and `RBX1_sequence_manifest.AMPKg.tsv` (from job x1);
 #          `AMPKg_contact_reference.tsv` (the three site sets in canonical and anchor numbering); `Homo_sapiens.faa`
 #          (anchor NP_001193638.1) and `p54619_canonical.faa`; `gamma_pocket.tsv` of the original pocket analysis

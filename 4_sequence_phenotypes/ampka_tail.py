@@ -3,7 +3,7 @@
 # Purpose: Measures the C-terminal region of every retained AMPKα copy: its length after the residue homologous to
 #          human PRKAA1 residue 290 and its predicted disorder, with the length from the kinase-domain end as a
 #          sensitivity.
-# Methods: Sequence phenotypes of the retained subunits
+# Methods: Sequence phenotypes of the present subunits
 # Inputs:  `04_ampka_ctd/AMPKa_orthologs_fulllength.faa` and `RBX1_sequence_manifest.AMPKa.tsv` (from job x1); the
 #          human proteome `Homo_sapiens.faa` (anchor NP_996790.3) and `q13131_canonical.faa`; the genome-wide
 #          HMMER domain tables `<species>.domtbl.gz`

@@ -2,7 +2,7 @@
 # Program:  MAFFT
 # Version:  7.526 (orthofinder3 environment)
 # Evidence: env
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   the deposited scripts that issue the call
 # Outputs:  the pairwise and joint alignments of the AMPK-gamma, AMPK-alpha and AMPK-beta measurements
 # <<< deposit header

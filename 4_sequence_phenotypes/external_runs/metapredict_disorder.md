@@ -2,7 +2,7 @@
 # Program:  metapredict
 # Version:  3.0.2
 # Evidence: pinned
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   the deposited script that issues the call
 # Outputs:  the per-residue disorder of the AMPK-alpha C-terminal region
 # <<< deposit header

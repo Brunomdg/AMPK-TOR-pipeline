@@ -2,7 +2,7 @@
 # Program:  US-align
 # Version:  20241201
 # Evidence: env
-# Methods:  Supplementary Methods, Sequence phenotypes of the retained subunits
+# Methods:  Supplementary Methods, Sequence phenotypes of the present subunits
 # Source:   the deposited script that issues the call
 # Outputs:  one US-align report per TOR copy and experimental reference
 # <<< deposit header

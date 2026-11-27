@@ -2,14 +2,14 @@
 # Purpose: Collects per-copy AMPKγ measurements (CBS-domain identity away from the AMP contacts, site-1 contact score,
 #          agreement of pairwise and joint alignments at site 1, CBS domain evidence, predicted-structure confidence
 #          and RMSD, length) and compares the coccidian copies with the others; descriptive statistics only.
-# Methods: Sequence phenotypes of the retained subunits
+# Methods: Sequence phenotypes of the present subunits
 # Inputs:  a JSON configuration file (first argument) naming the output folder, the number of copies and the input
 #          tables: per-copy AMPKγ table, per-position residues, InterPro domain coordinates, per-site structure
 #          summaries, the check of the residue correspondence, taxonomy, species states, agreement with the earlier
 #          residue calls, and (after the rescue) the correspondence check for the two rescued Eimeria copies
 # Outputs: `METRICS_PER_COPY.tsv`, `LOSS_PATTERN_APICOMPLEXA.tsv`, `CONCORDANCE_PER_COPY.tsv`, `GROUP_COMPARISONS.tsv`,
 #          `ANALYSIS_SUMMARY.json` (with the SHA-256 of every input); measurements summarised in Supplementary
-#          Table S28
+#          Table S4
 # Tools:   Python 3 with pandas, NumPy and SciPy (scipy.stats.mannwhitneyu); versions: see envs/
 # <<< deposit header
 """Descriptive measurements of the coccidian AMPKγ copies: extraction from existing tables and summary statistics.

@@ -3,7 +3,7 @@
 # Purpose: Scores the AMPKβ carbohydrate-binding module of every retained AMPKβ copy at five binding positions and
 #          seven structural positions (identity to human PRKAB1), under a pairwise (primary) and a joint alignment,
 #          with the identity of the other module positions as background, per copy and per species.
-# Methods: Sequence phenotypes of the retained subunits
+# Methods: Sequence phenotypes of the present subunits
 # Inputs:  `AMPKb_CBM_reference.tsv` (from job y0); `CLEAN_literature_controls.tsv` (human PRKAB1 NP_006244.2); the
 #          retained AMPKβ copies and species states; the proteome FASTA files
 # Outputs: in `05_ampkb_cbm`: `AMPKb_sequence_manifest.tsv` (one row per copy), the pairwise and joint alignments,
