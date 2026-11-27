@@ -8,8 +8,7 @@
 #          `MULTI_RECORD_SPECIES.tsv` (proteomes with more than one sequence per gene)
 # Outputs: per pair, `MODELS.tsv` (four fits), one `model_NN.rds` per fit, `INPUT_MD5.tsv` (MD5 of every input,
 #          including this script and its helper) and `DONE.txt`
-# Tools:   R; phylolm 2.6.5 (through `network10_multistart_helper.R`); ape (version: see envs/); Python 3 for the
-#          check script
+# Tools:   R; phylolm 2.6.5 (through `lib/multistart_search.R`); ape (version: see envs/)
 # <<< deposit header
 ## deposit path defaults: begin
 .TA210_ENVS <- local({v <- Sys.getenv("TA210_ENVS"); if (nzchar(v)) v else "/gpfs2/scratch/bdigenov/envs"})
@@ -39,13 +38,13 @@ stopifnot(!is.na(id),id>=0,id<90)
 set.seed(488761235)
 D <- file.path(P,'02_derived/network10_loss_20260918',sprintf('pair_%02d',id))
 dir.create(D,recursive=TRUE,showWarnings=FALSE)
-source(file.path(.REPO_ROOT, '5_phylogenetic_analyses', 'lib', 'network10_multistart_helper.R'))
+source(file.path(.REPO_ROOT, '5_phylogenetic_analyses', 'lib', 'multistart_search.R'))
 rd <- function(p)read.delim(p,comment.char='#',quote='',stringsAsFactors=FALSE,check.names=FALSE)
 treepath <- paste0(.TA210_SCRATCH, '/concord/ms210/P04b_chronogram/species_chronogram_209.treefile')
 indexpath <- path.expand('~/ref/proteomes/proteome_index.tsv')
 multipath <- file.path(S,'05_method_and_rules/MULTI_RECORD_SPECIES.tsv')
 files <- c(TRAITS=file.path(Q,'Q0_REPLACEMENT_per_species.tsv'),R37=file.path(Q,'Q0_REPLACEMENT_per_species__R37coding.tsv'))
-inputpaths <- c(files,treepath,indexpath,multipath,file.path(.REPO_ROOT,'5_phylogenetic_analyses/ordered_pair_models.R'),file.path(.REPO_ROOT,'5_phylogenetic_analyses/lib/network10_multistart_helper.R'))
+inputpaths <- c(files,treepath,indexpath,multipath,file.path(.REPO_ROOT,'5_phylogenetic_analyses/ordered_pair_models.R'),file.path(.REPO_ROOT,'5_phylogenetic_analyses/lib/multistart_search.R'))
 hashes <- tools::md5sum(inputpaths)
 write.table(data.frame(FILE=names(hashes),MD5=unname(hashes)),file.path(D,'INPUT_MD5.tsv'),sep='\t',quote=FALSE,row.names=FALSE)
 tree <- read.tree(treepath)

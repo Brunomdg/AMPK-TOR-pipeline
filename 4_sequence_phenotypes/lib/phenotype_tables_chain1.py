@@ -63,7 +63,6 @@ T1B_SHA = "20abcca4265bfec28e1198eb444859bd37d62acee61a5cd14aa281eaa4a82355"
 T2_SHA = "e4e4946abac3d6cb41ed3c3477e8bd6d9d70f03820ef1e3930f1b1e9023e65d4"
 Q0SP = os.path.join(SIS, "14_remodeling/Q0_replacement/Q0_REPLACEMENT_per_species.tsv")
 ASR = os.path.join(SIS, "14_remodeling/Q0_replacement/asr")
-ASRLIB = os.path.join(SIS, "14_remodeling/scripts/rl_rm_asr_lib.R")
 MAFFT = (_TA210_ENVS + "/orthofinder3/bin/mafft")
 PY_MS210 = (_TA210_ENVS + "/ms210/bin/python3")
 RELEASE_ID, RB_ID, X_ID = "SISTER-10TARGET-20260916", "-", "RBX1-REFIT-10T-20260916"

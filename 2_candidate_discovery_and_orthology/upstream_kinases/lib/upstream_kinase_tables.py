@@ -58,14 +58,8 @@ DOMTBL = os.path.join(R1, "03_evidence_by_method/hmmer_genomewide/domtbl")
 PK = os.path.join(X3, "02_inputs/declarations")
 PHYLO = os.path.join(X3, "02_inputs/membership_tree")
 ASR = os.path.join(R1, "14_remodeling/Q0_replacement/asr")
-ASR_LIB = os.path.join(R1, "14_remodeling/scripts/rl_rm_asr_lib.R")
 Q7_COTRANSITION = os.path.join(R1, "14_remodeling/Q7_alltargets/Q7_COTRANSITION.tsv")
 XC = os.path.join(R1, "16_control_repair/refit/rbx2c")
-R1_FM = os.path.join(R1, "16_remediation/R1_INPUT_FREEZE/R1_INPUT_FREEZE_MANIFEST.tsv")
-RB_FM = os.path.join(RB, "RELEASE_B_REPORTING_FREEZE_MANIFEST.tsv")
-X1_FM = os.path.join(X1, "00_release/RBX1_SEQUENCE_REMODELING_FREEZE_MANIFEST.tsv")
-X2_FM = os.path.join(X2, "00_release/RBX2_FREEZE_MANIFEST.tsv")
-XC_FM = os.path.join(XC, "00_release/RBX2C_FREEZE_MANIFEST.tsv")
 MAFFT = (_TA210_ENVS + "/orthofinder3/bin/mafft")
 IQTREE = (_TA210_ENVS + "/orthofinder3/bin/iqtree3")
 CHRONO = os.path.join(CH, "species_chronogram_209.treefile")
@@ -200,24 +194,6 @@ def record_outputs(tag, script=None):
     print("recorded %d outputs in 11_logs/outputs_%s.tsv" % (len(WRITTEN), tag))
 
 
-def _verify(root, manifest, key, marker_name, label, need_pass=True):
-    msha = sha(manifest)
-    marker = open(os.path.join(root, marker_name)).read()
-    if msha not in marker or (need_pass and "PASS" not in marker):
-        sys.exit("REFUSED: the %s marker does not name manifest %s" % (label, msha))
-    bad, n = [], 0
-    for r in rows(manifest):
-        p = os.path.join(root, r[key])
-        if r[key] == os.path.relpath(manifest, root):
-            continue          # the clade-robustness file list holds a row for itself, written before it was final
-        n += 1
-        if not os.path.exists(p) or sha(p) != r["SHA256"]:
-            bad.append(r[key])
-    if bad:
-        sys.exit("REFUSED: frozen %s artefacts differ: %s" % (label, bad[:5]))
-    return msha, n
-
-
 T1F = os.path.join(PUB, "T1_ortholog_table.tsv")
 T1_SHA = "3a71dbcf05408d7102d375cf49bfe6c5633a88216b338b03a1ea860e41041b23"
 T1B = os.path.join(PUB, "T1b_orthologs_retained.tsv")
@@ -243,28 +219,6 @@ def verify_freezes():
     return SHAS
 
 
-def _retired_verify_freezes():
-    """The earlier check of the twenty-target analysis over five fixed input sets; no longer called, kept for
-    reference."""
-    m1, n1 = _verify(R1, R1_FM, "PATH", "R1_INPUT_FREEZE", "R1", need_pass=False)
-    m2, n2 = _verify(RB, RB_FM, "FILE", "RELEASE_B_REPORTING_FREEZE", "Release B")
-    m3, n3 = _verify(X1, X1_FM, "FILE", "RBX1_SEQUENCE_REMODELING_FREEZE", "RBX1")
-    m4, n4 = _verify(X2, X2_FM, "FILE", "RBX2_FREEZE/RBX2_FREEZE", "RBX2")
-    m5, n5 = _verify(XC, XC_FM, "FILE", "RBX2C_CLADE_ROBUSTNESS_FREEZE/RBX2C_CLADE_ROBUSTNESS_FREEZE", "RBX2C")
-    SHAS.update(R1=m1, RB=m2, X1=m3, X2=m4, XC=m5)
-    print("FREEZES VERIFIED: R1 %d (%s); Release B %d (%s); RBX1 %d (%s); RBX2 %d (%s); RBX2C %d (%s)"
-          % (n1, m1, n2, m2, n3, m3, n4, m4, n5, m5))
-    return SHAS
-
-
-# ------------------------------------------------------------------ species-state helpers, behaviour unchanged
-## ---- matching a tip name built from the domain table to a tree tip ----
-## A Newick label cannot contain a colon, so the tree writer replaces one with an underscore, and a tip name built
-## from the domain table then differs from the tip in the tree. Three CAMKK copies are affected, all from
-## Trypanosoma vivax, with protein identifiers of the form TvY486_0806100:mRNA-p1. The lookup below tries the
-## exact name first, so every tip that already matched is unaffected, and only then compares both sides reduced to
-## the characters a Newick label can hold. If that comparison matches more than one tip, the script stops rather
-## than choose, because taking a call from the wrong tip is worse than stopping.
 _NEWICK_SAFE = re.compile(r"[^A-Za-z0-9_-]")
 
 
@@ -312,27 +266,6 @@ def read_frozen_t2():
         r["SOURCE_TYPE"] = "transcriptome" if r.get("ABSENCE_CALLABLE") == "no" else "genome"
         out[(r["TARGET"], r["SPECIES"])] = r
     return out
-
-
-def t1_orthologs(target):
-    """Accepted ortholog copies of one target from the ten-target T1b table, with DECISION_SOURCE and
-    MODEL_SENSITIVE derived as in rows() (source `CURATION` is a declared control; model sensitive when one of the
-    maximum-likelihood and PMSF tree calls is `WITH_CONTROLS` and the other `CONTAMINANT`). A second definition of
-    t1_orthologs further down replaces this one when the module is loaded."""
-    out = []
-    for r in rows(T1B):
-        if r["TARGET"] != target or r.get("IS_ORTHOLOG") != "yes":
-            continue
-        src = r.get("DISPOSITION_SOURCE", "-")
-        r["DECISION_SOURCE"] = "DECLARED_POSITIVE" if src == "CURATION" else src
-        r["MODEL_SENSITIVE"] = "yes" if {r.get("TREE_CALL"), r.get("PMSF_CALL")} == {"WITH_CONTROLS", "CONTAMINANT"} else "no"
-        r["FINAL_CLASS"] = "ORTHOLOG"
-        out.append(r)
-    return out
-
-
-def _retired_read_frozen_t2():
-    return {(r["TARGET"], r["SPECIES"]): r for r in rows(os.path.join(PUB, "T2_presence_all20_long.tsv"))}
 
 
 def t1_orthologs(target):

@@ -30,6 +30,10 @@
 suppressMessages({library(ape); library(phylolm)})
 SEED <- 488761235
 set.seed(SEED)
+## The output folder of these fits. It was the first line of core_multistart_helper.R until the two
+## multistart helpers were merged; the path is unchanged.
+D <- file.path(.TA210_SCRATCH, "ms210_phase2/TOR-AMPK_orthologs_10target_R1",
+               "20_port_68taxa_analyses/02_derived", "core18_penalized_20260918")
 source(file.path(.REPO_ROOT, "5_phylogenetic_analyses", "lib", "multistart_search.R"))
 X <- Sys.getenv("RBX1_ROOT")
 CONCORD <- paste0(.TA210_SCRATCH, "/concord/ms210")

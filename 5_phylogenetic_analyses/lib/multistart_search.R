@@ -1,4 +1,18 @@
-D<-file.path('/gpfs2/scratch/bdigenov/ms210_phase2/TOR-AMPK_orthologs_10target_R1/20_port_68taxa_analyses/02_derived','core18_penalized_20260918')
+# >>> deposit header
+# Purpose: The multistart search of the penalised phylogenetic logistic fits: a grid of starting values, then
+#          shrinking local moves ranked by penalised log-likelihood, with the search history and every warning
+#          stored beside each fit. This is the search the Data Availability statement names.
+# Methods: Phylogenetic analyses
+# Inputs:  the model formula, the species data and the pruned tree, passed in by the calling script, which also
+#          sets the output folder `D` before sourcing this file
+# Outputs: one `model_NN.rds` per fit in `D` (baseline fit, best fit, search history, attempts, warnings) and
+#          `sessionInfo.txt`
+# Tools:   R; phylolm 2.6.5 (phyloglm, logistic_MPLE, btol = 30; the version is checked here)
+# <<< deposit header
+# Ran as: core_multistart_helper.R for the core-complement fits and network10_multistart_helper.R for the
+# ordered-pair fits. The two were the same code: the only differences were this header and a hardcoded output
+# folder on the first line of the core copy. `D` now always comes from the caller.
+if (!exists("D")) stop("REFUSED: the calling script must set D, the output folder, before sourcing this file")
 dir.create(D,recursive=TRUE,showWarnings=FALSE)
 stopifnot(as.character(packageVersion('phylolm'))=='2.6.5')
 capture.output(sessionInfo(),file=file.path(D,'sessionInfo.txt'))

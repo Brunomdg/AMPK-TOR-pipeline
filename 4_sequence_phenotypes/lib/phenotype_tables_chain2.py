@@ -43,9 +43,6 @@ CDS = (_TA210_SCRATCH + "/cds_norm")
 GCODE = os.path.join(CONCORD, "ms210/AUDIT_20260823/genetic_code_210.tsv")
 PUB = os.path.join(R1, "07_findings/publication_tables")
 PK = os.path.join(R1, "16_remediation/R1")
-R1_FM = os.path.join(R1, "16_remediation/R1_INPUT_FREEZE/R1_INPUT_FREEZE_MANIFEST.tsv")
-RB_FM = os.path.join(RB, "RELEASE_B_REPORTING_FREEZE_MANIFEST.tsv")
-X1_FM = os.path.join(X1, "00_release/RBX1_SEQUENCE_REMODELING_FREEZE_MANIFEST.tsv")
 MAFFT = (_TA210_ENVS + "/orthofinder3/bin/mafft")
 HYPHY = (_TA210_ENVS + "/ms210/bin/hyphy")
 RELEASE_ID, RB_ID, X1_ID, X2_ID = "R1-20260913", "RB-R1-20260914", "RBX1-R1-20260914", "RBX2-R1-20260914"
@@ -129,23 +126,6 @@ def record_outputs(tag, script=None):
     print("recorded %d outputs in 12_logs/outputs_%s.tsv" % (len(WRITTEN), tag))
 
 
-def _verify_manifest(root, manifest, key, marker_name, label, need_pass=True):
-    msha = sha(manifest)
-    marker = open(os.path.join(root, marker_name)).read()
-    if msha not in marker or (need_pass and "PASS" not in marker):
-        sys.exit("REFUSED: the %s marker does not name manifest %s" % (label, msha))
-    bad = []
-    n = 0
-    for r in rows(manifest):
-        p = os.path.join(root, r[key])
-        n += 1
-        if not os.path.exists(p) or sha(p) != r["SHA256"]:
-            bad.append(r[key])
-    if bad:
-        sys.exit("REFUSED: frozen %s artefacts differ: %s" % (label, bad[:5]))
-    return msha, n
-
-
 T1B = os.path.join(PUB, "T1b_orthologs_retained.tsv")
 T2F = os.path.join(PUB, "T2_presence_long.tsv")
 T1B_SHA = "20abcca4265bfec28e1198eb444859bd37d62acee61a5cd14aa281eaa4a82355"
@@ -166,26 +146,6 @@ def verify_freezes():
     if miss:
         sys.exit("REFUSED: the rebuilt RBX1 layer is incomplete: %s" % miss)
     SHAS.update(R1=T1B_SHA, RB=T2_SHA, X1="-")
-    return SHAS
-
-
-def _retired_verify_freezes():
-    """Input check of the earlier twenty-target run. No longer called; kept to show how that run was checked."""
-    m1, n1 = _verify_manifest(R1, R1_FM, "PATH", "R1_INPUT_FREEZE", "R1", need_pass=False)
-    pk = 0
-    bad = []
-    for ln in open(os.path.join(PK, "PACKET_SHA256.txt")):
-        s, f = ln.split(None, 1)
-        pk += 1
-        if sha(os.path.join(PK, f.strip().lstrip("*"))) != s:
-            bad.append(f.strip())
-    if bad:
-        sys.exit("REFUSED: R1 packet artefacts differ: %s" % bad[:5])
-    m2, n2 = _verify_manifest(RB, RB_FM, "FILE", "RELEASE_B_REPORTING_FREEZE", "Release B reporting")
-    m3, n3 = _verify_manifest(X1, X1_FM, "FILE", "RBX1_SEQUENCE_REMODELING_FREEZE", "RBX1")
-    SHAS.update(R1=m1, RB=m2, X1=m3)
-    print("FREEZES VERIFIED: R1 %d + %d packet (%s); Release B %d (%s); RBX1 %d (%s)"
-          % (n1, pk, m1, n2, m2, n3, m3))
     return SHAS
 
 
