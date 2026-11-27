@@ -79,16 +79,6 @@ def traits_from_header():
 
 
 def main():
-    # Origins are counted over all traits, CAMKK and LKB1 included, so the check that the calls for both kinases
-    # are final (required since 16 September 2026) runs first.
-    sys.path.insert(0, os.path.join(os.environ.get("PROJECT_ROOT") or (_TA210_SCRATCH + '/ms210_phase2/TOR-AMPK_orthologs_10target_R1'),
-                                    "16_control_repair", "scripts"))
-    from rl_require_camkk_lkb1_joint_freeze import (require_camkk_lkb1_joint_freeze,  # noqa: E402
-                                                    JointFreezeNotComplete)
-    try:
-        require_camkk_lkb1_joint_freeze()
-    except JointFreezeNotComplete as _jf_exc:
-        sys.exit("REFUSED: %s" % _jf_exc)
     traits = traits_from_header()
     src = L.sources()
     out, summ, inputs = [], [], []

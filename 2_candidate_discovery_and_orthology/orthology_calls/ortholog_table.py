@@ -142,18 +142,6 @@ def rows(p):
 
 
 def main():
-    if set(("CAMKK", "LKB1")) & set(TARGETS):
-        # The final ortholog table of a target set that includes CAMKK or LKB1 is
-        # rebuilt only after the species states of both targets have been declared
-        # final and match their stored checksums and counts (chosen on 16 September 2026).
-        sys.path.insert(0, os.path.join(os.environ.get("PROJECT_ROOT") or (_TA210_SCRATCH + '/ms210_phase2/TOR-AMPK_orthologs_10target_R1'),
-                                        "16_control_repair", "scripts"))
-        from rl_require_camkk_lkb1_joint_freeze import (require_camkk_lkb1_joint_freeze,  # noqa: E402
-                                                        JointFreezeNotComplete)
-        try:
-            require_camkk_lkb1_joint_freeze()
-        except JointFreezeNotComplete as _jf_exc:
-            sys.exit("REFUSED: %s" % _jf_exc)
     cands = rows(CAND)
     if not cands:
         sys.exit("REFUSED: %s is missing or empty" % CAND)

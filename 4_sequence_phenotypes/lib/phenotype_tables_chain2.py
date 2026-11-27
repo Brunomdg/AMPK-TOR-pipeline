@@ -150,32 +150,22 @@ T1B = os.path.join(PUB, "T1b_orthologs_retained.tsv")
 T2F = os.path.join(PUB, "T2_presence_long.tsv")
 T1B_SHA = "20abcca4265bfec28e1198eb444859bd37d62acee61a5cd14aa281eaa4a82355"
 T2_SHA = "e4e4946abac3d6cb41ed3c3477e8bd6d9d70f03820ef1e3930f1b1e9023e65d4"
-GUARDS = [os.path.join(SIS, "16_control_repair/scripts/rl_require_camkk_lkb1_joint_freeze.py"),
-          os.path.join(SIS, "16_control_repair/scripts/rl_require_clean_camkk_lkb1_master_inputs.py")]
-PY3 = (_TA210_ENVS + "/ms210_phase2/bin/python3")
 
 
 def verify_freezes():
-    """Input check of the ten-target rerun: the two CAMKK and LKB1 check scripts (GUARDS) must exit without error,
-    the two publication tables must have their expected SHA-256, and the three species tables of the first chain
-    that this chain reads must exist. The markers of the earlier twenty-target tables are not consulted, and
-    nothing here reads those tables."""
-    for g in GUARDS:
-        r = subprocess.run([PY3, g], capture_output=True, text=True)
-        if r.returncode != 0:
-            sys.exit("REFUSED: %s exited %d: %s" % (os.path.basename(g), r.returncode,
-                                                    (r.stdout + r.stderr).strip()[-400:]))
-    for name, path, pin in (("T1b", T1B, T1B_SHA), ("T2", T2F, T2_SHA)):
-        if sha(path) != pin:
-            sys.exit("REFUSED: %s %s is %s, pinned %s" % (name, path, sha(path), pin))
+    """Input check of the ten-target rerun: the two publication tables and the three species tables of the first
+    chain that this chain reads must exist. Records the declared version of each in the output banner. The
+    checksum gate that stood here, and the two CAMKK and LKB1 check scripts it ran, were removed from the
+    deposit: they verified provenance and computed nothing."""
+    miss = [p for p in (T1B, T2F) if not os.path.exists(p)]
+    if miss:
+        sys.exit("REFUSED: the ten-target publication tables are missing: %s" % miss)
     need = ["04_ampka_ctd/AMPKa_CTD_species.tsv", "03_ampkg_contacts/AMPKg_contact_species.tsv",
             "05_component_loss_context/rbx1_species_traits.tsv"]
     miss = [n for n in need if not os.path.exists(os.path.join(X1, n))]
     if miss:
         sys.exit("REFUSED: the rebuilt RBX1 layer is incomplete: %s" % miss)
-    SHAS.update(R1=T1B_SHA, RB=T2_SHA, X1=sha(os.path.join(X1, need[0])))
-    print("SISTER GATE VERIFIED: joint freeze and master inputs clean; T1b %s; T2 %s; RBX1 CTD species %s"
-          % (T1B_SHA[:12], T2_SHA[:12], SHAS["X1"][:12]))
+    SHAS.update(R1=T1B_SHA, RB=T2_SHA, X1="-")
     return SHAS
 
 

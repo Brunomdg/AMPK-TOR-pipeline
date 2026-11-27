@@ -140,11 +140,6 @@ if (CODING == "STANDARD") traits <- trait_columns(read_species("STANDARD"))
 if (!TRAIT %in% traits)
   stop("REFUSED: trait ", TRAIT, " is not a _p1 column of the per_species header: ",
        paste(traits, collapse = ", "))
-## The CAMKK and LKB1 absence traits are reconstructed only after rl_require_camkk_lkb1_joint_freeze.py
-## confirms that the calls for both kinases are final (required since 16 September 2026); the other traits
-## are unaffected.
-if (TRAIT %in% c("CAMKK_absent", "LKB1_absent") && system2(paste0(.TA210_ENVS, "/ms210_phase2/bin/python3"), paste0(.TA210_SCRATCH, "/ms210_phase2/TOR-AMPK_orthologs_10target_R1/16_control_repair/scripts/rl_require_camkk_lkb1_joint_freeze.py")) != 0)
-  stop("REFUSED: CAMKK/LKB1 joint freeze is not complete; ", TRAIT, " is not reconstructed")
 
 SPECIESF <- coding_path(CODING)
 d <- read_species(CODING)

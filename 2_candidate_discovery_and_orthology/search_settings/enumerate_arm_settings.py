@@ -81,7 +81,6 @@ ROOT = os.environ.get("PROJECT_ROOT") or (
 sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
 sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
 import rl_arm1_selection as A                                    # noqa: E402
-import rl_invariants                                             # noqa: E402
 import rl_targets                                                # noqa: E402
 
 OF2 = (_TA210_SCRATCH + "/ofrun2/I1.2/Results_Sep06")
@@ -361,7 +360,6 @@ def do_pairwise(fh, ch, run, allc, binding, spidx, neg):
 
 
 def main():
-    rl_invariants.check_inputs()
     allc, binding = load_controls()
     spidx = A.species_index()
     # The declared negatives: the ranked decoy pools unioned with the corpus-wide

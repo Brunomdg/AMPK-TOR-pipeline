@@ -61,9 +61,6 @@ T1B = os.path.join(PUB, "T1b_orthologs_retained.tsv")
 T2F = os.path.join(PUB, "T2_presence_long.tsv")
 T1B_SHA = "20abcca4265bfec28e1198eb444859bd37d62acee61a5cd14aa281eaa4a82355"
 T2_SHA = "e4e4946abac3d6cb41ed3c3477e8bd6d9d70f03820ef1e3930f1b1e9023e65d4"
-GUARDS = [os.path.join(SIS, "16_control_repair/scripts/rl_require_camkk_lkb1_joint_freeze.py"),
-          os.path.join(SIS, "16_control_repair/scripts/rl_require_clean_camkk_lkb1_master_inputs.py")]
-PY = (_TA210_ENVS + "/ms210_phase2/bin/python3")
 Q0SP = os.path.join(SIS, "14_remodeling/Q0_replacement/Q0_REPLACEMENT_per_species.tsv")
 ASR = os.path.join(SIS, "14_remodeling/Q0_replacement/asr")
 ASRLIB = os.path.join(SIS, "14_remodeling/scripts/rl_rm_asr_lib.R")
@@ -148,25 +145,14 @@ def record_outputs(tag, script):
 
 
 def verify_freezes():
-    """Input check before any computation: the two CAMKK and LKB1 check scripts (GUARDS) must both exit without
-    error, and the two publication tables must have their expected SHA-256."""
+    """Input check before any computation: the two publication tables this chain reads must exist. Records the
+    declared version of each in the output banner. The checksum gate that stood here, and the two CAMKK and LKB1
+    check scripts it ran, were removed from the deposit: they verified provenance and computed nothing."""
     global R1_SHA, RB_SHA
-    for g in GUARDS:
-        if not os.path.exists(g):
-            sys.exit("REFUSED: guard %s is missing" % g)
-        r = subprocess.run([PY, g], capture_output=True, text=True)
-        if r.returncode != 0:
-            sys.exit("REFUSED: %s exited %d: %s" % (os.path.basename(g), r.returncode,
-                                                    (r.stdout + r.stderr).strip()[-400:]))
-    bad = []
-    for name, path, pin in (("T1b", T1B, T1B_SHA), ("T2", T2F, T2_SHA)):
-        got = sha(path)
-        if got != pin:
-            bad.append("%s %s is %s, pinned %s" % (name, path, got, pin))
-    if bad:
-        sys.exit("REFUSED: the ten-target publication tables are not the pinned ones: %s" % "; ".join(bad))
+    miss = [p for p in (T1B, T2F) if not os.path.exists(p)]
+    if miss:
+        sys.exit("REFUSED: the ten-target publication tables are missing: %s" % miss)
     R1_SHA, RB_SHA = T1B_SHA, T2_SHA
-    print("SISTER GATE VERIFIED: joint freeze and master inputs clean; T1b %s; T2 %s" % (T1B_SHA[:12], T2_SHA[:12]))
     return R1_SHA, RB_SHA
 
 

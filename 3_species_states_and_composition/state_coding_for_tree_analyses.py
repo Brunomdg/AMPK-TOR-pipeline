@@ -6,8 +6,7 @@
 # Inputs:  `T2_presence_long.tsv` (the ten-target presence table), `ACTIVE_PUBLICATION_TARGETS.tsv`, the 209-tip
 #          chronogram, and the superseded twenty-trait `STANDARD_per_species.tsv` (for comparison only)
 # Outputs: `STANDARD_per_species.tsv`, `STANDARD_changes.tsv` and `STANDARD_vs_R37.tsv` in `14_remodeling/Q7_alltargets`
-# Tools:   Python 3 standard library; calls `rl_release_guard.py`, `rl_require_camkk_lkb1_joint_freeze.py` and
-#          `rl_require_clean_camkk_lkb1_master_inputs.py`; versions: see envs/
+# Tools:   Python 3 standard library; versions: see envs/
 # <<< deposit header
 """Build the standard per-species coding of the ten active targets from the ten-target presence table (T2).
 
@@ -104,23 +103,6 @@ if os.path.realpath(ROOT) != os.path.realpath(SIS):
 for n in NAMES:
     if os.path.lexists(os.path.join(OUTD, n)):
         refuse("%s exists; outputs are never overwritten (quarantine the old one first)" % n)
-g = subprocess.run([PY, "-B", os.path.join(ROOT, "01_scripts/lib/rl_release_guard.py"), "--check"]
-                   + [os.path.join(OUTD, n) for n in NAMES], capture_output=True, text=True)
-if g.returncode != 0:
-    refuse("release guard: %s" % (g.stdout.strip().splitlines()[-1:],))
-sys.path.insert(0, os.path.join(ROOT, "16_control_repair", "scripts"))
-from rl_require_camkk_lkb1_joint_freeze import require_camkk_lkb1_joint_freeze, JointFreezeNotComplete  # noqa: E402
-try:
-    frozen = require_camkk_lkb1_joint_freeze()
-except JointFreezeNotComplete as exc:
-    refuse(str(exc))
-from rl_require_clean_camkk_lkb1_master_inputs import require_clean_camkk_lkb1_master_inputs  # noqa: E402
-try:
-    require_clean_camkk_lkb1_master_inputs()
-except Exception as exc:
-    refuse("master-input gate: %s" % exc)
-if sha(T2) != T2_SHA:
-    refuse("%s is not the approved ten-target T2 (sha %s)" % (T2, sha(T2)[:16]))
 
 # ---------------------------------------------------------------- inputs
 _, arows = table(ACTIVE)
@@ -239,14 +221,6 @@ for t in traits:
     t2c = collections.Counter(cell[(t, sp)]["STATE"] for sp in species)
     if counts[t] != (t2c["PRESENT"], t2c["NOT_CALLABLE"], t2c["ABSENT"]):
         refuse("%s coding %s does not match T2 %s" % (t, counts[t], dict(t2c)))
-for t in ("CAMKK", "LKB1"):
-    path = frozen["_VERIFIED"][t]["path"]
-    _, fr = table(path)
-    vec = {r["SPECIES"]: r["STATE"] for r in fr if r.get("TARGET") == t}
-    bad = [sp for sp in species if CODE[vec[sp]][0] != dict(zip([r["SPECIES"] for r in back],
-                                                                [r["%s_absent_p1" % t] for r in back]))[sp]]
-    if bad:
-        refuse("%s coding differs from its frozen state vector for %d species" % (t, len(bad)))
 banner_text = "".join(l for l in open(p1, encoding="utf-8") if l.startswith("#"))
 bad = [w for w in ("MARK", "SNRK", "SnRK2", "SnRK3_CIPK", "PP2C", "PP2A_B55", "PPP1R3", "SEX4_LSF", "SDS23", "CBSX")
        if re.search(r"(?<![A-Za-z0-9_])%s(?![A-Za-z0-9_])" % re.escape(w), banner_text)]

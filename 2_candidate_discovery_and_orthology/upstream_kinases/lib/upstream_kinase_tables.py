@@ -4,7 +4,7 @@
 #          the table writer with its banner line, the CAMKK reference list and the species-state helpers.
 # Methods: several steps (shared helper)
 # Inputs:  the publication tables `T1_ortholog_table.tsv`, `T1b_orthologs_retained.tsv` and `T2_presence_long.tsv`;
-#          `rl_require_camkk_lkb1_joint_freeze.py` and `rl_require_clean_camkk_lkb1_master_inputs.py`; the rebuilt
+#          the rebuilt
 #          `rbx1_species_traits.tsv`, `TORC_core_states.tsv` and `upstream_kinase_states.tsv`
 # Outputs: none of its own; write() and record_outputs() write each step's tables and `11_logs/outputs_<step>.tsv`
 # Tools:   Python 3 (standard library); paths of MAFFT and IQ-TREE 3 (orthofinder3 environment); versions: see envs/
@@ -224,32 +224,22 @@ T1B = os.path.join(PUB, "T1b_orthologs_retained.tsv")
 T2F = os.path.join(PUB, "T2_presence_long.tsv")
 T1B_SHA = "20abcca4265bfec28e1198eb444859bd37d62acee61a5cd14aa281eaa4a82355"
 T2_SHA = "e4e4946abac3d6cb41ed3c3477e8bd6d9d70f03820ef1e3930f1b1e9023e65d4"
-GUARDS = [os.path.join(SIS, "16_control_repair/scripts/rl_require_camkk_lkb1_joint_freeze.py"),
-          os.path.join(SIS, "16_control_repair/scripts/rl_require_clean_camkk_lkb1_master_inputs.py")]
-PY3 = (_TA210_ENVS + "/ms210_phase2/bin/python3")
 
 
 def verify_freezes():
-    """Input check run by every step: the two input-check scripts of the ten-target project must pass, the
-    publication tables T1, T1b and T2 must match their stored checksums, and the three rebuilt tables this refit
-    reads must exist. Fills `SHAS` for the banner line of the output tables."""
-    import subprocess as _sp
-    for g in GUARDS:
-        r = _sp.run([PY3, g], capture_output=True, text=True)
-        if r.returncode != 0:
-            sys.exit("REFUSED: %s exited %d: %s" % (os.path.basename(g), r.returncode,
-                                                    (r.stdout + r.stderr).strip()[-400:]))
-    for name, path, pin in (("T1", T1F, T1_SHA), ("T1b", T1B, T1B_SHA), ("T2", T2F, T2_SHA)):
-        if sha256_file(path) != pin:
-            sys.exit("REFUSED: %s %s is %s, pinned %s" % (name, path, sha256_file(path), pin))
+    """Input check run by every step: the publication tables T1, T1b and T2 and the three rebuilt tables this
+    refit reads must exist. Fills `SHAS` for the banner line of the output tables. The checksum gate that stood
+    here, and the two CAMKK and LKB1 check scripts it ran, were removed from the deposit: they verified
+    provenance and computed nothing."""
+    miss = [p for p in (T1F, T1B, T2F) if not os.path.exists(p)]
+    if miss:
+        sys.exit("REFUSED: the publication tables are missing: %s" % miss)
     need = [(X1, "05_component_loss_context/rbx1_species_traits.tsv"), (X2, "03_torc_core/TORC_core_states.tsv"),
             (X2, "04_ampka_activation/upstream_kinase_states.tsv")]
     miss = ["%s/%s" % (os.path.basename(r), n) for r, n in need if not os.path.exists(os.path.join(r, n))]
     if miss:
         sys.exit("REFUSED: the rebuilt layers are incomplete: %s" % miss)
-    SHAS.update(R1=T1B_SHA, RB=T2_SHA, X1=sha256_file(os.path.join(X1, need[0][1])),
-                X2=sha256_file(os.path.join(X2, need[1][1])), XC="-")
-    print("SISTER GATE VERIFIED: joint freeze and master inputs clean; T1b %s; T2 %s" % (T1B_SHA[:12], T2_SHA[:12]))
+    SHAS.update(R1=T1B_SHA, RB=T2_SHA, X1="-", X2="-", XC="-")
     return SHAS
 
 

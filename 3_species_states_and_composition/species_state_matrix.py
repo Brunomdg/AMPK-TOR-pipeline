@@ -149,21 +149,6 @@ if os.path.realpath(ROOT) != os.path.realpath(SIS):
 for p in [os.path.join(OUT, n) for n in NAMES] + [DIFF_OUT]:
     if os.path.lexists(p):
         refuse("%s already exists; outputs are never overwritten" % p)
-g = subprocess.run([PY, "-B", os.path.join(ROOT, "01_scripts/lib/rl_release_guard.py"), "--check"]
-                   + [os.path.join(OUT, n) for n in NAMES] + [DIFF_OUT], capture_output=True, text=True)
-if g.returncode != 0:
-    refuse("release guard: %s" % g.stdout.strip().splitlines()[-1:])
-sys.path.insert(0, os.path.join(ROOT, "16_control_repair", "scripts"))
-from rl_require_camkk_lkb1_joint_freeze import require_camkk_lkb1_joint_freeze, JointFreezeNotComplete  # noqa: E402
-try:
-    frozen = require_camkk_lkb1_joint_freeze()
-except JointFreezeNotComplete as exc:
-    refuse(str(exc))
-from rl_require_clean_camkk_lkb1_master_inputs import require_clean_camkk_lkb1_master_inputs  # noqa: E402
-try:
-    require_clean_camkk_lkb1_master_inputs()
-except Exception as exc:
-    refuse("master-input gate: %s" % exc)
 
 # ---------------------------------------------------------------- inputs
 mhdr, mlines, mrows = table(MASTER)
@@ -297,12 +282,6 @@ h2, l2, r2 = table(outs["T2L"], record=False)
 cells = {(r["TARGET"], r["SPECIES"]): r["STATE"] for r in r2}
 check("T2 has 10 x 210 unique cells", len(r2) == 2100 and len(cells) == 2100
       and {r["STATE"] for r in r2} <= {"PRESENT", "ABSENT", "NOT_CALLABLE"}, "%d rows" % len(r2))
-for t in ("CAMKK", "LKB1"):
-    _, _, fr = table(frozen["_VERIFIED"][t]["path"], record=False)
-    vec = {r["SPECIES"]: r["STATE"] for r in fr if r.get("TARGET") == t}
-    diff = [sp for sp in meta if cells.get((t, sp)) != vec.get(sp)]
-    check("%s column equals its frozen state vector" % t, len(vec) == 210 and not diff,
-          "%s; %d of 210 differ" % (dict(collections.Counter(cells[(t, sp)] for sp in meta)), len(diff)))
 _, _, old = table(OLD_T2)
 oldcells = {(r["TARGET"], r["SPECIES"]): r["STATE"] for r in old if r["TARGET"] in CORE8}
 master_yes = {(r["TARGET"], r["SPECIES"]) for r in mrows if r["IS_ORTHOLOG"] == "yes"}

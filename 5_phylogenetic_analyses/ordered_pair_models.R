@@ -5,8 +5,7 @@
 # Methods: Phylogenetic regressions
 # Inputs:  `Q0_REPLACEMENT_per_species.tsv` (primary coding) and `Q0_REPLACEMENT_per_species__R37coding.tsv`
 #          (sensitivity coding); the dated species tree (209 tips); `proteome_index.tsv` (sequence counts);
-#          `MULTI_RECORD_SPECIES.tsv` (proteomes with more than one sequence per gene); a check script,
-#          `rl_require_camkk_lkb1_joint_freeze.py`, that must exit without error
+#          `MULTI_RECORD_SPECIES.tsv` (proteomes with more than one sequence per gene)
 # Outputs: per pair, `MODELS.tsv` (four fits), one `model_NN.rds` per fit, `INPUT_MD5.tsv` (MD5 of every input,
 #          including this script and its helper) and `DONE.txt`
 # Tools:   R; phylolm 2.6.5 (through `network10_multistart_helper.R`); ape (version: see envs/); Python 3 for the
@@ -35,13 +34,11 @@ D <- file.path(P,'02_derived/network10_loss_20260918',sprintf('pair_%02d',id))
 dir.create(D,recursive=TRUE,showWarnings=FALSE)
 source(file.path(P,'01_scripts/network10_multistart_helper.R'))
 rd <- function(p)read.delim(p,comment.char='#',quote='',stringsAsFactors=FALSE,check.names=FALSE)
-freeze <- file.path(S,'16_control_repair/scripts/rl_require_camkk_lkb1_joint_freeze.py')
-stopifnot(system2(paste0(.TA210_ENVS, '/ms210_phase2/bin/python3'),freeze)==0)
 treepath <- paste0(.TA210_SCRATCH, '/concord/ms210/P04b_chronogram/species_chronogram_209.treefile')
 indexpath <- path.expand('~/ref/proteomes/proteome_index.tsv')
 multipath <- file.path(S,'05_method_and_rules/MULTI_RECORD_SPECIES.tsv')
 files <- c(TRAITS=file.path(Q,'Q0_REPLACEMENT_per_species.tsv'),R37=file.path(Q,'Q0_REPLACEMENT_per_species__R37coding.tsv'))
-inputpaths <- c(files,treepath,indexpath,multipath,freeze,file.path(P,'01_scripts/network10_refit.R'),file.path(P,'01_scripts/network10_multistart_helper.R'))
+inputpaths <- c(files,treepath,indexpath,multipath,file.path(P,'01_scripts/network10_refit.R'),file.path(P,'01_scripts/network10_multistart_helper.R'))
 hashes <- tools::md5sum(inputpaths)
 write.table(data.frame(FILE=names(hashes),MD5=unname(hashes)),file.path(D,'INPUT_MD5.tsv'),sep='\t',quote=FALSE,row.names=FALSE)
 tree <- read.tree(treepath)

@@ -13,8 +13,8 @@
 #          `R59_frontier__<tag>.tsv` and `R59_frontier_cover__<tag>.tsv` (every allowed setting after Pareto
 #          pruning, with the controls it covers) and `R59_union_optimum__<tag>.md` (summary table); <tag> is the
 #          control set in `R59_TAG` plus the target-set suffix
-# Tools:   Python 3 standard library and the project modules `rl_arm1_selection`, `rl_invariants`, `rl_targets`
-#          and `rl_evidence_roots`; reads HMMER, CDD, InterProScan, OrthoFinder and SonicParanoid output without
+# Tools:   Python 3 standard library and the project modules `select_arm_settings`, `targets` and
+#          `evidence_roots`; reads HMMER, CDD, InterProScan, OrthoFinder and SonicParanoid output without
 #          running them; versions: see envs/
 # <<< deposit header
 """The joint optimum of the search settings, chosen at the union of all methods.
@@ -134,7 +134,6 @@ ROOT = os.environ.get("PROJECT_ROOT") or (
 sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
 sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
 import rl_arm1_selection as A                                    # noqa: E402
-import rl_invariants                                             # noqa: E402
 import rl_targets                                                # noqa: E402
 import rl_evidence_roots                                         # noqa: E402
 
@@ -690,7 +689,6 @@ def load_frontier_cache(allc):
 
 
 def main():
-    rl_invariants.check_inputs()
     # The control set is the set of controls in use, not every declared row.
     #
     # This once read the declared-control table directly, with no REVIEW filter,

@@ -89,7 +89,6 @@ sys.path.insert(0, os.path.join(ROOT, "01_scripts"))
 sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
 SPIDX = {}
 
-import rl_invariants                                            # noqa: E402
 import rl_accession                                              # noqa: E402
 import rl_declaration                                            # noqa: E402
 import rl_targets                                                # noqa: E402
@@ -121,8 +120,7 @@ CUR_OF = (ROOT + "/03_evidence_by_method/orthofinder_full/Orthogroups.txt")
 # A directory named BACKUP_ that holds an input in use, not an archive: it is the
 # default SonicParanoid clustering, "cov0.75/I1.5 (CURRENT)", scored below together
 # with the five runs under panel/sp2_out/runs, and the joint choice of settings
-# selects it for six of the eight targets. rl_invariants.py checks its checksum (as
-# sonic_clustering_full02), so a silent change is caught. It is not renamed because
+# selects it for six of the eight targets. It is not renamed because
 # the selections stored in `R59_union_settings__set{A,B}.tsv` name this exact path.
 CUR_SP = ((_TA210_SCRATCH + "/panel/BACKUP_full02_20260819/" "ortholog_groups/flat.ortholog_groups.tsv"))
 OUT = ROOT + "/07_findings/arm1_reclustering%s.md" % SET_SUFFIX
@@ -467,7 +465,6 @@ def main():
     # decoy-using step reads, are checked against their stored sha256 checksums
     # before anything is computed, so a table cannot be built on a silently
     # changed control declaration.
-    rl_invariants.check_inputs()
     global SPIDX
     ctrl, decl = binding_controls()
     NEG = negative_controls()

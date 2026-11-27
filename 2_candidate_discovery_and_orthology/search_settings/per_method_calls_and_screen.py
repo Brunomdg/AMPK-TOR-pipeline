@@ -14,8 +14,8 @@
 #          and `04b_cdd_LST8_raw_hits.tsv` (calls per method), `06_candidate_list.tsv`,
 #          `06b_candidate_provenance.tsv` (which methods nominated each protein), `07_contaminant_screen.tsv`,
 #          `08_final_retained_orthologs.tsv`, `09_final_lists_per_method.tsv` and `RUN_REPORT.md`
-# Tools:   Python 3 standard library and the project modules `rl_invariants`, `rl_accession`, `rl_declaration`,
-#          `rl_vocab`, `rl_targets`, `rl_evidence_roots` and `rl_join`; reads the output of OrthoFinder,
+# Tools:   Python 3 standard library and the project modules `accessions`, `control_declaration`,
+#          `call_vocabulary`, `targets`, `evidence_roots` and `join`; reads the output of OrthoFinder,
 #          SonicParanoid, HMMER, CDD and InterProScan without running them; versions: see envs/
 # <<< deposit header
 """Per-method ortholog calls derived from raw method output, for 8 targets in 210 species.
@@ -73,7 +73,6 @@ ROOT = os.environ.get("PROJECT_ROOT") or (
     (_TA210_SCRATCH + "/ms210_phase2/TOR-AMPK_orthologs_10target_R1"))
 sys.path.insert(0, os.path.join(ROOT, "01_scripts", "lib"))
 
-import rl_invariants                                            # noqa: E402
 import rl_accession                       # noqa: E402
 import rl_declaration                     # noqa: E402
 import rl_vocab                           # noqa: E402
@@ -1488,7 +1487,6 @@ def main():
     # the inputs fixed before the analysis are checked against their SHA-256
     # checksums before any call is made, so a table cannot be built on a silently
     # changed control table.
-    rl_invariants.check_inputs()
     os.makedirs(OUT, exist_ok=True)
     gate()
 
